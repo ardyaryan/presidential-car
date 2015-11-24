@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+    font: 100% Verdana, Arial, Helvetica, sans-serif;
+    background: #FFFFFF;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    color: #000000;
+}
+#container {
+    width: 1280px;
+    height: 700px;
+    margin: 100px auto;
+    border: 1px solid #868686;
+    color: #ffffff;
+    text-align: left;
+    background-color:#ef7c61 ;
+}
+#mainContent {
+    padding: 0 20px;
+
+}
+div#form {
+    width: 300px;
+
+}
+input{
+    padding: 8px;
+    margin: 5px;
+}
+#signup{
+    padding: 5px 60px;
+    margin: 5px;
+}
+a {color:#5a5a5a;font-weight: bold; text-decoration: none;}
