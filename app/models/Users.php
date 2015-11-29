@@ -1,12 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Adboom-Developer
- * Date: 12/30/2014
- * Time: 4:51 PM
- */
-class Users extends Eloquent {
-    /*
-     * Users table in test DB, nothing is required to be here
-     */
+
+use Illuminate\Auth\UserTrait;
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableTrait;
+use Illuminate\Auth\Reminders\RemindableInterface;
+
+class Users extends Eloquent implements UserInterface, RemindableInterface {
+
+	use UserTrait, RemindableTrait;
+
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'users';
+
+	/**
+	 * The attributes excluded from the model's JSON form.
+	 *
+	 * @var array
+	 */
+	protected $hidden = array('password');
+
+    protected $filables = array('first', 'last', 'email', 'role_id');
+
 }

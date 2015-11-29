@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>@yield('title')</title>
     @section('head')
-    {{ HTML::style('css/style.css'); }}
+    {{ HTML::style('public/css/style.css'); }}
     @show
 </head>
 <body>

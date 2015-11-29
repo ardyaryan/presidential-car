@@ -52,3 +52,13 @@ Route::get('administrator/deleteuser/{id}' ,'AdministratorController@DeleteUser'
 Route::get('signup' ,function() {
     return View::make('signup');
 });
+
+
+/**
+ * this section is all new for presidential car
+ *
+ */
+
+Route::get('/admin' ,'AdminController@index');
+Route::post('/admin/login' ,'AdminController@login');
+Route::get('/admin/trips' ,'AdminController@tripsEntry');
