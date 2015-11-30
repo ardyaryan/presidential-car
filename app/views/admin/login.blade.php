@@ -7,14 +7,18 @@ Admin Login
 <div id="container">
     <div id="mainContent">
         <h2>Admin Login</h2>
-        <div id="form" align="right">
-            {{Form::open(array('url' =>''))}}
-                {{Form::label('email','Email')}}
-                {{Form::text('email', '',  array('placeholder'=>'- Email'))}}<br/>
-                {{Form::label('password','Password')}}
-                {{Form::password('password', '',  array('placeholder'=>'- Password'))}}
-                {{Form::submit('Login',array('id'=>'login'))}}
-            {{Form::close()}}
+        <div id="form">
+            <form role="form">
+              <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" name="email" id="email">
+              </div>
+              <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" name="password" id="password">
+              </div>
+              <button type="submit" id="login" class="btn btn-default">Submit</button>
+            </form>
         </div>
     </div>
 </div>

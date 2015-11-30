@@ -7,19 +7,40 @@ Admin Login
 <div id="tripsContainer">
     <div id="mainContent">
         <h2>Enter New Trips</h2>
-        <div id="form" align="right">
-            {{Form::open(array('url' =>''))}}
-                {{Form::label('email','Email')}}
-                {{Form::text('email', '',  array('placeholder'=>'- Email'))}}<br/>
-                {{Form::label('password','Password')}}
-                {{Form::password('password', '',  array('placeholder'=>'- Password'))}}
-                {{Form::submit('Login',array('id'=>'login'))}}
-            {{Form::close()}}
+        <div id="form">
+            <form role="form">
+              <div class="form-group">
+                <label for="email">Client Name:</label>
+                <input type="text" class="form-control" id="client_name">
+                <label for="email">Departure Hour:</label>
+                <select  class="form-control" id="departure_hour">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                </select>
+              </div>
+
+              <div class="input-group">
+                  <!--<span class="input-group-addon">Label 2</span>-->
+                  <label for="email">Departure Hour:</label>
+                  <select id="departure_hour" class="selectpicker form-control">
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                  </select>
+              </div>
+
+              <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd">
+              </div>
+              <div class="checkbox">
+                <label><input type="checkbox"> Remember me</label>
+              </div>
+              <button type="submit" class="btn btn-default">Submit</button>
+            </form>
         </div>
     </div>
 </div>
 @stop
 
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="{{ URL::asset('public/js/partials/login.js')}}"></script>
