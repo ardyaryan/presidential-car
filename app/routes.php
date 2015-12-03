@@ -62,3 +62,4 @@ Route::get('signup' ,function() {
 Route::get('/admin' ,'AdminController@index');
 Route::post('/admin/login' ,'AdminController@login');
 Route::get('/admin/trips' ,'AdminController@tripsEntry');
+Route::post('/admin/newtrip' ,'AdminController@newDailyTrip');

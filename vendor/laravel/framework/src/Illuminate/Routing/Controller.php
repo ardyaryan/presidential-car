@@ -27,7 +27,7 @@ abstract class Controller {
 	protected static $filterer;
 
 	/**
-	 * The layouts used by the controller.
+	 * The layout used by the controller.
 	 *
 	 * @var \Illuminate\View\View
 	 */
@@ -211,7 +211,7 @@ abstract class Controller {
 	}
 
 	/**
-	 * Create the layouts used by the controller.
+	 * Create the layout used by the controller.
 	 *
 	 * @return void
 	 */
@@ -230,8 +230,8 @@ abstract class Controller {
 
 		$response = call_user_func_array(array($this, $method), $parameters);
 
-		// If no response is returned from the controller action and a layouts is being
-		// used we will assume we want to just return the layouts view as any nested
+		// If no response is returned from the controller action and a layout is being
+		// used we will assume we want to just return the layout view as any nested
 		// views were probably bound on this view during this controller actions.
 		if (is_null($response) && ! is_null($this->layout))
 		{

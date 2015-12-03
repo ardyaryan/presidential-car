@@ -19,7 +19,7 @@ body {
 }
 #tripsContainer {
     width: 80%;
-    height: 80%;
+    height: 580px;
     margin: 100px auto;
     border: 1px solid #868686;
     color: #ffffff;
@@ -27,11 +27,11 @@ body {
     background-color: #2785a9;
 }
 #mainContent {
-    padding: 0 20px;
+    padding: 20px 30px 30px ;
 
 }
 div#form {
-    width: 300px;
+
 
 }
 input{
@@ -43,3 +43,7 @@ input{
     margin: 5px;
 }
 a {color:#5a5a5a;font-weight: bold; text-decoration: none;}
+
+#start_address { width : 350px;}
+#end_address { width : 350px;}
+thead {color: white; font-size: 12px;}

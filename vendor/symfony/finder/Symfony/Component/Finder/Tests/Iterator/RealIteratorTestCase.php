@@ -18,7 +18,7 @@ abstract class RealIteratorTestCase extends IteratorTestCase
 
     public static function setUpBeforeClass()
     {
-        self::$tmpDir = realpath(sys_get_temp_dir()).DIRECTORY_SEPARATOR.'symfony2_finder';
+        self::$tmpDir = realpath(sys_get_temp_dir()).DIRECTORY_SEPARATOR.'symfony_finder';
 
         self::$files = array(
             '.git/',
@@ -29,7 +29,7 @@ abstract class RealIteratorTestCase extends IteratorTestCase
             'test.py',
             'foo/',
             'foo/bar.tmp',
-            'wrapper.blade.php',
+            'test.php',
             'toto/',
             'foo bar',
         );
@@ -50,11 +50,11 @@ abstract class RealIteratorTestCase extends IteratorTestCase
             }
         }
 
-        file_put_contents(self::toAbsolute('wrapper.blade.php'), str_repeat(' ', 800));
+        file_put_contents(self::toAbsolute('test.php'), str_repeat(' ', 800));
         file_put_contents(self::toAbsolute('test.py'), str_repeat(' ', 2000));
 
         touch(self::toAbsolute('foo/bar.tmp'), strtotime('2005-10-15'));
-        touch(self::toAbsolute('wrapper.blade.php'), strtotime('2005-10-15'));
+        touch(self::toAbsolute('test.php'), strtotime('2005-10-15'));
     }
 
     public static function tearDownAfterClass()
@@ -74,7 +74,7 @@ abstract class RealIteratorTestCase extends IteratorTestCase
          * Without the call to setUpBeforeClass() property can be null.
          */
         if (!self::$tmpDir) {
-            self::$tmpDir = realpath(sys_get_temp_dir()).DIRECTORY_SEPARATOR.'symfony2_finder';
+            self::$tmpDir = realpath(sys_get_temp_dir()).DIRECTORY_SEPARATOR.'symfony_finder';
         }
 
         if (is_array($files)) {

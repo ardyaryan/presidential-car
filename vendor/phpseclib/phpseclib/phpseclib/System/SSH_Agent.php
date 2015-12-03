@@ -6,7 +6,7 @@
  *
  * Originally System_SSH_Agent was accessed as System/SSH_Agent.php instead of
  * System/SSH/Agent.php. The problem with this is that PSR0 compatible autoloaders
- * don't support that kind of directory layouts hence the package being moved and
+ * don't support that kind of directory layout hence the package being moved and
  * this "alias" being created to maintain backwards compatibility.
  *
  * LICENSE: Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -30,7 +30,7 @@
  * @category  System
  * @package   System_SSH_Agent
  * @author    Jim Wigginton <terrafrost@php.net>
- * @copyright MMXIV Jim Wigginton
+ * @copyright 2014 Jim Wigginton
  * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
  * @link      http://phpseclib.sourceforge.net
  * @internal  See http://api.libssh.org/rfc/PROTOCOL.agent
