@@ -59,7 +59,11 @@ Route::get('signup' ,function() {
  *
  */
 
+Route::get('/' ,'AdminController@index');
 Route::get('/admin' ,'AdminController@index');
 Route::post('/admin/login' ,'AdminController@login');
+Route::get('/admin/logout' ,'AdminController@logout');
 Route::get('/admin/trips' ,'AdminController@tripsEntry');
+Route::get('/admin/signup' ,'AdminController@signUp');
 Route::post('/admin/newtrip' ,'AdminController@newDailyTrip');
+Route::post('/admin/newuser' ,'AdminController@createNewUser');

@@ -1,13 +1,13 @@
 <?php
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
+//use Illuminate\Auth\UserTrait;
+//use Illuminate\Auth\UserInterface;
+//use Illuminate\Auth\Reminders\RemindableTrait;
+//use Illuminate\Auth\Reminders\RemindableInterface;
 
-class Users extends Eloquent implements UserInterface, RemindableInterface {
+class Users extends Eloquent { //implements UserInterface, RemindableInterface {
 
-	use UserTrait, RemindableTrait;
+	//use UserTrait, RemindableTrait;
 
 	/**
 	 * The database table used by the model.
@@ -23,6 +23,8 @@ class Users extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	protected $hidden = array('password');
 
-    protected $filables = array('first', 'last', 'email', 'role_id');
+    public $timestamps  = false;
+
+    protected $filables = array('first', 'last', 'email', 'role_id', 'password');
 
 }

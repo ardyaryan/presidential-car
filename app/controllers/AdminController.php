@@ -4,7 +4,11 @@ class AdminController extends BaseController {
 
 	public function index()
 	{
-       return View::make('admin/login');
+        if(\Session::get('logged')) {
+
+        }
+
+        return View::make('admin/login');
 	}
 
     public function login()
@@ -12,19 +16,26 @@ class AdminController extends BaseController {
         $email    = Input::get('email');
         $password = Input::get('password');
 
-        $user = \Users::where('email', '=', $email)->first();
+        $user = Users::where('email', '=', $email)->first();
 
-        if($user != null) {
-            \Session::set('logged', true);
-            \Session::set('email', $email);
-            \Session::set('user_id', $user->id);
+        if( $user != null && Hash::check($password, $user->password) ) {
+            Session::set('logged', true);
+            Session::set('email', $email);
+            Session::set('user_id', $user->id);
             $result = array('success' => true, 'message' => 'logged in successfully');
+
         }else {
-            \Session::flush();
+            Session::flush();
             $result = array('success' => false, 'message' => 'invalid email or password');
         }
 
         return $result;
+    }
+
+    public function logout()
+    {
+        Session::flush();
+        return Redirect::to('/');
     }
 
     public function tripsEntry()
@@ -32,10 +43,14 @@ class AdminController extends BaseController {
         return View::make('admin/trips');
     }
 
+    public function signUp()
+    {
+        return View::make('admin/signup');
+    }
+
     public function newDailyTrip()
     {
         $post = Input::all();
-        \Log::info(print_r($post,1));
         if($post != null) {
             try{
                 $newDailyTrip = new DailyTrips();
@@ -52,11 +67,62 @@ class AdminController extends BaseController {
                 $newDailyTrip->price_per_trip   = $post['price_per_trip'];
                 $newDailyTrip->save();
 
+                $result = array('success' => true, 'message' => 'New trip entered successfully');
+
             }catch(Exception $ex) {
                 \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+
+                $result = array('success' => false, 'message' => 'en error occurred');
             }
+
+            return $result;
         }
 
 
+    }
+
+    public function createNewUser()
+    {
+        $post = Input::all();
+
+        $email = $post['email'];
+
+        $user = Users::where('email', '=', $email)->first();
+
+        if($user != null) {
+            return array('success' => false, 'message' => 'Email already exists!');
+        }
+
+        if($post != null) {
+            $password = $post['password'];
+            $confirmedPassword = $post['password_2'];
+
+            if($password != $confirmedPassword) {
+                $result = array('success' => false, 'message' => 'passwords do not match');
+            }else {
+
+                $password = Hash::make($password);
+
+                try{
+                    $newUser = new Users();
+                    $newUser->first    = $post['first'];
+                    $newUser->last     = $post['last'];
+                    $newUser->email    = $post['email'];
+                    $newUser->password = $password;
+                    $newUser->role_id  = $post['role_id'];
+
+                    $newUser->save();
+
+                    $result = array('success' => true, 'message' => 'New user saved successfully');
+
+                }catch(Exception $ex) {
+                    \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+                    $result = array('success' => false, 'message' => 'en error occurred');
+                }
+            }
+
+            return $result;
+
+        }
     }
 }

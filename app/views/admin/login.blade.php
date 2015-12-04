@@ -4,6 +4,7 @@ Admin Login
 @stop
 
 @section('body')
+
 <div id="container">
     <div id="mainContent">
         <h2>Admin Login</h2>
