@@ -38,9 +38,9 @@ class AdminController extends BaseController {
         return Redirect::to('/');
     }
 
-    public function tripsEntry()
+    public function newTrips()
     {
-        return View::make('admin/trips');
+        return View::make('admin/newTrips');
     }
 
     public function signUp()
@@ -55,6 +55,7 @@ class AdminController extends BaseController {
             try{
                 $newDailyTrip = new DailyTrips();
                 $newDailyTrip->client_name      = $post['client_name'];
+                $newDailyTrip->date             = date('Y-m-d', strtotime(str_replace('-', '/', $post['date'])));
                 $newDailyTrip->departure_hour   = $post['departure_hour'];
                 $newDailyTrip->departure_minute = $post['departure_minute'];
                 $newDailyTrip->departure_ampm   = $post['departure_ampm'];
@@ -124,5 +125,23 @@ class AdminController extends BaseController {
             return $result;
 
         }
+    }
+
+    public function viewTrips()
+    {
+        return View::make('admin/viewTrips');
+    }
+
+    public function getTrips()
+    {
+        $post = Input::all();
+        $startDate =  date('Y-m-d', strtotime(str_replace('-','/',$post['start_date'])));
+        $endDate =  date('Y-m-d', strtotime(str_replace('-','/',$post['end_date'])));
+
+        $result = DailyTrips::whereBetween('date', array($startDate, $endDate) )->get();
+
+        \Log::info(print_r(json_encode(array('data' => $result)),1));
+
+        return json_encode(array('data' => $result));
     }
 }

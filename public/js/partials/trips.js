@@ -1,5 +1,8 @@
 $(document).ready(function(){
 
+    $('.input-append.date').datepicker({});
+
+
     $('form').on('submit', function(e) {
 
         var form = $(this);

@@ -13,6 +13,14 @@ Daily Trips
                     <label for="client_name">Client Name:</label><br/>
                     <input type="text" class="form-control" id="client_name" name="client_name">
                 </div>
+
+              <div class="input-group date" data-provide="datepicker">
+                  <input type="text" class="form-control" name="date">
+                  <div class="input-group-addon">
+                     <span class="glyphicon glyphicon-th"></span>
+                  </div>
+              </div>
+
               <table>
                   <thead>
                       <tr>

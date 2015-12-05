@@ -60,3 +60,9 @@ a {color:#5a5a5a;font-weight: bold; text-decoration: none;}
 thead {color: white; font-size: 12px;}
 
 #message {color: white; font-size: 15px; font: "Helvetica Neue Light", "Lucida Grande", "Calibri", "Arial", sans-serif}
+
+.date {margin-top: 26;}
+.datepicker-switch {color: black;}
+.dow {color: black; font-size: 14;}
+.day {color: black; font-size: 14;}
+#search {margin-top: 24;}
