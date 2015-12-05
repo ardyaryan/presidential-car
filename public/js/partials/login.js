@@ -12,7 +12,7 @@ $(document).ready(function(){
                 password: password
             },
             success: function(data) {
-                window.location.replace('admin/trips');
+                window.location.replace('admin/viewtrips');
             },
             error: function (data) {
                 console.log(data);

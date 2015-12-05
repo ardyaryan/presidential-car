@@ -1,8 +1,6 @@
 $(document).ready(function(){
 
-    $(document).ready(function() {
-       // $('#daily_trips').DataTable();
-    });
+
 
     $('form').on('submit', function(e) {
         e.preventDefault();
@@ -24,6 +22,31 @@ $(document).ready(function(){
 
 
 function getDailyTrips(startDate, endDate) {
+
+    $('#daily_trips').DataTable({
+        'ajax': {
+            "type"   : "POST",
+            "url"    : 'gettrips',
+            "data"   : {start_date: startDate, end_date: endDate},
+            "dataSrc": ""
+        },
+        "destroy": true,
+        'columns': [
+            {"data" : "client_name"},
+            {"data" : "date"},
+            {"data" : "departure_hour"},
+            {"data" : "departure_minute"},
+            {"data" : "departure_ampm"},
+            {"data" : "arrival_hour"},
+            {"data" : "arrival_minute"},
+            {"data" : "arrival_ampm"},
+            {"data" : "departure_address"},
+            {"data" : "arrival_address"},
+            {"data" : "water_bottle"},
+            {"data" : "price_per_trip"}
+        ]
+    });
+    /*
     $.ajax({
         url : "gettrips",
         type: "POST",
@@ -34,13 +57,14 @@ function getDailyTrips(startDate, endDate) {
         success: function(data) {
             //window.location.replace('admin/trips');
             $('#Search').html('<span class="fa fa-check"></span> Search');
-            $('#daily_trips').DataTable({'ajax': 'data/' + data});
-            console.log(data.payload);
+            $('#daily_trips').DataTable(JSON.parse(data));
+            console.log(JSON.parse(data));
         },
         error: function (data) {
             console.log(data);
         }
     });
+    */
 }
 
 function validate() {

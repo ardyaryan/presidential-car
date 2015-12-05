@@ -142,6 +142,6 @@ class AdminController extends BaseController {
 
         \Log::info(print_r(json_encode(array('data' => $result)),1));
 
-        return json_encode(array('data' => $result));
+        return json_encode($result);
     }
 }
