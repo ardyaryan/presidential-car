@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-
+    $('#daily_trips').DataTable({});
 
     $('form').on('submit', function(e) {
         e.preventDefault();
@@ -46,25 +46,6 @@ function getDailyTrips(startDate, endDate) {
             {"data" : "price_per_trip"}
         ]
     });
-    /*
-    $.ajax({
-        url : "gettrips",
-        type: "POST",
-        data : {start_date: startDate, end_date: endDate},
-        beforeSend: function(){
-            $('#search').html('<span class="fa fa-spinner fa-spin"></span> Search');
-        },
-        success: function(data) {
-            //window.location.replace('admin/trips');
-            $('#Search').html('<span class="fa fa-check"></span> Search');
-            $('#daily_trips').DataTable(JSON.parse(data));
-            console.log(JSON.parse(data));
-        },
-        error: function (data) {
-            console.log(data);
-        }
-    });
-    */
 }
 
 function validate() {

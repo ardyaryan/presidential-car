@@ -61,6 +61,8 @@ Route::get('signup' ,function() {
 
 Route::get('/' ,'AdminController@index');
 Route::get('/admin' ,'AdminController@index');
+Route::get('/admin/dashboard' ,'AdminController@viewDashboard');
+
 Route::post('/admin/login' ,'AdminController@login');
 Route::get('/admin/logout' ,'AdminController@logout');
 Route::get('/admin/viewtrips' ,'AdminController@viewTrips');

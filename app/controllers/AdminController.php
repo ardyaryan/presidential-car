@@ -4,8 +4,10 @@ class AdminController extends BaseController {
 
 	public function index()
 	{
-        if(\Session::get('logged')) {
+        $loggedIn = Session::get('logged');
 
+        if(isset($loggedIn) && $loggedIn == true) {
+            return Redirect::to('admin/viewtrips');
         }
 
         return View::make('admin/login');
@@ -129,6 +131,9 @@ class AdminController extends BaseController {
 
     public function viewTrips()
     {
+        if(!Session::get('logged')) {
+            return Redirect::to('/');
+        }
         return View::make('admin/viewTrips');
     }
 
@@ -143,5 +148,10 @@ class AdminController extends BaseController {
         \Log::info(print_r(json_encode(array('data' => $result)),1));
 
         return json_encode($result);
+    }
+
+    public function viewDashboard()
+    {
+        return View::make('admin/dashboard');
     }
 }

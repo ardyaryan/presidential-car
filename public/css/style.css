@@ -37,6 +37,16 @@ body {
     background-color: #a94731;
 }
 
+#dashboardContainer {
+    width: 80%;
+    height: 580px;
+    margin: 100px auto;
+    border: 1px solid #868686;
+    color: #ffffff;
+    text-align: left;
+    background-color: #41a9a8;
+}
+
 #mainContent {
     padding: 20px 30px 30px ;
 
@@ -66,3 +76,4 @@ thead {color: white; font-size: 12px;}
 .dow {color: black; font-size: 14;}
 .day {color: black; font-size: 14;}
 #search {margin-top: 24;}
+td {white-space:nowrap;}
