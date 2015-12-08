@@ -12,6 +12,7 @@ return array(
     'CreateLaravelClients' => $baseDir . '/app/database/migrations/2014_12_31_002128_create-laravel-clients.php',
     'DailyTrips' => $baseDir . '/app/models/DailyTrips.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
+    'Drivers' => $baseDir . '/app/models/Drivers.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'Normalizer' => $vendorDir . '/patchwork/utf8/src/Normalizer.php',

@@ -47,6 +47,16 @@ body {
     background-color: #41a9a8;
 }
 
+#driversContainer {
+    width: 80%;
+    height: 580px;
+    margin: 100px auto;
+    border: 1px solid #868686;
+    color: #ffffff;
+    text-align: left;
+    background-color: #8354a9;
+}
+
 #mainContent {
     padding: 20px 30px 30px ;
 

@@ -13,7 +13,7 @@ $(document).ready(function(){
             },
             success: function(data) {
                 if(data.success) {
-                    window.location.replace('admin/viewtrips');
+                    window.location.replace('admin/dashboard');
                 }else {
                     window.location.replace('admin/');
                 }

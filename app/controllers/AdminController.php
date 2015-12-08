@@ -145,13 +145,23 @@ class AdminController extends BaseController {
 
         $result = DailyTrips::whereBetween('date', array($startDate, $endDate) )->get();
 
-        \Log::info(print_r(json_encode(array('data' => $result)),1));
-
         return json_encode($result);
     }
 
     public function viewDashboard()
     {
         return View::make('admin/dashboard');
+    }
+
+    public function viewDrivers()
+    {
+        return View::make('admin/viewDrivers');
+    }
+
+    public function getDrivers()
+    {
+        $result = Drivers::all();
+        \Log::info(print_r($result, 1));
+        return json_encode($result);
     }
 }
