@@ -6,14 +6,14 @@ $(document).ready(function(){
         e.preventDefault();
         if(validate() && checkPasswords()) {
             $.ajax({
-                url : "newuser",
+                url : "admin/newuser",
                 type: "POST",
                 data : form.serialize(),
                 beforeSend: function(){
                     $('#submit').html('<span class="fa fa-spinner fa-spin"></span> Submit');
                 },
                 success: function(data) {
-                    //window.location.replace('admin/trips');
+
 
                     if(data.success == false) {
                         $('#submit').html('<span class="glyphicon glyphicon-remove"></span> Submit');

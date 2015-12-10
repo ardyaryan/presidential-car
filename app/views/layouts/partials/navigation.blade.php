@@ -6,7 +6,9 @@
     </div>
     <div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="dashboard"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        @if (Session::get('logged'))
+              <li class="active"><a href="dashboard"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+        @endif
         @if (!Session::get('logged'))
             <!--<li ><a href=""><span class="glyphicon glyphicon-user"></span> Log In</a></li>-->
         @endif

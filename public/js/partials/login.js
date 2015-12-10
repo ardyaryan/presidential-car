@@ -13,7 +13,7 @@ $(document).ready(function(){
             },
             success: function(data) {
                 if(data.success) {
-                    window.location.replace('admin/dashboard');
+                    window.location.replace(data.payload.role +'/dashboard');
                 }else {
                     window.location.replace('admin/');
                 }

@@ -24,7 +24,11 @@ class AdminController extends BaseController {
             Session::set('logged', true);
             Session::set('email', $email);
             Session::set('user_id', $user->id);
-            $result = array('success' => true, 'message' => 'logged in successfully');
+            $userRole = Roles::getUserRole($user->role_id);
+            \Log::info(print_r($userRole, 1));
+            Session::set('role', $userRole);
+
+            $result = array('success' => true, 'message' => 'logged in successfully', 'payload' => array('role' => $userRole));
 
         }else {
             Session::flush();
