@@ -1,4 +1,4 @@
-@extends('layouts.adminMain')
+@extends('layouts.main')
 @section('title')
 List of Active Drivers
 @stop

@@ -1,4 +1,4 @@
-@extends('layouts.adminMain')
+@extends('layouts.main')
 @section('title')
 View Daily Trips
 @stop
