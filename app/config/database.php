@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => '127.0.0.1',
-			'database'  => 'presidentialcar',
+			'host'      => '188.166.97.101',//'127.0.0.1',
+			'database'  => 'presidential_car',//'presidentialcar',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => '67930226d9da202df36f66c10553c5c1',//'',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
