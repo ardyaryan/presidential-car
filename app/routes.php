@@ -58,7 +58,7 @@ Route::get('signup' ,function() {
  * this section is all new for presidential car
  *
  */
-
+//-------------------ADMIN---------------------//
 Route::get('/' ,'AdminController@index');
 Route::get('/admin' ,'AdminController@index');
 Route::get('/admin/dashboard' ,'AdminController@viewDashboard');
@@ -75,3 +75,7 @@ Route::post('/admin/getdrivers' ,'AdminController@getDrivers');
 Route::get('/signup' ,'AdminController@signUp');
 Route::post('/admin/newtrip' ,'AdminController@newDailyTrip');
 Route::post('/admin/newuser' ,'AdminController@createNewUser');
+
+//-------------------DRIVER---------------------//
+
+Route::get('/driver/newtrip' ,'DriverController@newTrip');

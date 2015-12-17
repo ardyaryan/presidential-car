@@ -13,8 +13,14 @@
     @show
 </head>
 <body>
-    @include('layouts.partials.navigation')
-    @show
+    @if (Session::get('role') == 'admin')
+        @include('layouts.partials.adminNavigation')
+        @show
+    @else
+        @include('layouts.partials.driverNavigation')
+        @show
+    @endif
+
     @yield('body')
     @section('footer')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>

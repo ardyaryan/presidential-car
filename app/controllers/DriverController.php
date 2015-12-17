@@ -1,6 +1,6 @@
 <?php
 
-class AdminController extends BaseController {
+class DriverController extends BaseController {
 
 	public function index()
 	{
@@ -25,6 +25,7 @@ class AdminController extends BaseController {
             Session::set('email', $email);
             Session::set('user_id', $user->id);
             $userRole = Roles::getUserRole($user->role_id);
+            \Log::info(print_r($userRole, 1));
             Session::set('role', $userRole);
 
             $result = array('success' => true, 'message' => 'logged in successfully', 'payload' => array('role' => $userRole));
@@ -43,9 +44,9 @@ class AdminController extends BaseController {
         return Redirect::to('/');
     }
 
-    public function newTrips()
+    public function newTrip()
     {
-        return View::make('admin/newTrips');
+        return View::make('driver/newTrip');
     }
 
     public function signUp()

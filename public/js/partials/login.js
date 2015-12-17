@@ -13,7 +13,12 @@ $(document).ready(function(){
             },
             success: function(data) {
                 if(data.success) {
-                    window.location.replace(data.payload.role +'/dashboard');
+                    console.log(data.payload.role);
+                    if(data.payload.role == 'admin') {
+                        window.location.replace(data.payload.role +'/dashboard');
+                    }else if(data.payload.role == 'driver') {
+                        window.location.replace(data.payload.role +'/newtrip');
+                    }
                 }else {
                     window.location.replace('admin/');
                 }
