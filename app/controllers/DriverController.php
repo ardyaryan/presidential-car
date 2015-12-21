@@ -2,42 +2,6 @@
 
 class DriverController extends BaseController {
 
-	public function index()
-	{
-        $loggedIn = Session::get('logged');
-
-        if(isset($loggedIn) && $loggedIn == true) {
-            return Redirect::to('admin/viewtrips');
-        }
-
-        return View::make('admin/login');
-	}
-
-    public function login()
-    {
-        $email    = Input::get('email');
-        $password = Input::get('password');
-
-        $user = Users::where('email', '=', $email)->first();
-
-        if( $user != null && Hash::check($password, $user->password) ) {
-            Session::set('logged', true);
-            Session::set('email', $email);
-            Session::set('user_id', $user->id);
-            $userRole = Roles::getUserRole($user->role_id);
-            \Log::info(print_r($userRole, 1));
-            Session::set('role', $userRole);
-
-            $result = array('success' => true, 'message' => 'logged in successfully', 'payload' => array('role' => $userRole));
-
-        }else {
-            Session::flush();
-            $result = array('success' => false, 'message' => 'invalid email or password');
-        }
-
-        return $result;
-    }
-
     public function logout()
     {
         Session::flush();
@@ -49,9 +13,9 @@ class DriverController extends BaseController {
         return View::make('driver/newTrip');
     }
 
-    public function signUp()
+    public function getLocation()
     {
-        return View::make('admin/signup');
+        return View::make('driver/getLocation');
     }
 
     public function newDailyTrip()
@@ -88,59 +52,6 @@ class DriverController extends BaseController {
 
     }
 
-    public function createNewUser()
-    {
-        $post = Input::all();
-
-        $email = $post['email'];
-
-        $user = Users::where('email', '=', $email)->first();
-
-        if($user != null) {
-            return array('success' => false, 'message' => 'Email already exists!');
-        }
-
-        if($post != null) {
-            $password = $post['password'];
-            $confirmedPassword = $post['password_2'];
-
-            if($password != $confirmedPassword) {
-                $result = array('success' => false, 'message' => 'passwords do not match');
-            }else {
-
-                $password = Hash::make($password);
-
-                try{
-                    $newUser = new Users();
-                    $newUser->first    = $post['first'];
-                    $newUser->last     = $post['last'];
-                    $newUser->email    = $post['email'];
-                    $newUser->password = $password;
-                    $newUser->role_id  = $post['role_id'];
-
-                    $newUser->save();
-
-                    $result = array('success' => true, 'message' => 'New user saved successfully');
-
-                }catch(Exception $ex) {
-                    \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
-                    $result = array('success' => false, 'message' => 'en error occurred');
-                }
-            }
-
-            return $result;
-
-        }
-    }
-
-    public function viewTrips()
-    {
-        if(!Session::get('logged')) {
-            return Redirect::to('/');
-        }
-        return View::make('admin/viewTrips');
-    }
-
     public function getTrips()
     {
         $post = Input::all();
@@ -152,20 +63,10 @@ class DriverController extends BaseController {
         return json_encode($result);
     }
 
-    public function viewDashboard()
-    {
-        return View::make('admin/dashboard');
-    }
-
-    public function viewDrivers()
-    {
-        return View::make('admin/viewDrivers');
-    }
 
     public function getDrivers()
     {
         $result = Drivers::all();
-        \Log::info(print_r($result, 1));
         return json_encode($result);
     }
 }

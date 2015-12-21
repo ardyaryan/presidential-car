@@ -20,7 +20,7 @@ $(document).ready(function(){
                         window.location.replace(data.payload.role +'/newtrip');
                     }
                 }else {
-                    window.location.replace('admin/');
+                    window.location.replace('');
                 }
 
             },

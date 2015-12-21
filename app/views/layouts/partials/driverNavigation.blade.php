@@ -1,28 +1,35 @@
-<div id="nav">
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">Presidential Car</a>
-    </div>
-    <div>
-      <ul class="nav navbar-nav">
-        @if (Session::get('logged'))
-              <li class="active"><a href="dashboard"><span class="glyphicon glyphicon-home"></span> Home</a></li>
-        @endif
-        @if (!Session::get('logged'))
-            <!--<li ><a href=""><span class="glyphicon glyphicon-user"></span> Log In</a></li>-->
-        @endif
-        @if (!Session::get('logged'))
-            <li><a href="#" ><span class="glyphicon glyphicon-plus"></span> Sign Up</a></li>
-        @endif
-        @if (Session::get('logged'))
-            <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span> Log Out</a></li>
-        @endif
-
-
-      </ul>
-    </div>
-  </div>
+<nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+        <div class="container topnav">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand topnav" href="#">Presidential Car - Driver</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                @if (Session::get('logged'))
+                    <li><a href="newtrip"><span class="fa fa-car"></span> Enter Trip</a></li>
+                @endif
+                @if (Session::get('logged'))
+                    <li><a href="location"><span class="fa fa-map-marker"></span> Get Location</a></li>
+                @endif
+                @if (!Session::get('logged'))
+                    <li><a href="#services"><span class="fa fa-user-plus"></span> Sign Up</a></li>
+                @endif
+                @if (Session::get('logged'))
+                    <li><a href="logout"><span class="fa fa-sign-out"></span> Logout</a></li>
+                @endif
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
 </nav>
 
 </div>

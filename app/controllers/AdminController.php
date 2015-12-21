@@ -19,7 +19,7 @@ class AdminController extends BaseController {
         $password = Input::get('password');
 
         $user = Users::where('email', '=', $email)->first();
-
+        //\Log::info(__METHOD__.' //===============> USER:  '.print_r($user, 1));
         if( $user != null && Hash::check($password, $user->password) ) {
             Session::set('logged', true);
             Session::set('email', $email);
