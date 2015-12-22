@@ -13,11 +13,6 @@ class DriverController extends BaseController {
         return View::make('driver/newTrip');
     }
 
-    public function getLocation()
-    {
-        return View::make('driver/getLocation');
-    }
-
     public function newDailyTrip()
     {
         $post = Input::all();

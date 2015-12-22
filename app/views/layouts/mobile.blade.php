@@ -35,16 +35,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <h1>Landing Page</h1>
-                        <h3>A Template by Start Bootstrap</h3>
-                        <hr class="intro-divider">
-                        <ul class="list-inline intro-social-buttons">
 
-                            <li>
-                                <a href="#" class="btn btn-default btn-lg">Send</a>
-                            </li>
-
-                        </ul>
+                        <h4>Start Your Trip:</h4>
+                        @yield('body')
                     </div>
                 </div>
             </div>
@@ -53,7 +46,7 @@
 
 
     </div>
-    @yield('body')
+
 
     <!-- Footer -->
     @include('layouts.partials.footer')

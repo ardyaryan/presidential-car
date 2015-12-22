@@ -16,9 +16,6 @@
                 @if (Session::get('logged'))
                     <li><a href="newtrip"><span class="fa fa-car"></span> Enter Trip</a></li>
                 @endif
-                @if (Session::get('logged'))
-                    <li><a href="location"><span class="fa fa-map-marker"></span> Get Location</a></li>
-                @endif
                 @if (!Session::get('logged'))
                     <li><a href="#services"><span class="fa fa-user-plus"></span> Sign Up</a></li>
                 @endif

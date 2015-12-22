@@ -34,5 +34,16 @@ class LocationController extends BaseController  {
 
     }
 
+    public static function getTime() {
+
+        $timeZone = (!is_null(Session::get('time_zone')) ? Session::get('time_zone') : 0);
+
+        $userTime = gmdate('h:i:s A', time() + 3600*($timeZone));
+        $userDate = gmdate('m-d-Y', time() + 3600*($timeZone));
+
+        return $result = array('date' => $userDate, 'time' => $userTime );
+
+    }
+
 
 }

@@ -23,6 +23,7 @@ class AdminController extends BaseController {
         if( $user != null && Hash::check($password, $user->password) ) {
             Session::set('logged', true);
             Session::set('email', $email);
+            Session::set('time_zone', $user->time_zone);
             Session::set('user_id', $user->id);
             $userRole = Roles::getUserRole($user->role_id);
             Session::set('role', $userRole);

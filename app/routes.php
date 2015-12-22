@@ -80,5 +80,6 @@ Route::post('/admin/newuser' ,'AdminController@createNewUser');
 
 Route::get('/driver/newtrip' ,'DriverController@newTrip');
 Route::get('/driver/logout' ,'DriverController@logout');
-Route::get('/driver/location' ,'DriverController@getLocation');
+
 Route::post('/driver/getlocation' ,'LocationController@getLocation');
+Route::post('/driver/gettime' ,'LocationController@getTime');
