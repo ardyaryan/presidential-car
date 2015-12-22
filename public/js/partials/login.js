@@ -17,7 +17,7 @@ $(document).ready(function(){
                     if(data.payload.role == 'admin') {
                         window.location.replace(data.payload.role +'/dashboard');
                     }else if(data.payload.role == 'driver') {
-                        window.location.replace(data.payload.role +'/location');
+                        window.location.replace(data.payload.role +'/newtrip');
                     }
                 }else {
                     window.location.replace('');
