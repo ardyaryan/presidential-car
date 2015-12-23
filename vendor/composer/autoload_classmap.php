@@ -8,11 +8,12 @@ $baseDir = dirname($vendorDir);
 return array(
     'AdminController' => $baseDir . '/app/controllers/AdminController.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
+    'Cars' => $baseDir . '/app/models/Cars.php',
     'CreateLaravelClients' => $baseDir . '/app/database/migrations/2014_12_31_002128_create-laravel-clients.php',
     'DailyTrips' => $baseDir . '/app/models/DailyTrips.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
+    'Driver' => $baseDir . '/app/models/Driver.php',
     'DriverController' => $baseDir . '/app/controllers/DriverController.php',
-    'Drivers' => $baseDir . '/app/models/Drivers.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'LocationController' => $baseDir . '/app/controllers/LocationController.php',

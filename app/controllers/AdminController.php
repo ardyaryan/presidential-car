@@ -19,7 +19,7 @@ class AdminController extends BaseController {
         $password = Input::get('password');
 
         $user = Users::where('email', '=', $email)->first();
-        //\Log::info(__METHOD__.' //===============> USER:  '.print_r($user, 1));
+
         if( $user != null && Hash::check($password, $user->password) ) {
             Session::set('logged', true);
             Session::set('email', $email);
@@ -27,6 +27,12 @@ class AdminController extends BaseController {
             Session::set('user_id', $user->id);
             $userRole = Roles::getUserRole($user->role_id);
             Session::set('role', $userRole);
+
+            // getting car_id if its a driver
+            if($user->role_id == Roles::DRIVER_ROLE_ID) {
+                $driver = Driver::where('user_id', '=', $user->id)->firstOrFail();
+                Session::set('car_id', $driver->car_id);
+            }
 
             $result = array('success' => true, 'message' => 'logged in successfully', 'payload' => array('role' => $userRole));
 

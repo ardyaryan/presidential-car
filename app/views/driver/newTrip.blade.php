@@ -4,8 +4,16 @@ Daily Trips
 @stop
 
 @section('body')
+<h3>Start Your Trip:</h3>
 <div>
 
+    <div class="input-group form-group">
+        <span class="input-group-addon"><i class="fa fa-truck"></i> Vehicle</span>
+        <input type="text" class="form-control" id="car" name="car" value="{{$car['car_name'].' - '.$car['car_reg']}}" disabled>
+        <span class="input-group-btn">
+             <button id="change_car" class="btn btn-default" style="width: 105px;"><i class="fa fa-pencil"></i> Change</button>
+        </span>
+    </div>
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-user"></i> Client</span>
         <select id="client_name" class="selectpicker form-group input-group" data-width="auto">
@@ -57,6 +65,8 @@ Daily Trips
         <span class="input-group-btn">
              <button id="end_trip" class="btn btn-danger form-group" style="width: 105px;">End Trip</button>
         </span>
+    </div>
+    <div id="alert" style="display: none">
     </div>
 </div>
 @stop

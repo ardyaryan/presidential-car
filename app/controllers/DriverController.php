@@ -10,17 +10,23 @@ class DriverController extends BaseController {
 
     public function newTrip()
     {
-        return View::make('driver/newTrip');
+        $carId = Session::get('car_id');
+        $car = Cars::find($carId);
+
+        return View::make('driver/newTrip')->with('car', array('car_name' => $car->name, 'car_reg' => $car->registration));
     }
 
     public function saveNewTrip()
     {
         $post = Input::all();
-        \Log::info(print_r($post,1));
+
+        //\Log::info(__METHOD__.' //========> $newDailyTrip : '.print_r($newDailyTrip, 1));
         if($post != null) {
             try{
                 $newDailyTrip = new DailyTrips();
-                $newDailyTrip->client_name         = $post['client_name'];
+                $newDailyTrip->user_id             = Session::get('user_id');
+                $newDailyTrip->car_id              = Session::get('car_id');
+                $newDailyTrip->client_id           = $post['client_id'];
                 $newDailyTrip->departure_km        = $post['departure_km'];
                 $newDailyTrip->departure_date_time = $post['departure_date_time'];
                 $newDailyTrip->arrival_km          = $post['arrival_km'];
@@ -30,12 +36,10 @@ class DriverController extends BaseController {
                 $newDailyTrip->water_bottle        = $post['water_bottle'];
                 $newDailyTrip->price_per_trip      = null;
                 $newDailyTrip->save();
-
                 $result = array('success' => true, 'message' => 'New trip entered successfully');
 
             }catch(Exception $ex) {
                 \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
-
                 $result = array('success' => false, 'message' => 'en error occurred');
             }
             return $result;

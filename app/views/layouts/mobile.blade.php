@@ -38,7 +38,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="intro-message">
-                        <h4>Start Your Trip:</h4>
                         @yield('body')
                     </div>
                 </div>

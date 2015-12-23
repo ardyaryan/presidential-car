@@ -28,7 +28,7 @@ $(document).ready(function () {
             $('#end_time').attr('disabled', true);
             $('#end_trip').attr('disabled', true);
             $('#water_bottle').attr('disabled', true);
-            setTimeout(function(){ saveTrip()}, 2000);
+            setTimeout(function(){ saveTrip()}, 1000);
             //saveTrip();
         }
     });
@@ -39,6 +39,14 @@ $(document).ready(function () {
 
     $('#end_km').on('keyup', function(){
         $('#end_km').css('background-color', 'white');
+    });
+
+    $('#change_car').on('click', function(){
+        $('#car').attr('disabled', false);
+    });
+
+    $('#car').on('blur', function(){
+        $('#car').attr('disabled', true);
     });
 });
 
@@ -110,7 +118,7 @@ function saveTrip() {
         url : "savenewtrip",
         type: "POST",
         data : {
-                client_name: client,
+                client_id: client,
                 departure_km: startKm,
                 departure_date_time: startTime,
                 arrival_km: endKm,
@@ -124,17 +132,18 @@ function saveTrip() {
         },
         success: function(data) {
 
-            /*
             if(data.success == false) {
-                $('#submit').html('<span class="glyphicon glyphicon-remove"></span> Submit');
-                $('#message').append(data.message + '<br/>');
-                $('#message').show();
+                $('#end_trip').html('<span class="fa fa-remove"></span> End Trip');
+                $('#alert').addClass('alert alert-danger');
+                $('#alert').html('There was a problem saving your trip!');
+                $('#alert').show();
             }else {
-                $('#message').html(data.message);
-                $('#submit').html('<span class="fa fa-check"></span> Submit');
-                $('#message').show();
+                $('#end_trip').html('<span class="fa fa-check-square"></span> End Trip');
+                $('#alert').addClass('alert alert-success');
+                $('#alert').html('Your trip has been saved successfully.');
+                $('#alert').show();
             }
-            */
+
         },
         error: function (data) {
             console.log(data);

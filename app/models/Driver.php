@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
 
-class Drivers extends Eloquent {
+class Driver extends Eloquent {
 
     use SoftDeletingTrait;
 
@@ -11,7 +11,7 @@ class Drivers extends Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'drivers';
+	protected $table = 'driver';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -20,6 +20,6 @@ class Drivers extends Eloquent {
 	 */
     protected $hidden = array('updated_at', 'deleted_at');
 
-    protected $filables = array('code', 'first', 'last', 'gsm_number', 'created_at');
+    protected $filables = array('user_id', 'code', 'first', 'last', 'car_id', 'gsm_number', 'created_at');
 
 }

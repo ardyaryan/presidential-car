@@ -17,7 +17,10 @@
                     <li><a href="newtrip"><span class="fa fa-car"></span> Enter Trip</a></li>
                 @endif
                 @if (!Session::get('logged'))
-                    <li><a href="#services"><span class="fa fa-user-plus"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="fa fa-user-plus"></span> Sign Up</a></li>
+                @endif
+                @if (Session::get('logged'))
+                    <li><a href="#"><span class="fa fa-table"></span> My Trips</a></li>
                 @endif
                 @if (Session::get('logged'))
                     <li><a href="logout"><span class="fa fa-sign-out"></span> Logout</a></li>
