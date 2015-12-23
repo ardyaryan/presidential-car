@@ -13,24 +13,22 @@ class DriverController extends BaseController {
         return View::make('driver/newTrip');
     }
 
-    public function newDailyTrip()
+    public function saveNewTrip()
     {
         $post = Input::all();
+        \Log::info(print_r($post,1));
         if($post != null) {
             try{
                 $newDailyTrip = new DailyTrips();
-                $newDailyTrip->client_name      = $post['client_name'];
-                $newDailyTrip->date             = date('Y-m-d', strtotime(str_replace('-', '/', $post['date'])));
-                $newDailyTrip->departure_hour   = $post['departure_hour'];
-                $newDailyTrip->departure_minute = $post['departure_minute'];
-                $newDailyTrip->departure_ampm   = $post['departure_ampm'];
-                $newDailyTrip->arrival_hour     = $post['arrival_hour'];
-                $newDailyTrip->arrival_minute   = $post['arrival_minute'];
-                $newDailyTrip->arrival_ampm     = $post['arrival_ampm'];
-                $newDailyTrip->departure_address = $post['departure_address'];
-                $newDailyTrip->arrival_address  = $post['arrival_address'];
-                $newDailyTrip->water_bottle     = $post['water_bottle'];
-                $newDailyTrip->price_per_trip   = $post['price_per_trip'];
+                $newDailyTrip->client_name         = $post['client_name'];
+                $newDailyTrip->departure_km        = $post['departure_km'];
+                $newDailyTrip->departure_date_time = $post['departure_date_time'];
+                $newDailyTrip->arrival_km          = $post['arrival_km'];
+                $newDailyTrip->arrival_date_time   = $post['arrival_date_time'];;
+                $newDailyTrip->departure_address   = $post['departure_address'];
+                $newDailyTrip->arrival_address     = $post['arrival_address'];
+                $newDailyTrip->water_bottle        = $post['water_bottle'];
+                $newDailyTrip->price_per_trip      = null;
                 $newDailyTrip->save();
 
                 $result = array('success' => true, 'message' => 'New trip entered successfully');
@@ -40,11 +38,8 @@ class DriverController extends BaseController {
 
                 $result = array('success' => false, 'message' => 'en error occurred');
             }
-
             return $result;
         }
-
-
     }
 
     public function getTrips()

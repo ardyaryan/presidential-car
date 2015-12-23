@@ -87,3 +87,7 @@ thead {color: white; font-size: 12px;}
 .day {color: black; font-size: 14;}
 #search {margin-top: 24;}
 td {white-space:nowrap;}
+
+.error_placeholder::-webkit-input-placeholder {
+    color: white !important;
+}
