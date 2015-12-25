@@ -84,4 +84,5 @@ Route::get('/driver/logout' ,'DriverController@logout');
 Route::post('/driver/getlocation' ,'LocationController@getLocation');
 Route::post('/driver/gettime' ,'LocationController@getTime');
 Route::post('/driver/savenewtrip' ,'DriverController@saveNewTrip');
-
+Route::post('/driver/getavailablecars' ,'DriverController@getAvailableCars');
+Route::post('/driver/replacecar' ,'DriverController@replaceCar');

@@ -10,10 +10,13 @@ class DriverController extends BaseController {
 
     public function newTrip()
     {
+        if(!Session::get('logged')){
+            return Redirect::to('/');
+        };
         $carId = Session::get('car_id');
         $car = Cars::find($carId);
 
-        return View::make('driver/newTrip')->with('car', array('car_name' => $car->name, 'car_reg' => $car->registration));
+        return View::make('driver/newTrip')->with('car', array('car_id' => $car->id, 'car_name' => $car->name, 'car_reg' => $car->registration));
     }
 
     public function saveNewTrip()
@@ -62,5 +65,44 @@ class DriverController extends BaseController {
     {
         $result = Drivers::all();
         return json_encode($result);
+    }
+
+    public function getAvailableCars()
+    {
+        $availableCars = DB::select(DB::raw('
+        SELECT car_id, name, registration FROM (
+        SELECT cars.id AS car_id,cars.name, cars.registration, driver.user_id FROM cars
+        LEFT JOIN driver
+        ON driver.car_id = cars.id
+        ) AS used_cars
+        WHERE used_cars.user_id IS NULL
+        '));
+
+        return array('success' => true, 'available_cars' => $availableCars);
+    }
+
+    public function replaceCar()
+    {
+        $newCarId = Input::get('new_car_id');
+
+        try{
+            $userId = Session::get('user_id');
+            $driver = Driver::where('user_id', '=', $userId)->firstOrFail();
+
+            $driver->car_id = $newCarId;
+            $driver->save();
+
+            Session::set('car_id', $newCarId);
+            $newCar = Cars::find($newCarId);
+
+            $results = array('success' => true, 'message' => 'New Car assigned.', 'new_car' => $newCar);
+        }
+        catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'en error occurred');
+        }
+
+        return $results;
+
     }
 }

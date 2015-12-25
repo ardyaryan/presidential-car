@@ -91,3 +91,12 @@ td {white-space:nowrap;}
 .error_placeholder::-webkit-input-placeholder {
     color: white !important;
 }
+
+.replace {
+    margin-left: 15px;
+}
+
+.replace-text{
+    background-color: #EAEAEA;
+    padding: 6px;
+}

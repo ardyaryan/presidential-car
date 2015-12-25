@@ -9,10 +9,9 @@ $(document).ready(function () {
             getUTCTime('start_time');
             $('#client_name').attr('disabled', true);
             $('#start_km').attr('disabled', true);
-            $('#departure_address').attr('disabled', true);
+            $('#change_car').attr('disabled', true);
             $('#start_time').attr('disabled', true);
             $('#start_trip').attr('disabled', true);
-
         }
     });
 
@@ -41,12 +40,14 @@ $(document).ready(function () {
         $('#end_km').css('background-color', 'white');
     });
 
-    $('#change_car').on('click', function(){
-        $('#car').attr('disabled', false);
+    $('#myModal').on('shown.bs.modal', function(e) {
+        getAvailableCars();
     });
 
-    $('#car').on('blur', function(){
-        $('#car').attr('disabled', true);
+    $('#replace').on('click', function() {
+        console.log('here');
+        //var carId = $(this).attr('data-id');
+        //console.log(carId);
     });
 });
 
@@ -149,4 +150,67 @@ function saveTrip() {
             console.log(data);
         }
     });
-};
+}
+
+function getAvailableCars() {
+
+    var currentCarId = $('#current_car_id').val();
+
+    $.ajax({
+        url : "getavailablecars",
+        type: "POST",
+        data : {
+            current_car_id: currentCarId
+        },
+        beforeSend: function(){
+            //$('#modal_body').html('<p><span class="fa fa-spin fa-spinner"></span> Getting Available Cars...</p>');
+        },
+        success: function(data) {
+
+            if(data.success == false) {
+                $('#modal_body').html('<p><span class="fa fa-exclamation-triangle"></span> No Cars Available.</p>');
+            }else {
+                var availableCars = data.available_cars;
+                $('#modal_body').html('');
+                for (var i = 0;  i < availableCars.length ; i++) {
+                    $('#modal_body').append('<p class="replace-text"><span class="fa fa-car"></span> ' + availableCars[i].name + ' - ' + availableCars[i].registration + '<button type="button" id="replace_' + availableCars[i].car_id + '" data-id="' + availableCars[i].car_id + '" class="replace btn btn-default fa fa-refresh" onclick="replaceCar(' + availableCars[i].car_id +')"></button> Replace</p>');
+                }
+            }
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function replaceCar(carId) {
+
+
+    $.ajax({
+        url : "replacecar",
+        type: "POST",
+        data : {
+            new_car_id: carId
+        },
+        beforeSend: function(){
+            var button = $('#replace_' + carId);
+            button.after('<i id="temp_spinner" style="margin-left: 12px;" class="fa fa-spin fa-spinner"></i>');
+            button.remove();
+        },
+        success: function(data) {
+
+            if(data.success == false) {
+                $('#temp_spinner').removeClass();
+                $('#temp_spinner').addClass('fa fa-exclamation');
+            }else {
+                $('#temp_spinner').removeClass();
+                $('#temp_spinner').addClass('fa fa-check');
+                $('#myModal').modal('hide');
+                $('#car').val(data.new_car.name + ' - ' + data.new_car.registration);
+            }
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
