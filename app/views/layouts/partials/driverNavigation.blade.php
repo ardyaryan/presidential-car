@@ -20,7 +20,7 @@
                     <li><a href="#"><span class="fa fa-user-plus"></span> Sign Up</a></li>
                 @endif
                 @if (Session::get('logged'))
-                    <li><a href="#"><span class="fa fa-table"></span> My Trips</a></li>
+                    <li><a href="mytrips"><span class="fa fa-table"></span> My Trips</a></li>
                 @endif
                 @if (Session::get('logged'))
                     <li><a href="logout"><span class="fa fa-sign-out"></span> Logout</a></li>

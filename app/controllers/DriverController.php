@@ -105,4 +105,18 @@ class DriverController extends BaseController {
         return $results;
 
     }
+
+    public function showMyTrips()
+    {
+        $userId = Session::get('user_id');
+
+        $myTrips = DailyTrips::where('user_id', '=', $userId)->orderBy('departure_date_time', 'desc')->get()->toArray();
+        \Log::info(__METHOD__.' //========> $myTrips : '.print_r($myTrips, 1));
+
+        if($myTrips == null) {
+            $myTrips = array('my_trips' => 'no trips have been recorded for you.');
+        }
+
+        return View::make('driver/myTrips')->with('myTrips', $myTrips);
+    }
 }
