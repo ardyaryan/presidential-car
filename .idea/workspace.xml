@@ -32,31 +32,25 @@
       <file leaf-file-name="routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-24.88889" vertical-offset="642" max-vertical-offset="1566">
-              <caret line="82" column="62" selection-start-line="82" selection-start-column="62" selection-end-line="82" selection-end-column="62" />
+            <state vertical-scroll-proportion="-28.222221" vertical-offset="714" max-vertical-offset="1602">
+              <caret line="91" column="72" selection-start-line="91" selection-start-column="72" selection-end-line="91" selection-end-column="72" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="myTrips.blade.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="myTrips.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/driver/myTrips.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.630105" vertical-offset="0" max-vertical-offset="864">
-              <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DriverController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/controllers/DriverController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-22.222221" vertical-offset="1434" max-vertical-offset="2304">
-              <caret line="113" column="52" selection-start-line="113" selection-start-column="52" selection-end-line="113" selection-end-column="52" />
+            <state vertical-scroll-proportion="-18.666666" vertical-offset="162" max-vertical-offset="2124">
+              <caret line="37" column="38" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="38" />
               <folding>
-                <marker date="1451024026000" expanded="true" signature="2591:2842" placeholder="SELECT car_i..id..." />
-                <marker date="1451024026000" expanded="true" signature="2640:2779" placeholder="SELECT cars...cars..." />
+                <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#span#1;n#div#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#i#0;n#button#1;n#span#1;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,11 +59,32 @@
       <file leaf-file-name="myTrips.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/partials/myTrips.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2986" max-vertical-offset="3942">
-              <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1242" max-vertical-offset="2394">
+              <caret line="109" column="10" selection-start-line="109" selection-start-column="10" selection-end-line="109" selection-end-column="10" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DriverController.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/controllers/DriverController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.71034485" vertical-offset="2820" max-vertical-offset="4104">
+              <caret line="191" column="12" selection-start-line="191" selection-start-column="12" selection-end-line="191" selection-end-column="12" />
               <folding>
-                <marker date="1451016646112" expanded="false" signature="6180:6198" placeholder="..." />
+                <marker date="1451118116294" expanded="true" signature="2591:2842" placeholder="SELECT car_i..id..." />
+                <marker date="1451118116294" expanded="true" signature="2640:2779" placeholder="SELECT cars...cars..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DailyTripsRevision.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/DailyTripsRevision.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-1.3333334" vertical-offset="0" max-vertical-offset="540">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -84,7 +99,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/controllers/HomeController.php" />
         <option value="$PROJECT_DIR$/css/style.css" />
         <option value="$PROJECT_DIR$/public/js/login.js" />
         <option value="$PROJECT_DIR$/app/views/signup.blade.php" />
@@ -120,19 +134,22 @@
         <option value="$PROJECT_DIR$/public/js/partials/login.js" />
         <option value="$PROJECT_DIR$/public/js/partials/location.js" />
         <option value="$PROJECT_DIR$/app/controllers/LocationController.php" />
-        <option value="$PROJECT_DIR$/app/models/DailyTrips.php" />
         <option value="$PROJECT_DIR$/app/views/layouts/mobile.blade.php" />
         <option value="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" />
         <option value="$PROJECT_DIR$/app/controllers/AdminController.php" />
         <option value="$PROJECT_DIR$/app/models/Driver.php" />
         <option value="$PROJECT_DIR$/app/models/Cars.php" />
         <option value="$PROJECT_DIR$/public/css/style.css" />
-        <option value="$PROJECT_DIR$/public/js/partials/newTrip.js" />
-        <option value="$PROJECT_DIR$/app/routes.php" />
         <option value="$PROJECT_DIR$/app/views/layouts/partials/driverNavigation.blade.php" />
+        <option value="$PROJECT_DIR$/app/models/DailyTrips.php" />
+        <option value="$PROJECT_DIR$/app/models/Client.php" />
         <option value="$PROJECT_DIR$/app/views/driver/newTrip.blade.php" />
-        <option value="$PROJECT_DIR$/app/controllers/DriverController.php" />
+        <option value="$PROJECT_DIR$/app/routes.php" />
+        <option value="$PROJECT_DIR$/app/models/DailyTripsRevision.php" />
         <option value="$PROJECT_DIR$/app/views/driver/myTrips.blade.php" />
+        <option value="$PROJECT_DIR$/public/js/partials/newTrip.js" />
+        <option value="$PROJECT_DIR$/public/js/partials/myTrips.js" />
+        <option value="$PROJECT_DIR$/app/controllers/DriverController.php" />
       </list>
     </option>
   </component>
@@ -169,6 +186,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -421,7 +439,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -435,9 +452,9 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\wamp\www\presidential-car\app\models" />
       <recent name="C:\wamp\www\presidential-car\public\js\partials" />
       <recent name="C:\wamp\www\presidential-car\app\views\driver" />
-      <recent name="C:\wamp\www\presidential-car\app\models" />
       <recent name="C:\wamp\www\presidential-car\app\views\layouts\partials" />
       <recent name="C:\wamp\www\presidential-car\app\views" />
     </key>
@@ -464,15 +481,15 @@
       <BehatRunner />
       <method />
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method />
+    </configuration>
     <configuration default="true" type="js.build_tools.gulp" factoryName="Gulp.js">
       <node-options />
       <gulpfile />
       <tasks />
       <pass-parent-env-vars>false</pass-parent-env-vars>
       <envs />
-      <method />
-    </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method />
     </configuration>
     <list size="0" />
@@ -500,19 +517,19 @@
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18070363" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18230277" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32864866" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -538,20 +555,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/public/js/partials/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="294" max-vertical-offset="609">
-          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1296" max-vertical-offset="2730">
-          <caret line="101" column="43" selection-start-line="101" selection-start-column="43" selection-end-line="101" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/routes.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1218">
@@ -564,7 +567,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="399" max-vertical-offset="630">
           <caret line="19" column="20" selection-start-line="19" selection-start-column="20" selection-end-line="19" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -729,14 +731,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/admin/newTrips.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.320879" vertical-offset="3932" max-vertical-offset="4842">
-          <caret line="0" column="19" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/admin/viewDrivers.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="576">
@@ -770,7 +764,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1620">
           <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="34" selection-end-column="7" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -778,14 +771,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-26.666666" vertical-offset="0" max-vertical-offset="990">
           <caret line="40" column="33" selection-start-line="40" selection-start-column="33" selection-end-line="40" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/DailyTrips.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.0" vertical-offset="0" max-vertical-offset="540">
-          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -800,7 +785,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="378" max-vertical-offset="738">
           <caret line="21" column="27" selection-start-line="21" selection-start-column="27" selection-end-line="21" selection-end-column="27" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -808,7 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="432" max-vertical-offset="594">
           <caret line="27" column="91" selection-start-line="27" selection-start-column="91" selection-end-line="27" selection-end-column="91" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -839,7 +822,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-12.666667" vertical-offset="72" max-vertical-offset="3294">
           <caret line="23" column="12" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -847,7 +829,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.04137931" vertical-offset="0" max-vertical-offset="870">
           <caret line="2" column="51" selection-start-line="2" selection-start-column="50" selection-end-line="2" selection-end-column="51" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -855,7 +836,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.45517242" vertical-offset="0" max-vertical-offset="870">
           <caret line="22" column="31" selection-start-line="22" selection-start-column="25" selection-end-line="22" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -867,58 +847,95 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/Client.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.08275862" vertical-offset="0" max-vertical-offset="870">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/admin/newTrips.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.537931" vertical-offset="0" max-vertical-offset="4842">
+          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/driver/newTrip.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.020689655" vertical-offset="396" max-vertical-offset="1818">
-          <caret line="23" column="0" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
+        <state vertical-scroll-proportion="-12.666667" vertical-offset="630" max-vertical-offset="1998">
+          <caret line="54" column="80" selection-start-line="54" selection-start-column="70" selection-end-line="54" selection-end-column="80" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/DailyTrips.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4410735" vertical-offset="0" max-vertical-offset="857">
+          <caret line="21" column="210" selection-start-line="21" selection-start-column="200" selection-end-line="21" selection-end-column="210" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-28.222221" vertical-offset="714" max-vertical-offset="1602">
+          <caret line="91" column="72" selection-start-line="91" selection-start-column="72" selection-end-line="91" selection-end-column="72" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/partials/newTrip.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51131225" vertical-offset="3022" max-vertical-offset="3942">
-          <caret line="193" column="48" selection-start-line="193" selection-start-column="48" selection-end-line="193" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.59049773" vertical-offset="0" max-vertical-offset="3816">
+          <caret line="29" column="54" selection-start-line="29" selection-start-column="54" selection-end-line="29" selection-end-column="54" />
           <folding>
-            <marker date="1451016646112" expanded="false" signature="-1:-1" placeholder="..." />
+            <marker date="1451116898014" expanded="true" signature="-1:-1" placeholder="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/DriverController.php">
+    <entry file="file://$PROJECT_DIR$/app/models/DailyTripsRevision.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-22.222221" vertical-offset="1434" max-vertical-offset="2304">
-          <caret line="113" column="52" selection-start-line="113" selection-start-column="52" selection-end-line="113" selection-end-column="52" />
-          <folding>
-            <marker date="1451024026000" expanded="true" signature="2591:2842" placeholder="SELECT car_i..id..." />
-            <marker date="1451024026000" expanded="true" signature="2640:2779" placeholder="SELECT cars...cars..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/routes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-24.88889" vertical-offset="642" max-vertical-offset="1566">
-          <caret line="82" column="62" selection-start-line="82" selection-start-column="62" selection-end-line="82" selection-end-column="62" />
+        <state vertical-scroll-proportion="-1.3333334" vertical-offset="0" max-vertical-offset="540">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/partials/myTrips.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="2986" max-vertical-offset="3942">
-          <caret line="213" column="0" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
-          <folding>
-            <marker date="1451016646112" expanded="false" signature="6180:6198" placeholder="..." />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="1242" max-vertical-offset="2394">
+          <caret line="109" column="10" selection-start-line="109" selection-start-column="10" selection-end-line="109" selection-end-column="10" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/driver/myTrips.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.630105" vertical-offset="0" max-vertical-offset="864">
-          <caret line="30" column="27" selection-start-line="30" selection-start-column="27" selection-end-line="30" selection-end-column="27" />
-          <folding />
+        <state vertical-scroll-proportion="-18.666666" vertical-offset="162" max-vertical-offset="2124">
+          <caret line="37" column="38" selection-start-line="37" selection-start-column="31" selection-end-line="37" selection-end-column="38" />
+          <folding>
+            <element signature="n#style#0;n#i#0;n#span#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#span#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#i#0;n#button#1;n#span#1;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#3;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/controllers/DriverController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.71034485" vertical-offset="2820" max-vertical-offset="4104">
+          <caret line="191" column="12" selection-start-line="191" selection-start-column="12" selection-end-line="191" selection-end-column="12" />
+          <folding>
+            <marker date="1451118116294" expanded="true" signature="2591:2842" placeholder="SELECT car_i..id..." />
+            <marker date="1451118116294" expanded="true" signature="2640:2779" placeholder="SELECT cars...cars..." />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -28,7 +28,6 @@ $(document).ready(function () {
             $('#end_trip').attr('disabled', true);
             $('#water_bottle').attr('disabled', true);
             setTimeout(function(){ saveTrip()}, 1000);
-            //saveTrip();
         }
     });
 
@@ -42,12 +41,6 @@ $(document).ready(function () {
 
     $('#myModal').on('shown.bs.modal', function(e) {
         getAvailableCars();
-    });
-
-    $('#replace').on('click', function() {
-        console.log('here');
-        //var carId = $(this).attr('data-id');
-        //console.log(carId);
     });
 });
 

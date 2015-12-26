@@ -87,4 +87,6 @@ Route::post('/driver/gettime' ,'LocationController@getTime');
 Route::post('/driver/savenewtrip' ,'DriverController@saveNewTrip');
 Route::post('/driver/getavailablecars' ,'DriverController@getAvailableCars');
 Route::post('/driver/replacecar', 'DriverController@replaceCar');
-
+Route::post('/driver/gettrip', 'DriverController@getTripById');
+Route::post('/driver/requestdeletion', 'DriverController@requestDeletion');
+Route::post('/driver/requestrevision', 'DriverController@requestRevision');

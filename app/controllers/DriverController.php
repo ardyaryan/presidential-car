@@ -43,7 +43,7 @@ class DriverController extends BaseController {
 
             }catch(Exception $ex) {
                 \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
-                $result = array('success' => false, 'message' => 'en error occurred');
+                $result = array('success' => false, 'message' => 'an error occurred');
             }
             return $result;
         }
@@ -99,7 +99,7 @@ class DriverController extends BaseController {
         }
         catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
-            $results = array('success' => false, 'message' => 'en error occurred');
+            $results = array('success' => false, 'message' => 'an error occurred');
         }
 
         return $results;
@@ -108,15 +108,115 @@ class DriverController extends BaseController {
 
     public function showMyTrips()
     {
+        if(!Session::get('logged')){
+            return Redirect::to('/');
+        };
         $userId = Session::get('user_id');
 
         $myTrips = DailyTrips::where('user_id', '=', $userId)->orderBy('departure_date_time', 'desc')->get()->toArray();
-        \Log::info(__METHOD__.' //========> $myTrips : '.print_r($myTrips, 1));
+        $carId = Session::get('car_id');
+
+        $car = Cars::find($carId);
 
         if($myTrips == null) {
             $myTrips = array('my_trips' => 'no trips have been recorded for you.');
         }
 
-        return View::make('driver/myTrips')->with('myTrips', $myTrips);
+        return View::make('driver/myTrips')->with(array('myTrips' => $myTrips, 'car' => $car));
     }
+
+    public function getTripById()
+    {
+        $tripId = Input::get('trip_id');
+
+        $myTrip = DailyTrips::find($tripId)->toArray();
+
+        if($myTrip == null) {
+            $myTrip = array('my_trips' => 'no trips associated with this id');
+        }else {
+            $client = Client::find($myTrip['client_id']);
+            $myTrip['client_name'] = $client->name;
+        }
+
+        return $myTrip;
+    }
+
+    public function requestDeletion()
+    {
+        $tripId = Input::get('trip_id');
+
+        try {
+            $myTrip = DailyTrips::find($tripId);
+            $myTrip->delete_req = 1;
+            $myTrip->save();
+
+            $results = array('success' => true, 'message' => 'deletion requested');
+
+        }catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'an error occurred');
+        }
+        return $results;
+    }
+
+    public function requestRevision()
+    {
+        $tripId = Input::get('trip_id');
+        $carName = Input::get('car');
+        $clientName = Input::get('client');
+        $departureKm = Input::get('start_km');
+        $arrivalKm = Input::get('end_km');
+        $departureDateTime = Input::get('start_time');
+        $arrivalDateTime = Input::get('end_time');
+        $departureAddress = Input::get('departure_address');
+        $arrivalAddress = Input::get('destination_address');
+        $water = Input::get('water');
+
+        $car = Cars::where('name', '=', substr($carName, 0, 2))->first();
+        if($car instanceof Cars) {
+            $carId = $car->id;
+        }else {
+            $carId = '';
+        }
+
+        $client = Client::where('name', '=', $clientName)->first();
+        if($client instanceof Client) {
+            $clientId = $client->id;
+        }else {
+            $clientId = '';
+        }
+
+
+
+        try {
+            $myTrip = DailyTrips::find($tripId);
+            $myTrip->edit_req = 1;
+            $myTrip->save();
+
+            $myTripRevison = new DailyTripsRevision();
+            $myTripRevison->trip_id             = $tripId;
+            $myTripRevison->user_id             = Session::get('user_id');
+            $myTripRevison->car_id              = $carId;
+            $myTripRevison->client_id           = $clientId;
+            $myTripRevison->departure_km        = $departureKm;
+            $myTripRevison->departure_date_time = $departureDateTime;
+            $myTripRevison->arrival_km          = $arrivalKm;
+            $myTripRevison->arrival_date_time   = $arrivalDateTime;
+            $myTripRevison->departure_address   = $departureAddress;
+            $myTripRevison->arrival_address     = $arrivalAddress;
+            $myTripRevison->water_bottle        = $water;
+            $myTripRevison->trip_cost           = null;
+
+            $myTripRevison->save();
+
+            $results = array('success' => true, 'message' => 'revision requested');
+
+        }catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'an error occurred');
+        }
+        return $results;
+    }
+
+
 }
