@@ -37,7 +37,10 @@ class DriverController extends BaseController {
                 $newDailyTrip->departure_address   = $post['departure_address'];
                 $newDailyTrip->arrival_address     = $post['arrival_address'];
                 $newDailyTrip->water_bottle        = $post['water_bottle'];
-                $newDailyTrip->price_per_trip      = null;
+                $newDailyTrip->trip_cost           = null;
+                $newDailyTrip->delete_req         = null;
+                $newDailyTrip->edit_req           = null;
+
                 $newDailyTrip->save();
                 $result = array('success' => true, 'message' => 'New trip entered successfully');
 
