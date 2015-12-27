@@ -46,16 +46,17 @@ Daily Trips
     </div>
 
     <div class="input-group form-group">
-        <span class="input-group-addon"><i class="fa fa-map-marker"></i> Start Address</span>
+        <span class="input-group-addon"><i id="start_address_icon" class="fa fa-map-marker"></i> Start Address</span>
         <input type="text" class="form-control form-group" id="departure_address" name="departure_address" placeholder=" - Start Address">
     </div>
 
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-clock-o"></i> Start Time</span>
         <input type="text" class="form-control" id="start_time" name="start_time" placeholder=" - Start Time">
-        <span class="input-group-btn">
-             <button id="start_trip" class="btn btn-success" style="width: 105px;">Start Trip</button>
-        </span>
+    </div>
+
+    <div class=" form-group">
+        <button id="start_trip" class="btn btn-success" style="width: 100%;"><i class="fa fa-play"></i> Start Trip</button>
     </div>
 
     <div class="input-group form-group">
@@ -64,18 +65,19 @@ Daily Trips
     </div>
 
     <div class="input-group form-group">
-        <span class="input-group-addon"><i class="fa fa-map-marker"></i> End Address</span>
+        <span class="input-group-addon"><i id="end_address_icon" class="fa fa-map-marker"></i> End Address</span>
         <input type="text" class="form-control form-group" id="destination_address" name="destination_address" placeholder=" - End Address">
     </div>
-
 
     <div class="input-group form-group" >
         <span class="input-group-addon"><i class="fa fa-clock-o"></i> End Time</span>
         <input type="text" class="form-control" id="end_time" name="end_time" placeholder=" - End Time">
-        <span class="input-group-btn">
-             <button id="end_trip" class="btn btn-danger form-group" style="width: 105px;">End Trip</button>
-        </span>
     </div>
+
+    <div class=" form-group">
+        <button id="end_trip" class="btn btn-danger form-group" style="width: 100%;" disabled><i class="fa fa-floppy-o"></i> End & Save Trip</button>
+    </div>
+
     <div id="alert" style="display: none">
     </div>
 </div>
