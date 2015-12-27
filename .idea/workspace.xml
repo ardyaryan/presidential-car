@@ -62,10 +62,10 @@
       <file leaf-file-name="newTrip.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/public/js/partials/newTrip.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5701358" vertical-offset="0" max-vertical-offset="4032">
-              <caret line="28" column="66" selection-start-line="28" selection-start-column="66" selection-end-line="28" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.6923077" vertical-offset="0" max-vertical-offset="4032">
+              <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
               <folding>
-                <marker date="1451178500282" expanded="false" signature="6909:6927" placeholder="..." />
+                <marker date="1451179094797" expanded="false" signature="6909:6927" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -931,10 +931,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/partials/newTrip.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5701358" vertical-offset="0" max-vertical-offset="4032">
-          <caret line="28" column="66" selection-start-line="28" selection-start-column="66" selection-end-line="28" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.6923077" vertical-offset="0" max-vertical-offset="4032">
+          <caret line="34" column="49" selection-start-line="34" selection-start-column="49" selection-end-line="34" selection-end-column="49" />
           <folding>
-            <marker date="1451178500282" expanded="false" signature="6909:6927" placeholder="..." />
+            <marker date="1451179094797" expanded="false" signature="6909:6927" placeholder="..." />
           </folding>
         </state>
       </provider>

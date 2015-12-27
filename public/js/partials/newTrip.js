@@ -32,7 +32,7 @@ $(document).ready(function () {
             $('#end_time').attr('disabled', true);
             $('#end_trip').attr('disabled', true);
             $('#water_bottle').attr('disabled', true);
-            setTimeout(function(){ saveTrip()}, 1000);
+            setTimeout(function(){ saveTrip()}, 2000);
             setTimeout(function(){ location.reload()}, 4000);
         }
     });
