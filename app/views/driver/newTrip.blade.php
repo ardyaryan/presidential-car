@@ -23,22 +23,6 @@ Daily Trips
         </select>
 
     </div>
-    <div class="input-group form-group">
-        <span class="input-group-addon"><i class="fa fa-flask"></i> Water</span>
-        <select id="water_bottle" class="selectpicker form-group input-group" data-width="auto">
-            <option value="0">0</option>
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-            <option value="9">9</option>
-            <option value="10">10</option>
-        </select>
-    </div>
 
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-tachometer"></i> Start Km</span>
@@ -75,7 +59,11 @@ Daily Trips
     </div>
 
     <div class=" form-group">
-        <button id="end_trip" class="btn btn-danger form-group" style="width: 100%;" disabled><i class="fa fa-floppy-o"></i> End & Save Trip</button>
+        <button id="end_trip" class="btn btn-danger form-group" style="width: 100%;" disabled><i class="fa fa-stop"></i> End Trip</button>
+    </div>
+
+    <div class=" form-group">
+        <button id="save_trip" class="btn btn-info form-group" style="width: 100%;" disabled><i class="fa fa-floppy-o"></i> Save Trip</button>
     </div>
 
     <div id="alert" style="display: none">

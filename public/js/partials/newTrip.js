@@ -9,17 +9,19 @@ $(document).ready(function () {
             getUTCTime('start_time');
             $('#start_address_icon').removeClass();
             $('#start_address_icon').addClass('fa fa-spin fa-spinner');
+            /*
             $('#client_name').attr('disabled', true);
             $('#start_km').attr('disabled', true);
             $('#change_car').attr('disabled', true);
             $('#start_time').attr('disabled', true);
+            */
             $('#start_trip').attr('disabled', true);
             $('#end_trip').attr('disabled', false);
         }
     });
 
     $('#end_trip').on('click', function() {
-        if($('#end_km').val() == '') {
+        if($('#end_km').val() == '' || $('#end_km').val() <= $('#start_km').val()) {
             $('#end_km').css('background-color', '#FFB0A2');
             $('#end_km').addClass('error_placeholder');
         }else{
@@ -27,14 +29,20 @@ $(document).ready(function () {
             getUTCTime('end_time');
             $('#end_address_icon').removeClass();
             $('#end_address_icon').addClass('fa fa-spin fa-spinner');
+            /*
             $('#end_km').attr('disabled', true);
             $('#destination_address').attr('disabled', true);
             $('#end_time').attr('disabled', true);
             $('#end_trip').attr('disabled', true);
-            $('#water_bottle').attr('disabled', true);
-            setTimeout(function(){ saveTrip()}, 2000);
-            setTimeout(function(){ location.reload()}, 4000);
+            */
+            $('#save_trip').attr('disabled', false);
         }
+    });
+
+    $('#save_trip').on('click', function() {
+        saveTrip();
+        setTimeout(function(){ location.reload()}, 4000);
+        $('#save_trip').attr('disabled', true);
     });
 
     $('#start_km').on('keyup', function(){
@@ -76,13 +84,11 @@ function showLocation(position) {
             lng: position.coords.longitude
         },
         success: function(data) {
-            console.log($('#start_trip').attr('disabled'));
-            console.log($('#end_trip').attr('disabled'));
-            if($('#start_trip').attr('disabled') == 'disabled' && typeof($('#end_trip').attr('disabled')) == 'undefined') {
+            if($('#start_km').val() != '' && $('#end_km').val() == '') {
                 $('#departure_address').val(data);
                 $('#start_address_icon').removeClass();
                 $('#start_address_icon').addClass('fa fa-map-marker');
-            }else if($('#start_trip').attr('disabled') == 'disabled' && ($('#end_trip').attr('disabled')) == 'disabled') {
+            }else if($('#start_km').val() != '' && $('#end_km').val() != '') {
                 $('#end_address_icon').removeClass();
                 $('#end_address_icon').addClass('fa fa-map-marker');
                 $('#destination_address').val(data);
@@ -112,7 +118,6 @@ function getUTCTime(resource) {
 function saveTrip() {
 
     var client      = $('#client_name').val();
-    var waterBottle = $('#water_bottle').val();
     var startKm     = $('#start_km').val();
     var endKm       = $('#end_km').val();
     var startAddr   = $('#departure_address').val();
@@ -130,21 +135,20 @@ function saveTrip() {
                 arrival_km: endKm,
                 arrival_date_time: endTime,
                 departure_address: startAddr,
-                arrival_address: endAddr,
-                water_bottle: waterBottle
+                arrival_address: endAddr
         },
         beforeSend: function(){
-            $('#end_trip').html('<span class="fa fa-spinner fa-spin"></span> End Trip');
+            $('#save_trip').html('<span class="fa fa-spinner fa-spin"></span> End Trip');
         },
         success: function(data) {
 
             if(data.success == false) {
-                $('#end_trip').html('<span class="fa fa-remove"></span> End Trip');
+                $('#save_trip').html('<span class="fa fa-remove"></span> End Trip');
                 $('#alert').addClass('alert alert-danger');
                 $('#alert').html('There was a problem saving your trip!');
                 $('#alert').show();
             }else {
-                $('#end_trip').html('<span class="fa fa-check-square"></span> End Trip');
+                $('#save_trip').html('<span class="fa fa-check-square"></span> End Trip');
                 $('#alert').addClass('alert alert-success');
                 $('#alert').html('Your trip has been saved successfully, Refreshing...');
                 $('#alert').show();

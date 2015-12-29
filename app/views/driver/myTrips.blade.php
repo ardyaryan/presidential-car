@@ -5,25 +5,34 @@ Daily Trips
 
 @section('body')
 <h3>My Trips:</h3>
-<div class="input-group form-group" >
+<div class="form-group">
     <span ><i class="fa fa-square" style="color: #E6BEBE; margin-left: 15px;"></i> Pending Deletion</span>
     <span ><i class="fa fa-square" style="color: #BEE6CE; margin-left: 15px;"></i> Pending Revision</span>
-</div>
-<div>
-    @foreach ($myTrips as $myTrip)
-    <div class="input-group form-group">
-            <span class="input-group-addon"><i class="fa fa-location-arrow"></i> </span>
-        <input type="text" class="form-control input-group" id="trip"  @if ($myTrip['delete_req'] != null) {{'style="background-color: #E6BEBE"'}}@elseif ($myTrip['edit_req'] != null) {{'style="background-color: #BEE6CE"'}}@endif  name="trip" value="{{'Date: '.$myTrip['departure_date_time'].'  -  Distance: '.$myTrip['departure_km'].'Km - '.$myTrip['arrival_km'].'Km  -  '.$myTrip['departure_address'].'  -  '.$myTrip['arrival_address']}}" disabled>
-        <span class="input-group-btn">
-             <button type="button" id="edit_trip" class="btn btn-default" data-toggle="modal" onclick="editTripModal({{$myTrip['id']}})" data-target="#editModal"
-             @if ($myTrip['delete_req'] != null || $myTrip['edit_req'] != null) {{'disabled'}} @endif
-             ><i class="fa fa-pencil"></i>&nbsp;</button>
-             <button type="button" id="delete_trip" class="btn btn-default" data-toggle="modal" onclick="pluckTripId({{$myTrip['id']}})" data-target="#deleteModal"
-             @if ($myTrip['delete_req'] != null || $myTrip['edit_req'] != null) {{'disabled'}} @endif
-             ><i class="fa fa-times" style="color: red"></i>&nbsp;</button>
-        </span>
+
+    <div class="input-group col-sm-3 col-md-offset-5 col-lg-offset-5 date">
+        <input type="text" class="datepicker form-control" name="from" id="from" placeholder=" - From" data-provide="datepicker">
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th"></span>
+        </div>
     </div>
-    @endforeach
+
+    <div class="input-group col-sm-3 col-md-offset-5 col-lg-offset-5 date">
+        <input type="text" class="datepicker form-control" name="to" id="to" placeholder=" - To" data-provide="datepicker" >
+        <div class="input-group-addon">
+            <span class="glyphicon glyphicon-th" ></span>
+        </div>
+    </div>
+</div>
+
+<div class=" form-group">
+    <button id="get_more_trips" class="btn btn-success" style="width: 100%;"><i id="go_button" class="fa fa-calendar"></i> GO!</button>
+</div>
+
+<div class="form-group">
+    <span ><i id="trips_time_tag" class="fa fa-calendar-o" ></i> Today's Trips</span>
+</div>
+<div id="trips_body">
+<!-- filled by JS -->
 </div>
 
 <div id="editModal" class="modal fade" role="dialog" style="margin-top: 200px;">
@@ -41,15 +50,11 @@ Daily Trips
 
             <div class="input-group form-group">
                 <span class="input-group-addon"><i class="fa fa-truck"></i> Vehicle</span>
-                <input type="text" class="form-control input-group" id="car" name="car" value="{{$car['name'].' - '.$car['registration']}}">
+                <input type="text" class="form-control input-group" id="car" name="car">
             </div>
             <div class="input-group form-group">
                 <span class="input-group-addon"><i class="fa fa-user"></i> Client</span>
                 <input type="text" class="form-control input-group" id="client" name="client">
-            </div>
-            <div class="input-group form-group">
-                <span class="input-group-addon"><i class="fa fa-flask"></i> Water</span>
-                <input type="text" class="form-control input-group" id="water" name="water">
             </div>
             <div class="input-group form-group">
                 <span class="input-group-addon"><i class="fa fa-tachometer"></i> Start Km</span>
@@ -110,4 +115,5 @@ Daily Trips
 @stop
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+
 <script src="{{ URL::asset('public/js/partials/myTrips.js')}}"></script>

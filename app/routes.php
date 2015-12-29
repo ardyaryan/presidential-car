@@ -80,7 +80,7 @@ Route::post('/admin/newuser' ,'AdminController@createNewUser');
 
 Route::get('/driver/newtrip' ,'DriverController@newTrip');
 Route::get('/driver/logout' ,'DriverController@logout');
-Route::get('/driver/mytrips', 'DriverController@showMyTrips');
+Route::get('/driver/mytrips', 'DriverController@myTrips');
 
 Route::post('/driver/getlocation' ,'LocationController@getLocation');
 Route::post('/driver/gettime' ,'LocationController@getTime');
@@ -90,3 +90,4 @@ Route::post('/driver/replacecar', 'DriverController@replaceCar');
 Route::post('/driver/gettrip', 'DriverController@getTripById');
 Route::post('/driver/requestdeletion', 'DriverController@requestDeletion');
 Route::post('/driver/requestrevision', 'DriverController@requestRevision');
+Route::post('/driver/showmytrips', 'DriverController@showMyTrips');

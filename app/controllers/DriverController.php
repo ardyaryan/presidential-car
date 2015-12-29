@@ -36,7 +36,6 @@ class DriverController extends BaseController {
                 $newDailyTrip->arrival_date_time   = $post['arrival_date_time'];;
                 $newDailyTrip->departure_address   = $post['departure_address'];
                 $newDailyTrip->arrival_address     = $post['arrival_address'];
-                $newDailyTrip->water_bottle        = $post['water_bottle'];
                 $newDailyTrip->trip_cost           = null;
                 $newDailyTrip->delete_req         = null;
                 $newDailyTrip->edit_req           = null;
@@ -109,23 +108,54 @@ class DriverController extends BaseController {
 
     }
 
-    public function showMyTrips()
+    public static function myTrips()
     {
-        if(!Session::get('logged')){
+        if(!Session::get('logged')) {
             return Redirect::to('/');
         };
+
+        return View::make('driver/myTrips');
+    }
+
+    public function showMyTrips()
+    {
+
         $userId = Session::get('user_id');
 
-        $myTrips = DailyTrips::where('user_id', '=', $userId)->orderBy('departure_date_time', 'desc')->get()->toArray();
-        $carId = Session::get('car_id');
+        $to = Input::get('to');
+        $from = Input::get('from');
 
-        $car = Cars::find($carId);
+        if($from == null || $to == null) {
+            $today = LocationController::getTime();
+            $todayFrom = $today['date'].' 00:00:00';
+            $todayTo = $today['date'].' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
+        \Log::info(__METHOD__.' //========> $todayFrom : '.print_r($todayFrom, 1));
+        \Log::info(__METHOD__.' //========> $todayTo : '.print_r($todayTo, 1));
+        try{
+            $myTrips = DailyTrips::where('user_id', '=', $userId)
+                ->where('departure_date_time','>', $todayFrom)
+                ->where('departure_date_time','<', $todayTo)
+                ->orderBy('departure_date_time', 'desc')->get()->toArray();
 
-        if($myTrips == null) {
-            $myTrips = array('my_trips' => 'no trips have been recorded for you.');
+            $carId = Session::get('car_id');
+            $car = Cars::find($carId);
+
+            if($myTrips == null) {
+                $myTrips = array('my_trips' => 'no trips have been recorded for you.');
+            };
+
+            $results = array('success' => true, 'my_trips' => $myTrips, 'car' => $car);
+        }
+        catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'an error occurred');
         }
 
-        return View::make('driver/myTrips')->with(array('myTrips' => $myTrips, 'car' => $car));
+        return $results;
     }
 
     public function getTripById()
@@ -173,7 +203,6 @@ class DriverController extends BaseController {
         $arrivalDateTime = Input::get('end_time');
         $departureAddress = Input::get('departure_address');
         $arrivalAddress = Input::get('destination_address');
-        $water = Input::get('water');
 
         $car = Cars::where('name', '=', substr($carName, 0, 2))->first();
         if($car instanceof Cars) {
@@ -207,7 +236,6 @@ class DriverController extends BaseController {
             $myTripRevison->arrival_date_time   = $arrivalDateTime;
             $myTripRevison->departure_address   = $departureAddress;
             $myTripRevison->arrival_address     = $arrivalAddress;
-            $myTripRevison->water_bottle        = $water;
             $myTripRevison->trip_cost           = null;
 
             $myTripRevison->save();
