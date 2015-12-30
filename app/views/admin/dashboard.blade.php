@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.mobile')
 @section('title')
 Dashboard
 @stop

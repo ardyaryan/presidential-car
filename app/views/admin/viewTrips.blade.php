@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.mobile')
 @section('title')
 View Daily Trips
 @stop

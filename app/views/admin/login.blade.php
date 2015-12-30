@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.mobile')
 @section('title')
 Admin Login
 @stop
@@ -7,9 +7,9 @@ Admin Login
 
 <div id="container">
     <div id="mainContent">
-        <h2>Admin Login</h2>
+        <h2>User Login</h2>
+        <form role="form">
         <div id="form">
-            <form role="form">
               <div class="form-group">
                 <label for="email">Email address:</label>
                 <input type="email" class="form-control" name="email" id="email">
@@ -18,9 +18,13 @@ Admin Login
                 <label for="pwd">Password:</label>
                 <input type="password" class="form-control" name="password" id="password">
               </div>
-              <button type="submit" id="login" class="btn btn-default">Submit</button>
-            </form>
         </div>
+
+        <div class=" form-group">
+                <button iype="submit" id="login" class="btn btn-success" style="width: 100%;"><i id="login_icon" class=""></i> Log in</button>
+        </div>
+
+        </form>
     </div>
 </div>
 @stop

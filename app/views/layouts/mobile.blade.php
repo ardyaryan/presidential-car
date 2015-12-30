@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Landing Page - Start Bootstrap Theme</title>
+    <title></title>
 
     {{ HTML::style('public/css/lib/bootstrap.min.css'); }}
     {{ HTML::style('public/css/lib/landing-page.css'); }}

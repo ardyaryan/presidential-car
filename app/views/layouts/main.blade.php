@@ -21,7 +21,29 @@
         @show
     @endif
 
-    @yield('body')
+
+    @if (Session::get('role') == 'admin')
+            @include('layouts.partials.adminNavigation')
+        @else
+            @include('layouts.partials.driverNavigation')
+        @endif
+        <!-- Header -->
+        <a name="about"></a>
+        <div class="intro-header">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="intro-message">
+                            @yield('body')
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Footer -->
+    @include('layouts.partials.footer')
+    @show
     @section('footer')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>

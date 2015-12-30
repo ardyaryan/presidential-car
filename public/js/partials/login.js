@@ -11,13 +11,17 @@ $(document).ready(function(){
                 email:email,
                 password: password
             },
+            beforeSend: function(){
+                $('#login_icon').removeClass();
+                $('#login_icon').addClass('fa fa-spinner fa-spin');
+            },
             success: function(data) {
                 if(data.success) {
                     console.log(data.payload.role);
                     if(data.payload.role == 'admin') {
-                        window.location.replace(data.payload.role +'/dashboard');
+                        location.replace(data.payload.role +'/dashboard');
                     }else if(data.payload.role == 'driver') {
-                        window.location.replace(data.payload.role +'/newtrip');
+                        location.replace(data.payload.role +'/newtrip');
                     }
                 }else {
                     window.location.replace('');
