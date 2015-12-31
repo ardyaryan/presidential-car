@@ -133,8 +133,7 @@ class DriverController extends BaseController {
             $todayFrom = $from.' 00:00:00';
             $todayTo = $to.' 23:59:59';
         }
-        \Log::info(__METHOD__.' //========> $todayFrom : '.print_r($todayFrom, 1));
-        \Log::info(__METHOD__.' //========> $todayTo : '.print_r($todayTo, 1));
+
         try{
             $myTrips = DailyTrips::where('user_id', '=', $userId)
                 ->where('departure_date_time','>', $todayFrom)
