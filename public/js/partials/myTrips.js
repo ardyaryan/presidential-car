@@ -138,6 +138,11 @@ function showMyTrips() {
     var from = $('#from').val();
     var to = $('#to').val();
 
+    console.log(from);
+    if ( from != '' && to != '') {
+        $('#time_range_span').html(from + ' <i class="fa fa-arrow-right"></i> ' + to);
+    }
+
     $.ajax({
         url : "showmytrips",
         type: "POST",

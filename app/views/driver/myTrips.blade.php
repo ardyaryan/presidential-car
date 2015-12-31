@@ -29,7 +29,7 @@ Daily Trips
 </div>
 
 <div class="form-group">
-    <span ><i id="trips_time_tag" class="fa fa-calendar-o" ></i> Today's Trips</span>
+    <span id="time_range_span" ><i id="trips_time_tag" class="fa fa-calendar-o" ></i> Today's Trips</span>
 </div>
 <div id="trips_body">
 <!-- filled by JS -->
