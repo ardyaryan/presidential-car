@@ -60,40 +60,6 @@ class AdminController extends BaseController {
         return View::make('admin/signup');
     }
 
-    public function newDailyTrip()
-    {
-        $post = Input::all();
-        if($post != null) {
-            try{
-                $newDailyTrip = new DailyTrips();
-                $newDailyTrip->client_name      = $post['client_name'];
-                $newDailyTrip->date             = date('Y-m-d', strtotime(str_replace('-', '/', $post['date'])));
-                $newDailyTrip->departure_hour   = $post['departure_hour'];
-                $newDailyTrip->departure_minute = $post['departure_minute'];
-                $newDailyTrip->departure_ampm   = $post['departure_ampm'];
-                $newDailyTrip->arrival_hour     = $post['arrival_hour'];
-                $newDailyTrip->arrival_minute   = $post['arrival_minute'];
-                $newDailyTrip->arrival_ampm     = $post['arrival_ampm'];
-                $newDailyTrip->departure_address = $post['departure_address'];
-                $newDailyTrip->arrival_address  = $post['arrival_address'];
-                $newDailyTrip->water_bottle     = $post['water_bottle'];
-                $newDailyTrip->price_per_trip   = $post['price_per_trip'];
-                $newDailyTrip->save();
-
-                $result = array('success' => true, 'message' => 'New trip entered successfully');
-
-            }catch(Exception $ex) {
-                \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
-
-                $result = array('success' => false, 'message' => 'en error occurred');
-            }
-
-            return $result;
-        }
-
-
-    }
-
     public function createNewUser()
     {
         $post = Input::all();

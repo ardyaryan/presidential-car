@@ -19,6 +19,6 @@ class DailyTrips extends Eloquent  {
 
     public $timestamps  = false;
 
-    protected $filables = array('client_id', 'user_id', 'departure_km', 'departure_date_time', 'arrival_km', 'arrival_date_time', 'departure_address', 'arrival_address', 'trip_cost', 'delete_req', 'edit_req');
+    protected $filables = array('client_id', 'user_id', 'departure_km', 'departure_date_time', 'arrival_km', 'arrival_date_time', 'departure_address', 'arrival_address', 'trip_cost', 'currency', 'delete_req', 'edit_req');
 
 }

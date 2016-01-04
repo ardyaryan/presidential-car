@@ -17,6 +17,7 @@
     {{ HTML::style('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.css'); }}
     {{ HTML::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css'); }}
     {{ HTML::style('https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css'); }}
+    {{ HTML::style('https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css'); }}
     {{ HTML::style('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.1/css/bootstrap-datepicker.css'); }}
     {{ HTML::style('http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css'); }}
 
@@ -29,8 +30,10 @@
 
     @if (Session::get('role') == 'admin')
         @include('layouts.partials.adminNavigation')
-    @else
+    @elseif (Session::get('role') == 'driver')
         @include('layouts.partials.driverNavigation')
+    @else
+        @include('layouts.partials.navigation')
     @endif
     <!-- Header -->
     <a name="about"></a>
@@ -55,6 +58,7 @@
         <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     @show
 

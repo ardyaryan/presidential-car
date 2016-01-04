@@ -8,26 +8,12 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#">Presidential Car - Admin</a>
+                <a class="navbar-brand topnav" href="">Presidential Car</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                @if (Session::get('logged'))
-                    <li><a href=""><span class="fa fa-home"></span> Home</a></li>
-                @endif
-                @if (!Session::get('logged'))
-                    <li><a href="#"><span class="fa fa-user-plus"></span> Add User</a></li>
-                @endif
-                @if (Session::get('logged'))
-                    <li><a href="viewtrips"><span class="fa fa-table"></span> View Trips</a></li>
-                @endif
-                @if (Session::get('logged'))
-                    <li><a href="viewdrivers"><span class="fa fa-users"></span> View Drivers</a></li>
-                @endif
-                @if (Session::get('logged'))
-                    <li><a href="logout"><span class="fa fa-sign-out"></span> Logout</a></li>
-                @endif
+                    <li><a href="#"><span class="fa fa-user-plus"></span> Sign Up</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -36,5 +22,3 @@
 </nav>
 
 </div>
-
-

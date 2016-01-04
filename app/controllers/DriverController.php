@@ -22,23 +22,51 @@ class DriverController extends BaseController {
     public function saveNewTrip()
     {
         $post = Input::all();
+        /**
+         * b : base fare
+         * ct : cost per time
+         * cd : cost per distance
+         * If your ride lasted for time T and you rode a distance of D, the total cost is simply b + ct∗T + cd∗D.
+         */
 
-        //\Log::info(__METHOD__.' //========> $newDailyTrip : '.print_r($newDailyTrip, 1));
+        $startKm    = $post['departure_km'];
+        $endKm      = $post['arrival_km'];
+        $tripKm     = $endKm - $startKm;
+
+        $startTime  = strtotime($post['departure_date_time']);
+        $endTime    = strtotime($post['arrival_date_time']);
+        $tripTime   = ($endTime - $startTime) / 60;
+
+        $clientId   = $post['client_id'];
+        try{
+            $client     = Client::find($clientId);
+            $baseFare   = $client->base;
+            $costPerKm  = $client->price_per_km;
+            $costPerMin = $client->price_per_min;
+            $currency   = $client->currency;
+
+        }catch (Exception $ex){
+            \Log::error(__METHOD__.' | error : '.print_r($ex, 1));
+        }
+
+        $tripCost = $baseFare + ($costPerKm * $tripKm) + ($costPerMin * $tripTime);
+
         if($post != null) {
             try{
                 $newDailyTrip = new DailyTrips();
                 $newDailyTrip->user_id             = Session::get('user_id');
                 $newDailyTrip->car_id              = Session::get('car_id');
-                $newDailyTrip->client_id           = $post['client_id'];
-                $newDailyTrip->departure_km        = $post['departure_km'];
+                $newDailyTrip->client_id           = $clientId;
+                $newDailyTrip->departure_km        = $startKm;
                 $newDailyTrip->departure_date_time = $post['departure_date_time'];
-                $newDailyTrip->arrival_km          = $post['arrival_km'];
-                $newDailyTrip->arrival_date_time   = $post['arrival_date_time'];;
+                $newDailyTrip->arrival_km          = $endKm;
+                $newDailyTrip->arrival_date_time   = $post['arrival_date_time'];
                 $newDailyTrip->departure_address   = $post['departure_address'];
                 $newDailyTrip->arrival_address     = $post['arrival_address'];
-                $newDailyTrip->trip_cost           = null;
-                $newDailyTrip->delete_req         = null;
-                $newDailyTrip->edit_req           = null;
+                $newDailyTrip->trip_cost           = $tripCost;
+                $newDailyTrip->currency            = $currency;
+                $newDailyTrip->delete_req          = null;
+                $newDailyTrip->edit_req            = null;
 
                 $newDailyTrip->save();
                 $result = array('success' => true, 'message' => 'New trip entered successfully');
