@@ -16,6 +16,7 @@ return array(
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'Driver' => $baseDir . '/app/models/Driver.php',
     'DriverController' => $baseDir . '/app/controllers/DriverController.php',
+    'FuelFillUp' => $baseDir . '/app/models/FuelFillUp.php',
     'HomeController' => $baseDir . '/app/controllers/HomeController.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'LocationController' => $baseDir . '/app/controllers/LocationController.php',

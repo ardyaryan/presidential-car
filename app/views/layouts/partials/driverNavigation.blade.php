@@ -23,6 +23,9 @@
                     <li><a href="mytrips"><span class="fa fa-table"></span> My Trips</a></li>
                 @endif
                 @if (Session::get('logged'))
+                    <li><a href="myfueltank"><span class="fa fa-battery-half"></span> My Fuel Tank</a></li>
+                @endif
+                @if (Session::get('logged'))
                     <li><a href="logout"><span class="fa fa-sign-out"></span> Logout</a></li>
                 @endif
                 </ul>

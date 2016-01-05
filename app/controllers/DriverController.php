@@ -19,6 +19,14 @@ class DriverController extends BaseController {
         return View::make('driver/newTrip')->with('car', array('car_id' => $car->id, 'car_name' => $car->name, 'car_reg' => $car->registration));
     }
 
+    public function myFuelTank()
+    {
+        $carId = Session::get('car_id');
+        $car = Cars::find($carId);
+
+        return View::make('driver/myFuelTank')->with('car', array('car_id' => $car->id, 'car_name' => $car->name, 'car_reg' => $car->registration));
+    }
+
     public function saveNewTrip()
     {
         $post = Input::all();
@@ -78,6 +86,37 @@ class DriverController extends BaseController {
             return $result;
         }
     }
+
+    public function saveFuelFillUp()
+    {
+        $post = Input::all();
+
+        $dateAndTime  = $post['date_and_time'];
+        $cost   = $post['cost'];
+        $amount = $post['amount'];
+        $pricePerLiter = $cost / $amount;
+
+        try{
+            $FuelFillUp = new FuelFillUp();
+
+            $FuelFillUp->user_id = Session::get('user_id');
+            $FuelFillUp->car_id = Session::get('car_id');
+            $FuelFillUp->date_and_time = $dateAndTime;
+            $FuelFillUp->cost = $cost;
+            $FuelFillUp->amount = $amount;
+            $FuelFillUp->price_per_liter = $pricePerLiter;
+            $FuelFillUp->save();
+
+            $result = array('success' => true, 'message' => 'Fuel Fill-up saved');
+
+        }catch (Exception $ex){
+            \Log::error(__METHOD__.' | error : '.print_r($ex, 1));
+            $result = array('success' => false, 'message' => 'an error occurred');
+        }
+
+        return $result;
+    }
+
 
     public function getTrips()
     {
