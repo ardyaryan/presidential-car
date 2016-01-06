@@ -49,6 +49,15 @@ $(document).ready(function(){
         $('#password_2').css('background-color', 'white');
     });
 
+    $('#role_id').on('change', function(){
+        if($('#role_id').val() == 2 ) {
+            $('#driver_code_div').fadeIn();
+            $('#gsm_div').fadeIn();
+        }else {
+            $('#driver_code_div').fadeOut();
+            $('#gsm_div').fadeOut();
+        }
+    });
 });
 
 function validate() {

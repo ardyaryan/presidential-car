@@ -18,8 +18,8 @@ class Driver extends Eloquent {
 	 *
 	 * @var array
 	 */
-    protected $hidden = array('updated_at', 'deleted_at');
+    protected $hidden = array('created_at', 'updated_at', 'deleted_at');
 
-    protected $filables = array('user_id', 'code', 'first', 'last', 'car_id', 'gsm_number', 'created_at');
+    protected $filables = array('user_id', 'code', 'first', 'last', 'car_id', 'gsm_number');
 
 }

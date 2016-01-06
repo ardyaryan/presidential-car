@@ -15,16 +15,32 @@ class DriverController extends BaseController {
         };
         $carId = Session::get('car_id');
         $car = Cars::find($carId);
+        if(! $car instanceof Cars ) {
+            $carId = 0;
+            $carName = 'N/A';
+            $carRegistration = 'N/A';
+        }else {
+            $carId = $car->id;
+            $carName = $car->name;
+            $carRegistration = $car->registration;
+        }
 
-        return View::make('driver/newTrip')->with('car', array('car_id' => $car->id, 'car_name' => $car->name, 'car_reg' => $car->registration));
+        return View::make('driver/newTrip')->with('car', array('car_id' => $carId, 'car_name' => $carName, 'car_reg' => $carRegistration));
     }
 
     public function myFuelTank()
     {
         $carId = Session::get('car_id');
         $car = Cars::find($carId);
+        if(! $car instanceof Cars ) {
+            $carId = 0;
+            $carName = 'N/A';
+            $carRegistration = 'N/A';
+            return View::make('driver/newTrip')->with('car', array('car_id' => $carId, 'car_name' => $carName, 'car_reg' => $carRegistration));
+        }else {
+            return View::make('driver/myFuelTank')->with('car', array('car_id' => $car->id, 'car_name' => $car->name, 'car_reg' => $car->registration));
+        }
 
-        return View::make('driver/myFuelTank')->with('car', array('car_id' => $car->id, 'car_name' => $car->name, 'car_reg' => $car->registration));
     }
 
     public function saveNewTrip()

@@ -13,25 +13,35 @@ Sign Up
 
                 <div class="input-group form-group">
                     <span class="input-group-addon"><i class="fa fa-envelope"></i> Email</span>
-                    <input type="text" class="form-control" id="email" name="email" placeholder=" - Email">
+                    <input type="text" class="form-control" id="email" name="email">
                 </div>
 
                 <div class="input-group form-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i> First Name</span>
-                    <input type="text" class="form-control" id="first" name="first" placeholder=" - First Name">
+                    <input type="text" class="form-control" id="first" name="first">
                 </div>
 
                 <div class="input-group form-group">
                     <span class="input-group-addon"><i class="fa fa-user"></i> Last Name</span>
-                    <input type="text" class="form-control" id="last" name="last" placeholder=" - Last Name">
+                    <input type="text" class="form-control" id="last" name="last">
                 </div>
 
                 <div class="input-group form-group">
                     <span class="input-group-addon"><i class="fa fa-users"></i> User Role</span>
                     <select id="role_id" class="selectpicker form-group input-group"  data-width="auto" name="role_id">
-                      <option value="2">Driver</option>
                       <option value="1">Admin</option>
+                      <option value="2">Driver</option>
                     </select>
+                </div>
+
+                <div id="driver_code_div" class="input-group form-group" style="display: none">
+                    <span class="input-group-addon"><i class="fa fa-hashtag"></i> Driver Code</span>
+                    <input type="text" class="form-control" id="driver_code" name="driver_code">
+                </div>
+
+                <div id="gsm_div"class="input-group form-group" style="display: none">
+                    <span class="input-group-addon"><i class="fa fa-file-o"></i> GSM Number</span>
+                    <input type="text" class="form-control" id="gsm" name="gsm">
                 </div>
 
                 <div class="input-group form-group">

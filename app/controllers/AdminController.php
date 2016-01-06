@@ -100,6 +100,19 @@ class AdminController extends BaseController {
 
                     $newUser->save();
 
+                    if($post['role_id'] == Roles::DRIVER_ROLE_ID) {
+
+                        $newDriver = new Driver();
+
+                        $newDriver->user_id       = $newUser->id;
+                        $newDriver->code          = $post['driver_code'];
+                        $newDriver->first         = $post['first'];
+                        $newDriver->last          = $post['last'];
+                        $newDriver->gsm_number    = $post['gsm'];
+
+                        $newDriver->save();
+                    }
+
                     $result = array('success' => true, 'message' => 'New user saved successfully');
 
                 }catch(Exception $ex) {
