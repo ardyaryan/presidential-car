@@ -8,12 +8,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="">Presidential Car</a>
+                <a class="navbar-brand topnav" href="{{URL::to('/');}}">Presidential Car</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="fa fa-user-plus"></span> Sign Up</a></li>
+                    <li><a href="{{URL::to('/');}}"><span class="fa fa-sign-in"></span> Sign In</a></li>
+                    <li><a href="signup"><span class="fa fa-user-plus"></span> Sign Up</a></li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

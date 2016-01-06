@@ -14,9 +14,8 @@ $(document).ready(function(){
                 },
                 success: function(data) {
 
-
                     if(data.success == false) {
-                        $('#submit').html('<span class="glyphicon glyphicon-remove"></span> Submit');
+                        $('#submit').html('<span class="fa fa-remove"></span> Submit');
                         $('#message').append(data.message + '<br/>');
                         $('#message').show();
                     }else {

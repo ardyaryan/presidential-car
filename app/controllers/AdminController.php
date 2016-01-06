@@ -7,7 +7,11 @@ class AdminController extends BaseController {
         $loggedIn = Session::get('logged');
 
         if(isset($loggedIn) && $loggedIn == true) {
-            return Redirect::to('admin/viewtrips');
+            if(Session::get('role') == Roles::DRIVER_ROLE) {
+                return Redirect::to('driver/newtrip');
+            }else {
+                return Redirect::to('admin/viewtrips');
+            }
         }
 
         return View::make('admin/login');
@@ -24,6 +28,7 @@ class AdminController extends BaseController {
             Session::set('logged', true);
             Session::set('email', $email);
             Session::set('time_zone', $user->time_zone);
+            Session::set('lid', $user->language_id);
             Session::set('user_id', $user->id);
             $userRole = Roles::getUserRole($user->role_id);
             Session::set('role', $userRole);
@@ -84,11 +89,14 @@ class AdminController extends BaseController {
 
                 try{
                     $newUser = new Users();
-                    $newUser->first    = $post['first'];
-                    $newUser->last     = $post['last'];
-                    $newUser->email    = $post['email'];
-                    $newUser->password = $password;
-                    $newUser->role_id  = $post['role_id'];
+
+                    $newUser->first         = $post['first'];
+                    $newUser->last          = $post['last'];
+                    $newUser->email         = $post['email'];
+                    $newUser->password      = $password;
+                    $newUser->role_id       = $post['role_id'];
+                    $newUser->language_id   = $post['language_id'];
+                    $newUser->time_zone     = $post['time_zone'];
 
                     $newUser->save();
 
@@ -101,7 +109,6 @@ class AdminController extends BaseController {
             }
 
             return $result;
-
         }
     }
 

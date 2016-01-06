@@ -28,11 +28,8 @@ body {
 #signupContainer {
     width: 80%;
     height: 580px;
-    margin: 100px auto;
-    border: 1px solid #868686;
-    color: #ffffff;
+    margin: 0px auto;
     text-align: left;
-    background-color: #a94731;
 }
 
 #dashboardContainer {

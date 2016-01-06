@@ -59,22 +59,22 @@ Route::get('signup' ,function() {
  *
  */
 //-------------------ADMIN---------------------//
-Route::get('/' ,'AdminController@index');
-Route::get('/admin' ,'AdminController@index');
-Route::get('/admin/dashboard' ,'AdminController@viewDashboard');
+Route::get('/',                     'AdminController@index');
+Route::get('',                      'AdminController@index');
+Route::get('/admin',                'AdminController@index');
+Route::get('/admin/dashboard',      'AdminController@viewDashboard');
+Route::get('/signup',               'AdminController@signUp');
 
-Route::post('/admin/login' ,'AdminController@login');
-Route::get('/admin/logout' ,'AdminController@logout');
-Route::get('/admin/viewtrips' ,'AdminController@viewTrips');
-Route::get('/admin/newtrips' ,'AdminController@newTrips');
-Route::post('/admin/gettrips' ,'AdminController@getTrips');
+Route::get('/admin/viewdrivers',    'AdminController@viewDrivers');
+Route::get('/admin/logout',         'AdminController@logout');
+Route::get('/admin/viewtrips',      'AdminController@viewTrips');
+Route::get('/admin/newtrips',       'AdminController@newTrips');
 
-Route::get('/admin/viewdrivers' ,'AdminController@viewDrivers');
-Route::post('/admin/getdrivers' ,'AdminController@getDrivers');
-
-Route::get('/signup' ,'AdminController@signUp');
-Route::post('/admin/newtrip' ,'AdminController@newDailyTrip');
-Route::post('/admin/newuser' ,'AdminController@createNewUser');
+Route::post('/admin/login',         'AdminController@login');
+Route::post('/admin/gettrips',      'AdminController@getTrips');
+Route::post('/admin/getdrivers',    'AdminController@getDrivers');
+Route::post('/admin/newtrip',       'AdminController@newDailyTrip');
+Route::post('/admin/newuser',       'AdminController@createNewUser');
 
 //-------------------DRIVER---------------------//
 

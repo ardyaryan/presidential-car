@@ -25,6 +25,6 @@ class Users extends Eloquent { //implements UserInterface, RemindableInterface {
 
     public $timestamps  = false;
 
-    protected $filables = array('first', 'last', 'email', 'role_id', 'password', 'time_zone');
+    protected $filables = array('first', 'last', 'email', 'role_id', 'language_id', 'password', 'time_zone');
 
 }

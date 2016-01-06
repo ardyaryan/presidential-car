@@ -21,7 +21,7 @@ $(document).ready(function () {
     });
 
     $('#end_trip').on('click', function() {
-        if($('#end_km').val() == '' || $('#end_km').val() <= $('#start_km').val()) {
+        if($('#end_km').val() == '' || (  parseInt($('#end_km').val()) <= parseInt($('#start_km').val()) ) ) {
             $('#end_km').css('background-color', '#FFB0A2');
             $('#end_km').addClass('error_placeholder');
         }else{
@@ -33,8 +33,8 @@ $(document).ready(function () {
             $('#end_km').attr('disabled', true);
             $('#destination_address').attr('disabled', true);
             $('#end_time').attr('disabled', true);
-            $('#end_trip').attr('disabled', true);
             */
+            $('#end_trip').attr('disabled', true);
             $('#save_trip').attr('disabled', false);
         }
     });
@@ -117,6 +117,9 @@ function getUTCTime(resource) {
 
 function saveTrip() {
 
+    var buttonName  = ($('#language_id').val() == 2) ? ' Enregistrer' : ' Save Trip';
+    var successMessage  = ($('#language_id').val() == 2) ? 'Enregistré!' : 'Your trip has been saved successfully, Refreshing...';
+    var errorMessage  = ($('#language_id').val() == 2) ? 'Erreur!' : 'There was a problem saving your trip!';
     var client      = $('#client_name').val();
     var startKm     = $('#start_km').val();
     var endKm       = $('#end_km').val();
@@ -138,19 +141,19 @@ function saveTrip() {
                 arrival_address: endAddr
         },
         beforeSend: function(){
-            $('#save_trip').html('<span class="fa fa-spinner fa-spin"></span> End Trip');
+            $('#save_trip').html('<span class="fa fa-spinner fa-spin"></span>' + buttonName + '');
         },
         success: function(data) {
 
             if(data.success == false) {
-                $('#save_trip').html('<span class="fa fa-remove"></span> End Trip');
+                $('#save_trip').html('<span class="fa fa-remove"></span>' + buttonName + '');
                 $('#alert').addClass('alert alert-danger');
-                $('#alert').html('There was a problem saving your trip!');
+                $('#alert').html(errorMessage);
                 $('#alert').show();
             }else {
-                $('#save_trip').html('<span class="fa fa-check-square"></span> End Trip');
+                $('#save_trip').html('<span class="fa fa-check-square"></span>' + buttonName + '');
                 $('#alert').addClass('alert alert-success');
-                $('#alert').html('Your trip has been saved successfully, Refreshing...');
+                $('#alert').html(successMessage);
                 $('#alert').show();
             }
 
@@ -162,6 +165,8 @@ function saveTrip() {
 }
 
 function getAvailableCars() {
+    var replaceWord     = ($('#language_id').val() == 2) ? ' Remplacer' : ' Replace';
+    var statusStatement = ($('#language_id').val() == 2) ? ' Pas des Véhicules Disponibles' : ' No Cars Available.';
 
     var currentCarId = $('#current_car_id').val();
 
@@ -177,12 +182,12 @@ function getAvailableCars() {
         success: function(data) {
 
             if(data.success == false) {
-                $('#modal_body').html('<p><span class="fa fa-exclamation-triangle"></span> No Cars Available.</p>');
+                $('#modal_body').html('<p><span class="fa fa-exclamation-triangle"></span>' + statusStatement + '</p>');
             }else {
                 var availableCars = data.available_cars;
                 $('#modal_body').html('');
                 for (var i = 0;  i < availableCars.length ; i++) {
-                    $('#modal_body').append('<p class="replace-text"><span class="fa fa-car"></span> ' + availableCars[i].name + ' - ' + availableCars[i].registration + '<button type="button" id="replace_' + availableCars[i].car_id + '" data-id="' + availableCars[i].car_id + '" class="replace btn btn-default fa fa-refresh" onclick="replaceCar(' + availableCars[i].car_id +')"></button> Replace</p>');
+                    $('#modal_body').append('<p class="replace-text"><span class="fa fa-car"></span> ' + availableCars[i].name + ' - ' + availableCars[i].registration + '<button type="button" id="replace_' + availableCars[i].car_id + '" data-id="' + availableCars[i].car_id + '" class="replace btn btn-default fa fa-refresh" onclick="replaceCar(' + availableCars[i].car_id +')"></button>' + replaceWord + '</p>');
                 }
             }
         },
