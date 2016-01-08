@@ -57,6 +57,10 @@ Daily Trips
                 <input type="text" class="form-control input-group" id="client" name="client">
             </div>
             <div class="input-group form-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i> Customer's Name</span>
+                <input type="text" class="form-control input-group" id="customer_name" name="customer_name">
+            </div>
+            <div class="input-group form-group">
                 <span class="input-group-addon"><i class="fa fa-tachometer"></i> Start Km</span>
                 <input type="text" class="form-control input-group" id="start_km" name="start_km">
             </div>

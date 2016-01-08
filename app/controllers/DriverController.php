@@ -81,6 +81,7 @@ class DriverController extends BaseController {
                 $newDailyTrip->user_id             = Session::get('user_id');
                 $newDailyTrip->car_id              = Session::get('car_id');
                 $newDailyTrip->client_id           = $clientId;
+                $newDailyTrip->customer_name       = $post['customer_name'];
                 $newDailyTrip->departure_km        = $startKm;
                 $newDailyTrip->departure_date_time = $post['departure_date_time'];
                 $newDailyTrip->arrival_km          = $endKm;
@@ -279,6 +280,7 @@ class DriverController extends BaseController {
         $tripId = Input::get('trip_id');
         $carName = Input::get('car');
         $clientName = Input::get('client');
+        $customerName = Input::get('customer_name');
         $departureKm = Input::get('start_km');
         $arrivalKm = Input::get('end_km');
         $departureDateTime = Input::get('start_time');
@@ -312,6 +314,7 @@ class DriverController extends BaseController {
             $myTripRevison->user_id             = Session::get('user_id');
             $myTripRevison->car_id              = $carId;
             $myTripRevison->client_id           = $clientId;
+            $myTripRevison->customer_name       = $customerName;
             $myTripRevison->departure_km        = $departureKm;
             $myTripRevison->departure_date_time = $departureDateTime;
             $myTripRevison->arrival_km          = $arrivalKm;

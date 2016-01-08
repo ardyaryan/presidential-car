@@ -120,7 +120,8 @@ function saveTrip() {
     var buttonName  = ($('#language_id').val() == 2) ? ' Enregistrer' : ' Save Trip';
     var successMessage  = ($('#language_id').val() == 2) ? 'Enregistré!' : 'Your trip has been saved successfully, Refreshing...';
     var errorMessage  = ($('#language_id').val() == 2) ? 'Erreur!' : 'There was a problem saving your trip!';
-    var client      = $('#client_name').val();
+    var client        = $('#client_name').val();
+    var customerName  = $('#customer_name').val();
     var startKm     = $('#start_km').val();
     var endKm       = $('#end_km').val();
     var startAddr   = $('#departure_address').val();
@@ -133,6 +134,7 @@ function saveTrip() {
         type: "POST",
         data : {
                 client_id: client,
+                customer_name: customerName,
                 departure_km: startKm,
                 departure_date_time: startTime,
                 arrival_km: endKm,

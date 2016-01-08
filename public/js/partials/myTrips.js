@@ -43,6 +43,7 @@ function editTripModal(tripId) {
         success: function(data) {
             $('#trip_id').val(tripId);
             $('#client').val(data.client_name);
+            $('#customer_name').val(data.customer_name);
             $('#start_km').val(data.departure_km);
             $('#end_km').val(data.arrival_km);
             $('#start_time').val(data.departure_date_time);
@@ -94,6 +95,7 @@ function requestRevision(tripId) {
 
     var car = $('#car').val();
     var client = $('#client').val();
+    var customerName = $('#customer_name').val();
     var startKm = $('#start_km').val();
     var endKm = $('#end_km').val();
     var startTime = $('#start_time').val();
@@ -108,6 +110,7 @@ function requestRevision(tripId) {
             trip_id: tripId,
             car : car,
             client : client,
+            customer_name : customerName,
             start_km : startKm,
             end_km : endKm,
             start_time : startTime,
@@ -179,7 +182,7 @@ function showMyTrips() {
 
                    $('#trips_body').append('<div class="input-group form-group">' +
                    '<span class="input-group-addon"><i class="fa fa-location-arrow"></i></span>' +
-                   '<input type="text" class="form-control input-group" id="trip" name="trip" value="Trip ID:' +  myTrips[i].id + ' - Date: ' + myTrips[i].departure_date_time + ' " ' + bgColor + ' disabled>' +
+                   '<input type="text" class="form-control input-group" id="trip" name="trip" value="Trip ID:' +  myTrips[i].id + ' - Date: ' + myTrips[i].departure_date_time + ' - Cost: ' + parseFloat(Math.round(myTrips[i].trip_cost * 100) / 100).toFixed(2) + ' ' + myTrips[i].currency + ' " ' + bgColor + ' disabled>' +
                    '<span class="input-group-btn">' +
                    '<button type="button" id="edit_trip" class="btn btn-default" data-toggle="modal" onclick="editTripModal(' + myTrips[i].id + ')" data-target="#editModal" ' + disabled + ' ><i class="fa fa-pencil"></i>&nbsp;</button>' +
                    '<button type="button" id="delete_trip" class="btn btn-default" data-toggle="modal" onclick="pluckTripId(' + myTrips[i].id+  ')" data-target="#deleteModal" ' + disabled + '> <i class="fa fa-times" style="color: red"></i>&nbsp;</button>' +

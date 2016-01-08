@@ -24,6 +24,11 @@ Daily Trips
     </div>
 
     <div class="input-group form-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i>{{(Session::get('lid') == 2) ? ' Le Nom' : ' Customer\'s Name' }}</span>
+        <input type="text" class="form-control" id="customer_name" name="customer_name">
+    </div>
+
+    <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-tachometer"></i>{{(Session::get('lid') == 2) ? ' Km de départ' : ' Start Km' }}</span>
         <input type="number" class="form-control" id="start_km" name="start_km">
     </div>
