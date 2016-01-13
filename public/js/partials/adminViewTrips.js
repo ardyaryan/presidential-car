@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+    $('.datepicker').datepicker({
+        dateFormat: 'yy-mm-dd',
+        startDate: '-3d'
+    });
+
     $('#daily_trips').DataTable({});
 
     $('form').on('submit', function(e) {
@@ -8,8 +13,7 @@ $(document).ready(function(){
         var endDate = $('#end_date').val();
         if(validate()) {
             getDailyTrips(startDate, endDate);
-        };
-
+        }
     });
 
     $('#start_date').on('change', function(){
@@ -18,34 +22,46 @@ $(document).ready(function(){
     $('#end_date').on('change', function(){
         $('#end_date').css('background-color', 'white');
     });
+
+    getDailyTrips();
+
 });
 
 
-function getDailyTrips(startDate, endDate) {
+function getDailyTrips() {
+
+    var from = $('#from').val();
+    var to = $('#to').val();
+
+    if( from != '' && to != '') {
+        $('#time_range_span').html(from + ' <i class="fa fa-arrow-right"></i> ' + to);
+    }
 
     $('#daily_trips').DataTable({
         'ajax': {
             "type"   : "POST",
             "url"    : 'gettrips',
-            "data"   : {start_date: startDate, end_date: endDate},
+            "data"   : {from: from, to: to},
             "dataSrc": ""
         },
         "destroy": true,
         'columns': [
-            {"data" : "client_name"},
-            {"data" : "date"},
-            {"data" : "departure_hour"},
-            {"data" : "departure_minute"},
-            {"data" : "departure_ampm"},
-            {"data" : "arrival_hour"},
-            {"data" : "arrival_minute"},
-            {"data" : "arrival_ampm"},
+            {"data" : "trip_id"},
+            {"data" : "driver"},
+            {"data" : "car"},
+            {"data" : "client"},
+            {"data" : "customer"},
+            {"data" : "departure_time"},
+            {"data" : "arrival_time"},
             {"data" : "departure_address"},
             {"data" : "arrival_address"},
-            {"data" : "water_bottle"},
-            {"data" : "price_per_trip"}
+            {"data" : "distance"},
+            {"data" : "cost"},
+            {"data" : "date"}
         ]
     });
+    $('input[aria-controls="daily_trips"]').prop('type', 'text');
+    //$('select[name=daily_trips_length]').addClass('form-control');
 }
 
 function validate() {

@@ -9,7 +9,7 @@ body {
     color: #000000;
 }
 #container {
-    width: 80%;
+    width: 100%;
     height: 80%;
     margin: 0px auto;
     /*border: 1px solid #868686;*/
@@ -17,11 +17,11 @@ body {
     text-align: left;
     /*background-color: #3ca984*/;
 }
+
 #tripsContainer {
-    width: 80%;
+    width: 120%;
     height: 580px;
-    margin: 0px auto;
-    border: 1px solid #868686;
+    margin-left: -200px;
     text-align: left;
 }
 
@@ -81,8 +81,9 @@ thead { font-size: 12px;}
 .dow {color: black; font-size: 14;}
 .day {color: black; font-size: 14;}
 #search {margin-top: 24;}
-td {white-space:nowrap;}
-
+td {white-space:nowrap; font-size: 13px;}
+th {white-space:nowrap; font-size: 13px;}
+thead {background-color: gainsboro;}
 .error_placeholder::-webkit-input-placeholder {
     color: white !important;
 }

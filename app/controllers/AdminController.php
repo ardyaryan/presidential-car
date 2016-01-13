@@ -135,13 +135,61 @@ class AdminController extends BaseController {
 
     public function getTrips()
     {
-        $post = Input::all();
-        $startDate =  date('Y-m-d', strtotime(str_replace('-','/',$post['start_date'])));
-        $endDate =  date('Y-m-d', strtotime(str_replace('-','/',$post['end_date'])));
+        $to = Input::get('to');
+        $from = Input::get('from');
 
-        $result = DailyTrips::whereBetween('date', array($startDate, $endDate) )->get();
+        if($from == null || $to == null) {
+            $today = LocationController::getTime();
+            $todayFrom = $today['date'].' 00:00:00';
+            $todayTo = $today['date'].' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
 
-        return json_encode($result);
+        try{
+            $trips = DailyTrips::where('departure_date_time','>', $todayFrom)
+                ->where('departure_date_time','<', $todayTo)
+                ->orderBy('departure_date_time', 'desc')->get();
+
+            $results = [];
+
+            if(!is_null($trips)) {
+                foreach($trips as $trip) {
+                    $driverId = $trip->user_id;
+
+                    $carId    = $trip->car_id;
+                    $clientId = $trip->client_id;
+                    $distance = $trip->arrival_km - $trip->departure_km;
+
+                    $driver = Driver::where('user_id', '=', $driverId)->first();
+                    $car    = Cars::find($carId);
+                    $client = Client::find($clientId);
+
+                    $finalTrip = [
+                        'trip_id'           => $trip->id,
+                        'driver'            => $driver->first.' '.$driver->last,
+                        'car'               => $car->name,
+                        'client'            => $client->name,
+                        'customer'          => $trip->customer_name,
+                        'departure_time'    => date("H:i:s",strtotime($trip->departure_date_time)),
+                        'arrival_time'      => date("H:i:s",strtotime($trip->arrival_date_time)),
+                        'departure_address' => $trip->departure_address,
+                        'arrival_address'   => $trip->arrival_address,
+                        'distance'          => $distance,
+                        'cost'              => $trip->trip_cost,
+                        'date'              => date("Y-d-m",strtotime($trip->arrival_date_time)),
+                    ];
+
+                    array_push($results, $finalTrip);
+                }
+            }
+
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+        }
+
+        return json_encode($results);
     }
 
     public function viewDashboard()
