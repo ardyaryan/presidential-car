@@ -204,8 +204,27 @@ class AdminController extends BaseController {
 
     public function getDrivers()
     {
-        $result = Drivers::all();
-        \Log::info(print_r($result, 1));
-        return json_encode($result);
+        $results = Driver::all()->toArray();
+
+        foreach ($results as $key => $driver) {
+            $driverName = $driver['first'].' '.$driver['last'];
+            $results[$key]['name'] = $driverName;
+            unset($results[$key]['first']);
+            unset($results[$key]['last']);
+        }
+
+        return json_encode($results);
+    }
+
+    public function viewCars()
+    {
+        return View::make('admin/viewCars');
+    }
+
+    public function getCars()
+    {
+        $results = Cars::all()->toArray();
+
+        return json_encode($results);
     }
 }

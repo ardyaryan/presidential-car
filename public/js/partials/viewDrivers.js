@@ -2,9 +2,7 @@ $(document).ready(function(){
 
     $('#drivers').DataTable({});
 
-
-            getAllDrivers();
-
+    getAllDrivers();
 
 });
 
@@ -20,11 +18,12 @@ function getAllDrivers() {
         },
         "destroy": true,
         'columns': [
+            {"data" : "id"},
             {"data" : "code"},
-            {"data" : "first"},
-            {"data" : "last"},
-            {"data" : "gsm_number"},
-            {"data" : "created_at"}
+            {"data" : "name"},
+            {"data" : "car_id"},
+            {"data" : "gsm_number"}
         ]
     });
+    $('input[aria-controls="drivers"]').prop('type', 'text');
 }

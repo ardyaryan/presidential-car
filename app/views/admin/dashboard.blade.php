@@ -6,15 +6,11 @@ Dashboard
 @section('body')
 <div id="dashboardContainer">
     <div id="mainContent">
-        <h2>View Driver Activity</h2>
-
-        <head>
-
-
-        	<div id="chartContainer" style="height: 300px; width: 100%;">
-        	</div>
-
-
+        <h2>Dashboard</h2>
+        <head></head>
+        <!--<div id="chartContainer" style="height: 300px; width: 100%;">
+        </div>-->
+        <div>coming soon.</div>
     </div>
 </div>
 @stop

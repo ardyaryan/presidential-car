@@ -69,12 +69,14 @@ Route::get('/admin/viewdrivers',    'AdminController@viewDrivers');
 Route::get('/admin/logout',         'AdminController@logout');
 Route::get('/admin/viewtrips',      'AdminController@viewTrips');
 Route::get('/admin/newtrips',       'AdminController@newTrips');
+Route::get('/admin/viewcars',       'AdminController@viewCars');
 
 Route::post('/admin/login',         'AdminController@login');
 Route::post('/admin/gettrips',      'AdminController@getTrips');
 Route::post('/admin/getdrivers',    'AdminController@getDrivers');
 Route::post('/admin/newtrip',       'AdminController@newDailyTrip');
 Route::post('/admin/newuser',       'AdminController@createNewUser');
+Route::post('/admin/getcars',       'AdminController@getCars');
 
 //-------------------DRIVER---------------------//
 
