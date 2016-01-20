@@ -17,6 +17,7 @@ List of Active Drivers
                         <th>Name</th>
                         <th>Car ID</th>
                         <th>GSM Number</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
             </table>

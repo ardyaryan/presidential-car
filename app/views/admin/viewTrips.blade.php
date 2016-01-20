@@ -32,7 +32,6 @@ View Daily Trips
     <span id="time_range_span" ><i id="trips_time_tag" class="fa fa-calendar-o" ></i> Today's Trips</span>
 </div>
 
-
 <div id="tripsContainer">
     <div id="mainContent">
         <table id="daily_trips" class="display" >

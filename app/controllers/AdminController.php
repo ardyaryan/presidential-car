@@ -227,4 +227,52 @@ class AdminController extends BaseController {
 
         return json_encode($results);
     }
+
+    public function getTripsByDriver() {
+
+        $to = Input::get('to');
+        $from = Input::get('from');
+
+        if($from == null || $to == null) {
+            $todayFrom = (date('Y-m-d', strtotime('-30 day'))).' 00:00:00';
+            $todayTo = date('Y-m-d').' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
+
+        $results = [];
+
+        try{
+
+            $trips = DB::table('daily_trips')
+                ->select(DB::raw('*, count(id) as count'))
+                ->where('departure_date_time','>', $todayFrom)
+                ->where('departure_date_time','<', $todayTo)
+                ->groupBy('arrival_date_time')
+                ->get();
+            \Log::info(__METHOD__.' | =====> $trips : '.print_r($trips,1 ));
+
+            //$trips = DailyTrips::all();//->groupBy('arrival_date_time')->get();
+
+            if(!is_null($trips)) {
+                foreach ($trips as $trip) {
+                    $coordinates = [];
+                    $coordinates['x'] = date('Y,m,d', strtotime($trip->arrival_date_time));
+                    $coordinates['y'] = $trip->count;
+                    $coordinates['name'] = 'Driver Id: '.$trip->user_id;
+
+                    //$coordinates['y'] = 1;
+                    //array_push($results, array('coordinates' => $coordinates, 'user_id' => $trip->user_id));
+                    array_push($results, $coordinates);
+                }
+            }
+
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+        }
+        \Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
+        //return json_encode($results);
+        return $results;
+    }
 }

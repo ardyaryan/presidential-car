@@ -14,7 +14,7 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 @if (Session::get('logged'))
-                    <li><a href="dashboard"><span class="fa fa-home"></span> Home</a></li>
+                    <li><a href="dashboard"><span class="fa fa-home"></span> Dashboard</a></li>
                 @endif
                 @if (!Session::get('logged'))
                     <li><a href="#"><span class="fa fa-user-plus"></span> Add User</a></li>

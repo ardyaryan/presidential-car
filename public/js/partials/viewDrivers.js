@@ -22,7 +22,10 @@ function getAllDrivers() {
             {"data" : "code"},
             {"data" : "name"},
             {"data" : "car_id"},
-            {"data" : "gsm_number"}
+            {"data" : "gsm_number"},
+            {"mRender": function ( data, type, row ) {
+                return '<a class="btn" data-id="' + row.id +'"><i class="fa fa-pencil-square-o"></i> Edit</a>';}
+            }
         ]
     });
     $('input[aria-controls="drivers"]').prop('type', 'text');

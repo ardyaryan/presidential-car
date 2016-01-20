@@ -9,10 +9,8 @@ $(document).ready(function(){
 
     $('form').on('submit', function(e) {
         e.preventDefault();
-        var startDate = $('#start_date').val();
-        var endDate = $('#end_date').val();
         if(validate()) {
-            getDailyTrips(startDate, endDate);
+            getDailyTrips();
         }
     });
 
