@@ -275,4 +275,49 @@ class AdminController extends BaseController {
         //return json_encode($results);
         return $results;
     }
+
+    public function getDriverById() {
+
+        $driverId = Input::get('driver_id');
+
+        try {
+            $driver = Driver::find($driverId);
+
+            $result = array('success' => true, 'driver' => $driver);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false, 'driver' => null);
+        }
+        return $result;
+    }
+
+    public function saveDriver() {
+
+        $driverId = Input::get('driver_id');
+        $code     = Input::get('code');
+        $first = Input::get('first');
+        $last = Input::get('last');
+        $gsmNumber = Input::get('gsm_number');
+        $carId = Input::get('car_id');
+
+        try {
+            $driver = Driver::find($driverId);
+
+            $driver->code = $code;
+            $driver->first = $first;
+            $driver->last = $last;
+            $driver->gsm_number = $gsmNumber;
+            $driver->car_id = $carId;
+
+            $driver->save();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
 }
