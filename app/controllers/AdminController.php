@@ -177,10 +177,11 @@ class AdminController extends BaseController {
                         'departure_address' => $trip->departure_address,
                         'arrival_address'   => $trip->arrival_address,
                         'distance'          => $distance,
-                        'cost'              => $trip->trip_cost,
+                        'cost'              => $trip->trip_cost.' '.$trip->currency,
                         'date'              => date("Y-d-m",strtotime($trip->arrival_date_time)),
+                        'delete'            => $trip->delete_req,
+                        'edit'              => $trip->edit_req
                     ];
-
                     array_push($results, $finalTrip);
                 }
             }
@@ -319,5 +320,22 @@ class AdminController extends BaseController {
             $result = array('success' => false);
         }
         return $result;
+    }
+
+    public function deleteTrip()
+    {
+        $tripId = Input::get('trip_id');
+
+        try {
+            $myTrip = DailyTrips::find($tripId);
+            $myTrip->delete();
+
+            $results = array('success' => true, 'message' => 'deletion requested');
+
+        }catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'an error occurred');
+        }
+        return $results;
     }
 }

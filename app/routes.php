@@ -80,6 +80,7 @@ Route::post('/admin/newuser',       'AdminController@createNewUser');
 Route::post('/admin/getcars',       'AdminController@getCars');
 Route::post('/admin/getdriverbyid', 'AdminController@getDriverById');
 Route::post('/admin/savedriver',    'AdminController@saveDriver');
+Route::post('/admin/deletetrip', 'AdminController@deleteTrip');
 
 //-------------------DRIVER---------------------//
 

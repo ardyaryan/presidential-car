@@ -8,12 +8,11 @@ $(document).ready(function(){
     $('.btn.edit-driver').on('click',function(){
         var driverId = $(this).attr('data-id');
         editDriver(driverId);
-
     });
 
 
     $('#editModal').on('hidden.bs.modal', function () {
-        getAllDrivers();
+        $('#save_driver').html('Save');
     });
 
     $('#save_driver').on('click', function() {
@@ -43,12 +42,16 @@ function getAllDrivers() {
             {"data" : "gsm_number"},
             {"mRender": function ( data, type, row ) {
                 return '<a class="btn edit-driver" data-id="' + row.id +'"><i class="fa fa-pencil-square-o"></i> Edit</a>';
-                //return '<button type="button" class="btn edit_driver"><i class="fa fa-pencil-square-o"></i> Edit</button>';
                 }
             }
         ]
     });
     $('input[aria-controls="drivers"]').prop('type', 'text');
+
+    $('.btn.edit-driver').on('click',function(){
+        var driverId = $(this).attr('data-id');
+        editDriver(driverId);
+    });
 }
 
 function editDriver(driverId) {
@@ -129,6 +132,7 @@ function saveDriver() {
                 //$('#alert').addClass('alert alert-success');
                 //$('#alert').html(successMessage);
                 //$('#alert').show();
+                getAllDrivers();
                 $('#editModal').modal('hide');
             }
 
