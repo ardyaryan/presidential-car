@@ -209,7 +209,9 @@ class AdminController extends BaseController {
 
         foreach ($results as $key => $driver) {
             $driverName = $driver['first'].' '.$driver['last'];
+            $email = Users::where('id', '=', $driver['user_id'])->pluck('email');
             $results[$key]['name'] = $driverName;
+            $results[$key]['email'] = $email;
             unset($results[$key]['first']);
             unset($results[$key]['last']);
         }
@@ -283,7 +285,8 @@ class AdminController extends BaseController {
 
         try {
             $driver = Driver::find($driverId);
-
+            $email = Users::where('id', '=', $driver->user_id)->pluck('email');
+            $driver->email = $email;
             $result = array('success' => true, 'driver' => $driver);
 
         }catch(Exception $ex) {
@@ -299,6 +302,7 @@ class AdminController extends BaseController {
         $code     = Input::get('code');
         $first = Input::get('first');
         $last = Input::get('last');
+        $email = Input::get('email');
         $gsmNumber = Input::get('gsm_number');
         $carId = Input::get('car_id');
 
@@ -312,6 +316,10 @@ class AdminController extends BaseController {
             $driver->car_id = $carId;
 
             $driver->save();
+
+            $user = Users::find($driver->user_id);
+            $user->email = $email;
+            $user->save();
 
             $result = array('success' => true);
 
@@ -338,4 +346,77 @@ class AdminController extends BaseController {
         }
         return $results;
     }
+
+    public function saveNewDriver() {
+
+        $code     = Input::get('code');
+        $first = Input::get('first');
+        $last = Input::get('last');
+        $email = Input::get('email');
+        $password = Input::get('password');
+        $gsmNumber = Input::get('gsm_number');
+        $carId = Input::get('car_id');
+        $timeZone = Input::get('time_zone');
+        $languageId = Input::get('language_id');
+
+        \Log::info('=====> '.print_r($code,1));
+        \Log::info('=====> '.print_r($first,1));
+        \Log::info('=====> '.print_r($last,1));
+        \Log::info('=====> '.print_r($email,1));
+        \Log::info('=====> '.print_r($password,1));
+        \Log::info('=====> '.print_r($gsmNumber,1));
+        \Log::info('=====> '.print_r($carId,1));
+        \Log::info('=====> '.print_r($timeZone,1));
+        \Log::info('=====> '.print_r($languageId,1));
+
+
+        try {
+            $user = new Users;
+
+            $user->first = $first;
+            $user->last  = $last;
+            $user->email = $email;
+            $user->password = Hash::make($password);
+            $user->role_id = Roles::DRIVER_ROLE_ID;
+            $user->language_id = $languageId;
+            $user->time_zone = $timeZone;
+            $user->save();
+
+            $driver = new Driver;
+
+            $driver->user_id = $user->id;
+            $driver->code = $code;
+            $driver->first = $first;
+            $driver->last = $last;
+            $driver->gsm_number = $gsmNumber;
+            $driver->car_id = $carId;
+
+            $driver->save();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
+
+    public function deleteDriver()
+    {
+        $driverId = Input::get('driver_id');
+
+        try {
+            $driver = Driver::find($driverId);
+            $driver->delete();
+
+            $results = array('success' => true, 'message' => 'deletion requested');
+
+        }catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'an error occurred');
+        }
+        return $results;
+    }
+
 }

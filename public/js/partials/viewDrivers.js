@@ -5,9 +5,15 @@ $(document).ready(function(){
 
     getAllDrivers();
 
-    $('.btn.edit-driver').on('click',function(){
+    $(document).on('click', '.btn.edit-driver', function(){
         var driverId = $(this).attr('data-id');
         editDriver(driverId);
+    });
+
+    $(document).on('click', '.btn.delete-driver', function(){
+        var driverId = $(this).attr('data-id');
+        $('#delete_driver_id').val(driverId);
+        $('#deleteModal').modal('show');
     });
 
 
@@ -19,6 +25,17 @@ $(document).ready(function(){
         saveDriver();
     });
 
+    $('#save_new_driver').on('click', function() {
+        saveNewDriver();
+    });
+
+    $('#add_driver').on('click', function() {
+        $('#addModal').modal('show');
+    });
+
+    $('#delete_driver_req').on('click', function() {
+        deleteDriver();
+    });
 
 });
 
@@ -38,20 +55,20 @@ function getAllDrivers() {
             {"data" : "id"},
             {"data" : "code"},
             {"data" : "name"},
+            {"data" : "email"},
             {"data" : "car_id"},
             {"data" : "gsm_number"},
             {"mRender": function ( data, type, row ) {
                 return '<a class="btn edit-driver" data-id="' + row.id +'"><i class="fa fa-pencil-square-o"></i> Edit</a>';
                 }
+            },
+            {"mRender": function ( data, type, row ) {
+                return '<a class="btn delete-driver" data-id="' + row.id +'" style="color:red;"><i class="fa fa-remove"></i> Delete</a>';
+                }
             }
         ]
     });
     $('input[aria-controls="drivers"]').prop('type', 'text');
-
-    $('.btn.edit-driver').on('click',function(){
-        var driverId = $(this).attr('data-id');
-        editDriver(driverId);
-    });
 }
 
 function editDriver(driverId) {
@@ -70,12 +87,13 @@ function editDriver(driverId) {
         },
         success: function(data) {
             if(data.success == true) {
-                console.log(data);
+                //console.log(data);
                 driver = data.driver;
                 $('#driver_id').val(driver.id);
                 $('#code').val(driver.code);
                 $('#first').val(driver.first);
                 $('#last').val(driver.last);
+                $('#email').val(driver.email);
                 $('#car_id').val(driver.car_id);
                 $('#gsm_number').val(driver.gsm_number);
 
@@ -102,6 +120,7 @@ function saveDriver() {
     var code  = $('#code').val();
     var first     = $('#first').val();
     var last     = $('#last').val();
+    var email     = $('#email').val();
     var carId     = $('#car_id').val();
     var gsmNumber     = $('#gsm_number').val();
 
@@ -114,6 +133,7 @@ function saveDriver() {
             code: code,
             first: first,
             last: last,
+            email: email,
             car_id: carId,
             gsm_number: gsmNumber
         },
@@ -136,6 +156,91 @@ function saveDriver() {
                 $('#editModal').modal('hide');
             }
 
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function saveNewDriver() {
+
+    var buttonName  = ' Save';//($('#language_id').val() == 2) ? ' Enregistrer' : ' Save Trip';
+    //var successMessage  = ($('#language_id').val() == 2) ? 'Enregistré!' : 'Your trip has been saved successfully, Refreshing...';
+    //var errorMessage  = ($('#language_id').val() == 2) ? 'Erreur!' : 'There was a problem saving your trip!';
+    var code       = $('#new_code').val();
+    var first      = $('#new_first').val();
+    var last       = $('#new_last').val();
+    var email      = $('#new_email').val();
+    var password   = $('#new_password').val();
+    var carId      = $('#new_car_id').val();
+    var gsmNumber  = $('#new_gsm_number').val();
+    var timeZone   = $('#new_time_zone').val();
+    var languageId = $('#new_language_id').val();
+
+
+    $.ajax({
+        url : "savenewdriver",
+        type: "POST",
+        data : {
+            code: code,
+            first: first,
+            last: last,
+            email: email,
+            password: password,
+            car_id: carId,
+            gsm_number: gsmNumber,
+            time_zone: timeZone,
+            language_id : languageId
+        },
+        beforeSend: function(){
+            $('#save_new_driver').html('<span class="fa fa-spinner fa-spin"></span>' + buttonName + '');
+        },
+        success: function(data) {
+
+            if(data.success == false) {
+                $('#save_new_driver').html('<span class="fa fa-remove"></span>' + buttonName + '');
+                //$('#alert').addClass('alert alert-danger');
+                //$('#alert').html(errorMessage);
+                //$('#alert').show();
+            }else {
+                $('#save_new_driver').html('<span class="fa fa-check-square"></span>' + buttonName + '');
+                //$('#alert').addClass('alert alert-success');
+                //$('#alert').html(successMessage);
+                //$('#alert').show();
+                getAllDrivers();
+                $('#addModal').modal('hide');
+            }
+
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
+}
+
+function deleteDriver() {
+
+    var driverId = $('#delete_driver_id').val();
+
+    $.ajax({
+        url : "deletedriver",
+        type: "POST",
+        data : {
+            driver_id: driverId
+        },
+        beforeSend: function(){
+            $('#delete_driver_req').append(' <span class="fa fa-spin fa-spinner"></span>');
+        },
+        success: function(data) {
+            if(data.success == true) {
+                $('#deleteModal').modal('hide');
+                location.reload();
+            }else {
+                $('#delete_driver_req').remove('<span class="fa fa-spin fa-spinner"></span>');
+                $('#delete_driver_req').append('<span class="fa fa-times"></span>');
+            }
         },
         error: function (data) {
             console.log(data);
