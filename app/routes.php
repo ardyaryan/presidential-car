@@ -76,13 +76,19 @@ Route::post('/admin/gettrips',      'AdminController@getTrips');
 Route::post('/admin/gettripsbydriver',  'AdminController@getTripsByDriver');
 Route::post('/admin/getdrivers',    'AdminController@getDrivers');
 Route::post('/admin/newtrip',       'AdminController@newDailyTrip');
+Route::post('/admin/deletetrip', 'AdminController@deleteTrip');
 Route::post('/admin/newuser',       'AdminController@createNewUser');
 Route::post('/admin/getcars',       'AdminController@getCars');
+
 Route::post('/admin/getdriverbyid', 'AdminController@getDriverById');
 Route::post('/admin/savedriver',    'AdminController@saveDriver');
 Route::post('/admin/savenewdriver',    'AdminController@saveNewDriver');
-Route::post('/admin/deletetrip', 'AdminController@deleteTrip');
 Route::post('/admin/deletedriver', 'AdminController@deleteDriver');
+
+Route::post('/admin/getcarbyid', 'AdminController@getCarById');
+Route::post('/admin/savecar',    'AdminController@saveCar');
+Route::post('/admin/savenewcar',    'AdminController@saveNewCar');
+Route::post('/admin/deletecar', 'AdminController@deleteCar');
 
 
 //-------------------DRIVER---------------------//

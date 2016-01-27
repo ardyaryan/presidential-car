@@ -359,17 +359,6 @@ class AdminController extends BaseController {
         $timeZone = Input::get('time_zone');
         $languageId = Input::get('language_id');
 
-        \Log::info('=====> '.print_r($code,1));
-        \Log::info('=====> '.print_r($first,1));
-        \Log::info('=====> '.print_r($last,1));
-        \Log::info('=====> '.print_r($email,1));
-        \Log::info('=====> '.print_r($password,1));
-        \Log::info('=====> '.print_r($gsmNumber,1));
-        \Log::info('=====> '.print_r($carId,1));
-        \Log::info('=====> '.print_r($timeZone,1));
-        \Log::info('=====> '.print_r($languageId,1));
-
-
         try {
             $user = new Users;
 
@@ -408,7 +397,10 @@ class AdminController extends BaseController {
 
         try {
             $driver = Driver::find($driverId);
+            $userId = $driver->user_id;
             $driver->delete();
+
+            $user = Users::find($userId)->delete();
 
             $results = array('success' => true, 'message' => 'deletion requested');
 
@@ -419,4 +411,96 @@ class AdminController extends BaseController {
         return $results;
     }
 
+    public function saveNewCar() {
+
+        $name     = Input::get('name');
+        $brand = Input::get('brand');
+        $model = Input::get('model');
+        $registration = Input::get('registration');
+        $policeNumber = Input::get('police_number');
+        $uberNumber = Input::get('uber_number');
+
+        try {
+            $user = new Cars;
+
+            $user->name = $name;
+            $user->brand  = $brand;
+            $user->model = $model;
+            $user->registration = $registration;
+            $user->police_number = $policeNumber;
+            $user->uber_number = $uberNumber;
+            $user->save();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
+
+    public function deleteCar()
+    {
+        $carId = Input::get('car_id');
+
+        try {
+            $car = Cars::find($carId);
+            $car->delete();
+
+            $results = array('success' => true, 'message' => 'deletion done');
+
+        }catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'an error occurred');
+        }
+        return $results;
+    }
+
+    public function getCarById() {
+
+        $carId = Input::get('car_id');
+
+        try {
+            $car = Cars::find($carId);
+
+            $result = array('success' => true, 'car' => $car);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false, 'car' => null);
+        }
+        return $result;
+    }
+
+    public function saveCar() {
+
+        $carId = Input::get('car_id');
+        $name     = Input::get('name');
+        $brand = Input::get('brand');
+        $model = Input::get('model');
+        $registration = Input::get('registration');
+        $policeNumber = Input::get('police_number');
+        $uberNumber = Input::get('uber_number');
+
+        try {
+            $car = Cars::find($carId);
+
+            $car->name = $name;
+            $car->brand = $brand;
+            $car->model = $model;
+            $car->registration = $registration;
+            $car->police_number = $policeNumber;
+            $car->uber_number = $uberNumber;
+
+            $car->save();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
 }
