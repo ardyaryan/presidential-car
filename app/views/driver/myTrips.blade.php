@@ -48,11 +48,11 @@ Daily Trips
       <div class="modal-body" id="modal_body" style="display: none">
             <p>Editing trip will be reviewed by the administration</p>
 
-            <div class="input-group form-group">
+            <div class="input-group form-group" style="display: none">
                 <span class="input-group-addon"><i class="fa fa-truck"></i> Vehicle</span>
                 <input type="text" class="form-control input-group" id="car" name="car">
             </div>
-            <div class="input-group form-group">
+            <div class="input-group form-group" style="display: none">
                 <span class="input-group-addon"><i class="fa fa-user"></i> Client</span>
                 <input type="text" class="form-control input-group" id="client" name="client">
             </div>

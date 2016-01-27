@@ -503,4 +503,59 @@ class AdminController extends BaseController {
         }
         return $result;
     }
+
+    public function getEditedTripById() {
+        $tripId = Input::get('trip_id');
+
+        try {
+
+            $originalTrip = DailyTrips::find($tripId)->toArray();
+            $editedTrip   = DailyTripsRevision::where('trip_id', '=', $tripId)->first()->toArray();
+
+            $trip = array ('original_trip' => $originalTrip, 'edited_trip' => $editedTrip);
+
+            $result = array('success' => true, 'trip' => $trip);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
+
+    public function saveEditedTrip() {
+        $tripId = Input::get('trip_id');
+        $edited_customer_name = Input::get('edited_customer_name');
+        $edited_start_km = Input::get('edited_start_km');
+        $edited_end_km = Input::get('edited_end_km');
+        $edited_start_time = Input::get('edited_start_time');
+        $edited_end_time = Input::get('edited_end_time');
+        $edited_departure_address = Input::get('edited_departure_address');
+        $edited_destination_address = Input::get('edited_destination_address');
+
+
+        try {
+
+            $originalTrip = DailyTrips::find($tripId);
+
+            $originalTrip->customer_name = $edited_customer_name;
+            $originalTrip->departure_km = $edited_start_km;
+            $originalTrip->arrival_km = $edited_end_km;
+            $originalTrip->departure_date_time = $edited_start_time;
+            $originalTrip->arrival_date_time = $edited_end_time;
+            $originalTrip->departure_address = $edited_departure_address;
+            $originalTrip->arrival_address = $edited_destination_address;
+            $originalTrip->edit_req = null;
+            $originalTrip->save();
+
+            DailyTripsRevision::where('trip_id', '=', $tripId)->first()->delete();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
 }

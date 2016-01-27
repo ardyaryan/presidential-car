@@ -93,7 +93,7 @@ function renderChart() {
             theme: "theme2",
             axisY: {
                 labelFontSize: 15,
-                valueFormatString: "#0", //try properties here
+                //valueFormatString: "#0", //try properties here
                 gridColor: "Silver",
                 tickColor: "silver"
             },

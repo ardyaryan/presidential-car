@@ -23,12 +23,22 @@ $(document).ready(function(){
         $('#end_date').css('background-color', 'white');
     });
 
-    $('#deleteModal').on('hidden.bs.modal', function () {
-        //$('#save_driver').html('Save');
+    $('#editModal').on('hidden.bs.modal', function () {
+        $('#edited_customer_name').css('background-color', '');
+        $('#edited_start_km').css('background-color', '');
+        $('#edited_end_km').css('background-color', '');
+        $('#edited_start_time').css('background-color', 'A');
+        $('#edited_end_time').css('background-color', '');
+        $('#edited_departure_address').css('background-color', '');
+        $('#edited_destination_address').css('background-color', '');
     });
 
     $('#delete_trip_req').on('click', function() {
         deleteTripRequest();
+    });
+
+    $('#accept_edited_trip').on('click', function() {
+        saveEditedTrip();
     });
 
     $(document).on('click', '.btn.edit-trip', function(){
@@ -116,8 +126,119 @@ function deleteTrip(tripId) {
 
 function editTrip(tripId) {
     $('#edit_trip_id').val(tripId);
-    $('#editModal').modal('show');
+    //$('#editModal').modal('show');
+
+    var driver = '';
+
+    $.ajax({
+        url : "geteditedtripbyid",
+        type: "POST",
+        async: false,
+        data : {
+            trip_id: tripId
+        },
+        beforeSend: function(){
+            //$('#delete_trip_req').append(' <span class="fa fa-spin fa-spinner"></span>');
+        },
+        success: function(data) {
+            if(data.success == true) {
+
+                var editedTrip = data.trip.edited_trip;
+                var originalTrip = data.trip.original_trip;
+                $('#customer_name').val(originalTrip.customer_name);
+                $('#start_km').val(originalTrip.departure_km);
+                $('#end_km').val(originalTrip.arrival_km);
+                $('#start_time').val(originalTrip.departure_date_time);
+                $('#end_time').val(originalTrip.arrival_date_time);
+                $('#departure_address').val(originalTrip.departure_address);
+                $('#destination_address').val(originalTrip.arrival_address);
+
+                $('#edited_customer_name').val(editedTrip.customer_name);
+                if(originalTrip.customer_name != editedTrip.customer_name){
+                    $('#edited_customer_name').css('background-color', '#FFAAAA')
+                }
+                $('#edited_start_km').val(editedTrip.departure_km);
+                if(originalTrip.departure_km != editedTrip.departure_km){
+                    $('#edited_start_km').css('background-color', '#FFAAAA')
+                }
+                $('#edited_end_km').val(editedTrip.arrival_km);
+                if(originalTrip.arrival_km != editedTrip.arrival_km){
+                    $('#edited_end_km').css('background-color', '#FFAAAA')
+                }
+                $('#edited_start_time').val(editedTrip.departure_date_time);
+                if(originalTrip.departure_date_time != editedTrip.departure_date_time){
+                    $('#edited_start_time').css('background-color', '#FFAAAA')
+                }
+                $('#edited_end_time').val(editedTrip.arrival_date_time);
+                if(originalTrip.arrival_date_time != editedTrip.arrival_date_time){
+                    $('#edited_end_time').css('background-color', '#FFAAAA')
+                }
+                $('#edited_departure_address').val(editedTrip.departure_address);
+                if(originalTrip.departure_address != editedTrip.departure_address){
+                    $('#edited_departure_address').css('background-color', '#FFAAAA')
+                }
+                $('#edited_destination_address').val(editedTrip.arrival_address);
+                if(originalTrip.arrival_address != editedTrip.arrival_address){
+                    $('#edited_destination_address').css('background-color', '#FFAAAA')
+                }
+
+                $('#editModal').modal('show');
+                //location.reload();
+            }else {
+                //$('#delete_trip_req').remove('<span class="fa fa-spin fa-spinner"></span>');
+                //$('#delete_trip_req').append('<span class="fa fa-times"></span>');
+            }
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+
 }
+
+
+function saveEditedTrip() {
+
+    var tripId = $('#edit_trip_id').val();
+    var $editedCustomerName = $('#edited_customer_name').val();
+    var $edited_start_km = $('#edited_start_km').val();
+    var $edited_end_km = $('#edited_end_km').val();
+    var $edited_start_time = $('#edited_start_time').val();
+    var $edited_end_time = $('#edited_end_time').val();
+    var $edited_departure_address = $('#edited_departure_address').val();
+    var $edited_destination_address = $('#edited_destination_address').val();
+
+    $.ajax({
+        url : "saveeditedtrip",
+        type: "POST",
+        data : {
+            trip_id: tripId,
+            edited_customer_name: $editedCustomerName,
+            edited_start_km: $edited_start_km,
+            edited_end_km: $edited_end_km,
+            edited_start_time: $edited_start_time,
+            edited_end_time: $edited_end_time,
+            edited_departure_address: $edited_departure_address,
+            edited_destination_address: $edited_destination_address
+        },
+        beforeSend: function(){
+            $('#accept_edited_trip').append(' <span class="fa fa-spin fa-spinner"></span>');
+        },
+        success: function(data) {
+            if(data.success == true) {
+                $('#editModal').modal('hide');
+                location.reload();
+            }else {
+                $('#accept_edited_trip').remove('<span class="fa fa-spin fa-spinner"></span>');
+                $('#accept_edited_trip').append('<span class="fa fa-times"></span>');
+            }
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
 
 
 function deleteTripRequest() {
