@@ -252,11 +252,8 @@ class AdminController extends BaseController {
                 ->select(DB::raw('*, count(id) as count'))
                 ->where('departure_date_time','>', $todayFrom)
                 ->where('departure_date_time','<', $todayTo)
-                ->groupBy('arrival_date_time')
+                ->groupBy(DB::raw('DATE_FORMAT(arrival_date_time, "%Y/%d/%m")'))//)'arrival_date_time')
                 ->get();
-            \Log::info(__METHOD__.' | =====> $trips : '.print_r($trips,1 ));
-
-            //$trips = DailyTrips::all();//->groupBy('arrival_date_time')->get();
 
             if(!is_null($trips)) {
                 foreach ($trips as $trip) {
@@ -265,12 +262,13 @@ class AdminController extends BaseController {
                     $coordinates['y'] = $trip->count;
                     $coordinates['name'] = 'Driver Id: '.$trip->user_id;
 
-                    //$coordinates['y'] = 1;
-                    //array_push($results, array('coordinates' => $coordinates, 'user_id' => $trip->user_id));
                     array_push($results, $coordinates);
                 }
             }
-
+            /*
+            $queries = DB::getQueryLog();
+            $last_query = end($queries);
+            */
         } catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
