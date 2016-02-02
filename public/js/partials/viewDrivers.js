@@ -58,6 +58,9 @@ function getAllDrivers() {
             {"data" : "email"},
             {"data" : "car_id"},
             {"data" : "gsm_number"},
+            {"data" : "hours"},
+            {"data" : "trips"},
+            {"data" : "earning"},
             {"mRender": function ( data, type, row ) {
                 return '<a class="btn edit-driver" data-id="' + row.id +'"><i class="fa fa-pencil-square-o"></i> Edit</a>';
                 }
@@ -67,7 +70,45 @@ function getAllDrivers() {
                 }
             }
         ]
-    });
+        ,
+    "footerCallback": function ( row, data, start, end, display ) {
+        var api = this.api(), data;
+
+        // Remove the formatting to get integer data for summation
+
+         var intVal = function ( i ) {
+         return typeof i === 'string' ?
+         i.replace(/[\$,]/g, '')*1 :
+         typeof i === 'number' ?
+         i : 0;
+         };
+
+         // Total over all pages
+         /*
+         total = api
+         .column(8)
+         .data()
+         .reduce( function (a, b) {
+         return intVal(a) + intVal(b);
+         }, 0 );
+         */
+        // Total over this page
+        pageTotal = api
+            .column( 8, { page: 'current'} )
+            .data()
+            .reduce( function (a, b) {
+                return intVal(a) + intVal(b);
+            }, 0 );
+
+        // Update footer
+        $( api.column(8).footer() ).html(
+            pageTotal
+            //'$'+pageTotal +' ( $'+ total +' total)'
+        );
+    }
+    }
+    );
+
     $('input[aria-controls="drivers"]').prop('type', 'text');
 }
 
@@ -96,7 +137,6 @@ function editDriver(driverId) {
                 $('#email').val(driver.email);
                 $('#car_id').val(driver.car_id);
                 $('#gsm_number').val(driver.gsm_number);
-
                 $('#editModal').modal('show');
                 //location.reload();
             }else {

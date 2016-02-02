@@ -210,6 +210,13 @@ class AdminController extends BaseController {
         foreach ($results as $key => $driver) {
             $driverName = $driver['first'].' '.$driver['last'];
             $email = Users::where('id', '=', $driver['user_id'])->pluck('email');
+            $hours = Driver::getHoursByDriverId($driver['user_id']);
+            $trips = Driver::getTripsByDriverId($driver['user_id']);
+            $earning = Driver::getEarningsByDriverId($driver['user_id']);
+
+            $results[$key]['hours'] =  $hours['hours'];
+            $results[$key]['trips'] =  $trips['count'];
+            $results[$key]['earning'] =  $earning['earning'];//.' '.$earning['currency'];
             $results[$key]['name'] = $driverName;
             $results[$key]['email'] = $email;
             unset($results[$key]['first']);

@@ -1,0 +1,7 @@
+ssh root:1t3f5s7e@188.226.156.98
+
+password : 1t3f5s7e
+
+cd ../var/www/html/
+
+git pull origin master

@@ -20,10 +20,21 @@ List of Active Drivers
                         <th>Email</th>
                         <th>Car ID</th>
                         <th>GSM Number</th>
+                        <th>Total Hours</th>
+                        <th>Total Trips</th>
+                        <th>Total Cost</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
+                <tfoot style="background-color: gainsboro;">
+                    <tr>
+                        <th colspan="8" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
             </table>
     </div>
 </div>
