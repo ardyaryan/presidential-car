@@ -22,7 +22,8 @@ $(document).ready(function(){
     $('#to').on('change', function(){
         $('#to').css('background-color', 'white');
     });
-    renderChart();
+
+    setTimeout(renderChart(), 2000);
 });
 
 function getTripsByDriver() {
