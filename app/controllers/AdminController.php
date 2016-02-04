@@ -267,7 +267,7 @@ class AdminController extends BaseController {
                 foreach ($trips as $trip) {
                     $coordinates = [];
                     $coordinates['x'] = date('Y-m-d', strtotime($trip->arrival_date_time));
-                    $coordinates['y'] = $trip->count;
+                    $coordinates['y'] = intval($trip->count);
                     //$coordinates['name'] = 'Driver Id: '.$trip->user_id;
                     array_push($results, $coordinates);
                 }
