@@ -11,7 +11,7 @@ $(document).ready(function(){
         if(validate()) {
             $('#graph_loading').show();
             setTimeout(function(){
-                renderChart();
+                getTripsByDriver();
             }, 500);
         }
     });
