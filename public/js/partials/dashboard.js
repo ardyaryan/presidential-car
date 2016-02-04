@@ -22,16 +22,12 @@ $(document).ready(function(){
     $('#to').on('change', function(){
         $('#to').css('background-color', 'white');
     });
-    setTimeout(function(){
-        getTripsByDriver();
-    }, 2500);
+
+    getTripsByDriver();
+
 
 });
 
-
-function callback(result) {
-    renderChart(result);
-}
 
 function getTripsByDriver() {
 
@@ -47,7 +43,6 @@ function getTripsByDriver() {
     $.ajax({
         url : "gettripsbydriver",
         type: "POST",
-        //async: false,
         data : {
             from: from,
             to: to
@@ -61,7 +56,7 @@ function getTripsByDriver() {
             }
             result = data;
             $('#graph_loading').hide();
-            callback(result);
+            setTimeout(function(){renderChart(result)}, 2000);
         },
         error: function (data) {
             console.log(data);
