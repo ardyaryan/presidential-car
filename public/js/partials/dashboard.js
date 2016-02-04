@@ -23,10 +23,12 @@ $(document).ready(function(){
         $('#to').css('background-color', 'white');
     });
 
-    setTimeout(renderChart(), 2000);
+    renderChart();
+
+
 });
 
-function getTripsByDriver() {
+var drivers = function getTripsByDriver() {
 
     var from = $('#from').val();
     var to = $('#to').val();
@@ -60,18 +62,32 @@ function getTripsByDriver() {
         }
     });
     return result;
-
-}
+};
 
 
 function renderChart() {
     var datas = [];
-    var driver = getTripsByDriver();
+    //var driver = drivers();
+    var driver = [
 
+        { x: new Date(2010,0,3), y: 650 },
+        { x: new Date(2010,0,5), y: 700 },
+        { x: new Date(2010,0,7), y: 710 },
+        { x: new Date(2010,0,9), y: 658 },
+        { x: new Date(2010,0,11), y: 734 },
+        { x: new Date(2010,0,13), y: 963 },
+        { x: new Date(2010,0,15), y: 847 },
+        { x: new Date(2010,0,17), y: 853 },
+        { x: new Date(2010,0,19), y: 869 },
+        { x: new Date(2010,0,21), y: 943 },
+        { x: new Date(2010,0,23), y: 970 }
+    ];
     for(var i = 0; i < driver.length ; i ++) {
 
         var specs ={ type: "line",showInLegend: true,lineThickness: 1, name: "Trips", markerType: "square", color: "#"+Math.floor(Math.random()*16777215).toString(16), dataPoints: driver};
         datas = [specs];//datas.concat([specs]);
+
+
     }
 
     var chart = new CanvasJS.Chart("chartContainer",
