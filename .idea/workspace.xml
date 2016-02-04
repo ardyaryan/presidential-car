@@ -42,8 +42,8 @@
       <file leaf-file-name="AdminController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/controllers/AdminController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7038168" vertical-offset="4003" max-vertical-offset="9168">
-              <caret line="279" column="31" selection-start-line="279" selection-start-column="31" selection-end-line="279" selection-end-column="31" />
+            <state vertical-scroll-proportion="0.63053435" vertical-offset="4035" max-vertical-offset="9216">
+              <caret line="278" column="14" selection-start-line="278" selection-start-column="14" selection-end-line="278" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -926,8 +926,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/AdminController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7038168" vertical-offset="4003" max-vertical-offset="9168">
-          <caret line="279" column="31" selection-start-line="279" selection-start-column="31" selection-end-line="279" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.63053435" vertical-offset="4035" max-vertical-offset="9216">
+          <caret line="278" column="14" selection-start-line="278" selection-start-column="14" selection-end-line="278" selection-end-column="14" />
           <folding />
         </state>
       </provider>
