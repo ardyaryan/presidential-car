@@ -269,7 +269,6 @@ class AdminController extends BaseController {
                     $coordinates['x'] = date('Y-m-d', strtotime($trip->arrival_date_time));
                     $coordinates['y'] = $trip->count;
                     //$coordinates['name'] = 'Driver Id: '.$trip->user_id;
-
                     array_push($results, $coordinates);
                 }
             }
@@ -283,8 +282,8 @@ class AdminController extends BaseController {
         \Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
         //return json_encode($results);
 
-        $results = [['x'=> '2016-02-01', 'y'=> 1],['x'=> '2016-02-02', 'y'=> 2],['x'=> '2016-02-03', 'y'=> 1]];
-        \Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
+        //$results = [['x'=> '2016-02-01', 'y'=> 1],['x'=> '2016-02-02', 'y'=> 2],['x'=> '2016-02-03', 'y'=> 1]];
+        //\Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
         return $results;
     }
 
