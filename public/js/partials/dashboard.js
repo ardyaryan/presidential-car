@@ -22,8 +22,10 @@ $(document).ready(function(){
     $('#to').on('change', function(){
         $('#to').css('background-color', 'white');
     });
+    setTimeout(function(){
+        getTripsByDriver();
+    }, 2500);
 
-    getTripsByDriver();
 });
 
 
