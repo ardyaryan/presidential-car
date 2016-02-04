@@ -56,7 +56,7 @@ function getTripsByDriver() {
             }
             result = data;
             $('#graph_loading').hide();
-            setTimeout(function(){renderChart(result)}, 2000);
+            renderChart(result);
         },
         error: function (data) {
             console.log(data);

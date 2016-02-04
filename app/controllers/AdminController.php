@@ -260,14 +260,15 @@ class AdminController extends BaseController {
                 ->where('departure_date_time','>', $todayFrom)
                 ->where('departure_date_time','<', $todayTo)
                 ->groupBy(DB::raw('DATE_FORMAT(arrival_date_time, "%Y/%d/%m")'))//)'arrival_date_time')
+                ->orderBy('departure_date_time')
                 ->get();
 
             if(!is_null($trips)) {
                 foreach ($trips as $trip) {
                     $coordinates = [];
-                    $coordinates['x'] = date('Y,m,d', strtotime($trip->arrival_date_time));
+                    $coordinates['x'] = date('Y-m-d', strtotime($trip->arrival_date_time));
                     $coordinates['y'] = $trip->count;
-                    $coordinates['name'] = 'Driver Id: '.$trip->user_id;
+                    //$coordinates['name'] = 'Driver Id: '.$trip->user_id;
 
                     array_push($results, $coordinates);
                 }
@@ -279,8 +280,8 @@ class AdminController extends BaseController {
         } catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
-        \Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
-        //return json_encode($results);
+        //\Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
+
         return $results;
     }
 
