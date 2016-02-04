@@ -23,12 +23,15 @@ $(document).ready(function(){
         $('#to').css('background-color', 'white');
     });
 
-    renderChart();
-
-
+    getTripsByDriver();
 });
 
-var drivers = function getTripsByDriver() {
+
+function callback(result) {
+    renderChart(result);
+}
+
+function getTripsByDriver() {
 
     var from = $('#from').val();
     var to = $('#to').val();
@@ -42,7 +45,7 @@ var drivers = function getTripsByDriver() {
     $.ajax({
         url : "gettripsbydriver",
         type: "POST",
-        async: false,
+        //async: false,
         data : {
             from: from,
             to: to
@@ -56,6 +59,7 @@ var drivers = function getTripsByDriver() {
             }
             result = data;
             $('#graph_loading').hide();
+            callback(result);
         },
         error: function (data) {
             console.log(data);
@@ -65,23 +69,10 @@ var drivers = function getTripsByDriver() {
 };
 
 
-function renderChart() {
+function renderChart(driver) {
     var datas = [];
     //var driver = drivers();
-    var driver = [
 
-        { x: new Date(2010,0,3), y: 650 },
-        { x: new Date(2010,0,5), y: 700 },
-        { x: new Date(2010,0,7), y: 710 },
-        { x: new Date(2010,0,9), y: 658 },
-        { x: new Date(2010,0,11), y: 734 },
-        { x: new Date(2010,0,13), y: 963 },
-        { x: new Date(2010,0,15), y: 847 },
-        { x: new Date(2010,0,17), y: 853 },
-        { x: new Date(2010,0,19), y: 869 },
-        { x: new Date(2010,0,21), y: 943 },
-        { x: new Date(2010,0,23), y: 970 }
-    ];
     for(var i = 0; i < driver.length ; i ++) {
 
         var specs ={ type: "line",showInLegend: true,lineThickness: 1, name: "Trips", markerType: "square", color: "#"+Math.floor(Math.random()*16777215).toString(16), dataPoints: driver};
