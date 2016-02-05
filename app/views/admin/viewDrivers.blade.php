@@ -23,6 +23,9 @@ List of Active Drivers
                         <th>Total Hours</th>
                         <th>Total Trips</th>
                         <th>Total Cost</th>
+                        <th>Hours/Trip</th>
+                        <th>Cost/Hour</th>
+                        <th>Cost/Trip</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -30,6 +33,9 @@ List of Active Drivers
                 <tfoot style="background-color: gainsboro;">
                     <tr>
                         <th colspan="8" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>

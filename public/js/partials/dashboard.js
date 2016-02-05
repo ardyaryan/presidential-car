@@ -55,7 +55,7 @@ function getTripsByDriver() {
                 data[i].x = new Date(data[i].x);
             }
             result = data;
-            console.log(result)
+            //console.log(result)
             $('#graph_loading').hide();
             renderChart(result);
         },

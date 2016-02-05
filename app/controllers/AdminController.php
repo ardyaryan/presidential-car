@@ -217,6 +217,9 @@ class AdminController extends BaseController {
             $results[$key]['hours'] =  $hours['hours'];
             $results[$key]['trips'] =  $trips['count'];
             $results[$key]['earning'] =  $earning['earning'];//.' '.$earning['currency'];
+            $results[$key]['hour_per_trip'] =  round(($trips['count'] == 0) ? 0 : $hours['hours'] / $trips['count'], 2);
+            $results[$key]['earning_per_hour'] =  round(($hours['hours'] == 0) ? 0 : $earning['earning']/$hours['hours'], 2).' MAD';
+            $results[$key]['earning_per_trip'] =  round(($trips['count'] == 0) ? 0 : $earning['earning']/$trips['count'], 2).' MAD';
             $results[$key]['name'] = $driverName;
             $results[$key]['email'] = $email;
             unset($results[$key]['first']);
@@ -280,10 +283,7 @@ class AdminController extends BaseController {
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
         \Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
-        //return json_encode($results);
 
-        //$results = [['x'=> '2016-02-01', 'y'=> 1],['x'=> '2016-02-02', 'y'=> 2],['x'=> '2016-02-03', 'y'=> 1]];
-        //\Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
         return $results;
     }
 

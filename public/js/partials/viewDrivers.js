@@ -61,6 +61,9 @@ function getAllDrivers() {
             {"data" : "hours"},
             {"data" : "trips"},
             {"data" : "earning"},
+            {"data" : "hour_per_trip"},
+            {"data" : "earning_per_hour"},
+            {"data" : "earning_per_trip"},
             {"mRender": function ( data, type, row ) {
                 return '<a class="btn edit-driver" data-id="' + row.id +'"><i class="fa fa-pencil-square-o"></i> Edit</a>';
                 }
