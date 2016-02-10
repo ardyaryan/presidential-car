@@ -70,6 +70,7 @@ Route::get('/admin/logout',         'AdminController@logout');
 Route::get('/admin/viewtrips',      'AdminController@viewTrips');
 Route::get('/admin/newtrips',       'AdminController@newTrips');
 Route::get('/admin/viewcars',       'AdminController@viewCars');
+Route::get('/admin/cardetails/{id}','AdminController@carDetails');
 
 Route::post('/admin/login',         'AdminController@login');
 Route::post('/admin/gettrips',      'AdminController@getTrips');

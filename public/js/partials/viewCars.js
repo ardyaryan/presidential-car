@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#cars').DataTable({});
-
+    
     getAllCars();
 
     $(document).on('click', '.btn.edit-car', function(){
@@ -37,7 +37,8 @@ $(document).ready(function(){
 });
 
 function getAllCars() {
-
+    
+    var domain = window.location.origin;
     $('#cars').DataTable({
         'ajax': {
             "type"   : "POST",
@@ -48,7 +49,10 @@ function getAllCars() {
         "destroy": true,
         'columns': [
             {"data" : "id"},
-            {"data" : "name"},
+            {"mRender": function ( data, type, row ) {
+                return '<a href="' + domain + '/presidential-car/admin/cardetails/' + row.id +'">' + row.name + '</a>';
+                }
+            },
             {"data" : "brand"},
             {"data" : "model"},
             {"data" : "registration"},

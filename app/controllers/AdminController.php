@@ -64,6 +64,48 @@ class AdminController extends BaseController {
     {
         return View::make('admin/signup');
     }
+    
+    public function carDetails($id)
+    {
+       
+        $carStats = $this->getCarDetails($id);
+        
+        \Log::info(__METHOD__.' =======> $carDetails : '.print_r($carStats, 1));
+        
+        return View::make('admin/carDetails')->with(['carDetails' => $carStats['car_details'], 'trips' => $carStats['trips']]);
+    }
+    
+    public function getCarDetails($id) {
+      
+       try{
+            $car   = Cars::find($id)->toArray();
+            $trips = DailyTrips::where('car_id', '=', $id)->get()->toArray();
+            
+            $calculatedTrip = [];
+
+            if(!is_null($trips)) {
+                \Log::info(__METHOD__.' =======> $trips : '.print_r($trips, 1));
+                foreach($trips as $trip) {
+               
+                    $distance = $trip['arrival_km'] - $trip['departure_km'];
+
+                    $finalTrip = [
+                        'distance'          => $distance,
+                        'cost'              => $trip['trip_cost'],
+                        'currency'          => $trip['currency'],
+                        'date'              => date("Y-d-m",strtotime($trip['arrival_date_time']))
+                    ];
+                    array_push($calculatedTrip, $finalTrip);
+                }
+            }
+
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+        }
+       
+       return ['car_details' => $car, 'trips' => $calculatedTrip];
+       
+    }
 
     public function createNewUser()
     {
