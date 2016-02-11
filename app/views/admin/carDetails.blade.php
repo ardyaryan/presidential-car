@@ -33,7 +33,9 @@ List of Vehicles
                     </tr>
                 </tbody>
         </table>
-        
+
+        <h3>Trpis made by Vehicle</h3>
+
         <table id="carTrips" class="display" >
                 <thead>
                     <tr>
@@ -48,6 +50,29 @@ List of Vehicles
                         <th>{{$trip['distance'] }} Km</th>
                         <th>{{$trip['cost'] .' '. $trip['currency'] }}</th>
                         <th>{{$trip['date'] }}</th>
+                    </tr>
+                </tbody>
+                @endforeach
+        </table>
+        
+        <h3>Fuel Tanks fillups made by Vehicle</h3>
+
+        <table id="carFuelFillUps" class="display" >
+                <thead>
+                    <tr>
+                        <th>Cost</th>
+                        <th>Amount</th>
+                        <th>Price/Liter</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                @foreach($fuelFillUps as $fuelFillUp)
+                <tbody>
+                    <tr>
+                        <th>{{$fuelFillUp['cost']}}</th>
+                        <th>{{$fuelFillUp['amount']}}</th>
+                        <th>{{$fuelFillUp['price_per_liter']}}</th>
+                        <th>{{$fuelFillUp['date_and_time']}}</th>
                     </tr>
                 </tbody>
                 @endforeach

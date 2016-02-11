@@ -3,6 +3,7 @@ $(document).ready(function(){
 
     $('#carDetails').DataTable({'bPaginate': false, 'bFilter': false, 'bInfo': false });
     $('#carTrips').DataTable({});
+    $('#carFuelFillUps').DataTable({});
 
 
     $(document).on('click', '.btn.edit-driver', function(){

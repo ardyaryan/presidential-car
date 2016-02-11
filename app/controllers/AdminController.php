@@ -72,7 +72,7 @@ class AdminController extends BaseController {
         
         \Log::info(__METHOD__.' =======> $carDetails : '.print_r($carStats, 1));
         
-        return View::make('admin/carDetails')->with(['carDetails' => $carStats['car_details'], 'trips' => $carStats['trips']]);
+        return View::make('admin/carDetails')->with(['carDetails' => $carStats['car_details'], 'trips' => $carStats['trips'], 'fuelFillUps' => $carStats['fuel_fills']]);
     }
     
     public function getCarDetails($id) {
@@ -80,11 +80,11 @@ class AdminController extends BaseController {
        try{
             $car   = Cars::find($id)->toArray();
             $trips = DailyTrips::where('car_id', '=', $id)->get()->toArray();
-            
+            $fuelFills = FuelFillUp::where('car_id', '=', $id)->get()->toArray();
             $calculatedTrip = [];
 
             if(!is_null($trips)) {
-                \Log::info(__METHOD__.' =======> $trips : '.print_r($trips, 1));
+                
                 foreach($trips as $trip) {
                
                     $distance = $trip['arrival_km'] - $trip['departure_km'];
@@ -103,7 +103,7 @@ class AdminController extends BaseController {
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
        
-       return ['car_details' => $car, 'trips' => $calculatedTrip];
+       return ['car_details' => $car, 'trips' => $calculatedTrip, 'fuel_fills' => $fuelFills];
        
     }
 
