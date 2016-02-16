@@ -26,6 +26,9 @@
                     <li><a href="viewdrivers"><span class="fa fa-users"></span> View Drivers</a></li>
                 @endif
                 @if (Session::get('logged'))
+                    <li><a href="viewclients"><span class="fa fa-users"></span> View Clients</a></li>
+                @endif
+                @if (Session::get('logged'))
                     <li><a href="viewcars"><span class="fa fa-car"></span> View Cars</a></li>
                 @endif
                 @if (Session::get('logged'))

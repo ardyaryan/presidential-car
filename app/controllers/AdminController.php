@@ -245,6 +245,11 @@ class AdminController extends BaseController {
         return View::make('admin/viewDrivers');
     }
 
+    public function viewClients()
+    {
+        return View::make('admin/viewClients');
+    }
+
     public function getDrivers()
     {
         $results = Driver::all()->toArray();
@@ -269,6 +274,18 @@ class AdminController extends BaseController {
         }
 
         return json_encode($results);
+    }
+
+    public function getClients()
+    {
+        $clients = Client::all()->toArray();
+        foreach ($clients as $key => $client) {
+            $clients[$key]['price_per_km'] = round($client['price_per_km'], 3);
+            $clients[$key]['price_per_min'] = round($client['price_per_km'], 3);
+            $clients[$key]['us_dollar_exchange_rate'] = round($client['us_dollar_exchange_rate'], 3);
+        }
+        \Log::info(__METHOD__.print_r($clients, 1));
+        return json_encode($clients);
     }
 
     public function viewCars()
@@ -338,6 +355,21 @@ class AdminController extends BaseController {
             $email = Users::where('id', '=', $driver->user_id)->pluck('email');
             $driver->email = $email;
             $result = array('success' => true, 'driver' => $driver);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false, 'driver' => null);
+        }
+        return $result;
+    }
+
+    public function getClientById() {
+
+        $clientId = Input::get('client_id');
+
+        try {
+            $client = Client::find($clientId);
+            $result = array('success' => true, 'client' => $client);
 
         }catch(Exception $ex) {
             \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
@@ -607,5 +639,84 @@ class AdminController extends BaseController {
             $result = array('success' => false);
         }
         return $result;
+    }
+
+    public function saveNewClient() {
+
+        $name = Input::get('name');
+        $base = Input::get('base');
+        $newPricePerKm = Input::get('price_per_km');
+        $newPricePerMin = Input::get('price_per_min');
+        $currency = Input::get('currency');
+        $exchangeRate = Input::get('us_dollar_exchange_rate');
+
+        try {
+            $client = new Client();
+
+            $client->name = $name;
+            $client->base  = $base;
+            $client->price_per_km = $newPricePerKm;
+            $client->price_per_min = $newPricePerMin;
+            $client->currency = $currency;
+            $client->us_dollar_exchange_rate = $exchangeRate;
+
+            $client->save();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
+
+    public function saveClient() {
+
+        $clientId = Input::get('client_id');
+        $name = Input::get('name');
+        $base = Input::get('base');
+        $newPricePerKm = Input::get('price_per_km');
+        $newPricePerMin = Input::get('price_per_min');
+        $currency = Input::get('currency');
+        $exchangeRate = Input::get('us_dollar_exchange_rate');
+
+        try {
+            $client = Client::find($clientId);
+
+            $client->name = $name;
+            $client->base  = $base;
+            $client->price_per_km = $newPricePerKm;
+            $client->price_per_min = $newPricePerMin;
+            $client->currency = $currency;
+            $client->us_dollar_exchange_rate = $exchangeRate;
+
+            $client->save();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+    }
+
+    public function deleteClient()
+    {
+        $clientId = Input::get('client_id');
+
+        try {
+            $client = Client::find($clientId);
+
+            $client->delete();
+
+            $results = array('success' => true, 'message' => 'deletion successful');
+
+        }catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $results = array('success' => false, 'message' => 'an error occurred');
+        }
+        return $results;
     }
 }

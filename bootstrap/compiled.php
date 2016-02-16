@@ -423,7 +423,7 @@ use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class Application extends Container implements HttpKernelInterface, TerminableInterface, ResponsePreparerInterface
 {
-    const VERSION = '4.2.17';
+    const VERSION = '4.2.19';
     protected $booted = false;
     protected $bootingCallbacks = array();
     protected $bootedCallbacks = array();
@@ -9776,10 +9776,15 @@ class View implements ArrayAccess, Renderable
     }
     public function render(Closure $callback = null)
     {
-        $contents = $this->renderContents();
-        $response = isset($callback) ? $callback($this, $contents) : null;
-        $this->factory->flushSectionsIfDoneRendering();
-        return $response ?: $contents;
+        try {
+            $contents = $this->renderContents();
+            $response = isset($callback) ? $callback($this, $contents) : null;
+            $this->factory->flushSectionsIfDoneRendering();
+            return $response ?: $contents;
+        } catch (Exception $e) {
+            $this->factory->flushSections();
+            throw $e;
+        }
     }
     protected function renderContents()
     {

@@ -9,6 +9,7 @@ List of Vehicles
 
 <div id="carsContainer">
     <div id="mainContent">
+
         <table id="carDetails" class="display" >
                 <thead>
                     <tr>
@@ -34,49 +35,65 @@ List of Vehicles
                 </tbody>
         </table>
 
-        <h3>Trpis made by Vehicle</h3>
 
-        <table id="carTrips" class="display" >
-                <thead>
-                    <tr>
-                        <th>Distance</th>
-                        <th>Cost</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                @foreach($trips as $trip)
-                <tbody>
-                    <tr>
-                        <th>{{$trip['distance'] }} Km</th>
-                        <th>{{$trip['cost'] .' '. $trip['currency'] }}</th>
-                        <th>{{$trip['date'] }}</th>
-                    </tr>
-                </tbody>
-                @endforeach
-        </table>
-        
-        <h3>Fuel Tanks fillups made by Vehicle</h3>
 
-        <table id="carFuelFillUps" class="display" >
-                <thead>
-                    <tr>
-                        <th>Cost</th>
-                        <th>Amount</th>
-                        <th>Price/Liter</th>
-                        <th>Date</th>
-                    </tr>
+
+        <table cellpadding="10"   style="width: 100%;">
+                <thead style="background-color: white">
+                    <th ><h4 style="margin-left: 20px;">Trpis made by Vehicle</h4></th>
+                    <th><h4 style="margin-left: 20px;">Fuel Tanks fillups made by Vehicle</h4></th>
                 </thead>
-                @foreach($fuelFillUps as $fuelFillUp)
-                <tbody>
-                    <tr>
-                        <th>{{$fuelFillUp['cost']}}</th>
-                        <th>{{$fuelFillUp['amount']}}</th>
-                        <th>{{$fuelFillUp['price_per_liter']}}</th>
-                        <th>{{$fuelFillUp['date_and_time']}}</th>
-                    </tr>
-                </tbody>
-                @endforeach
+                <tr>
+                    <td style="padding: 20;" valign="top">
+                        <table id="carTrips" class="display" >
+                                <thead>
+                                    <tr>
+                                        <th>Distance</th>
+                                        <th>Cost</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                @foreach($trips as $trip)
+                                <tbody>
+                                    <tr>
+                                        <th>{{$trip['distance'] }} Km</th>
+                                        <th>{{$trip['cost'] .' '. $trip['currency'] }}</th>
+                                        <th>{{$trip['date'] }}</th>
+                                    </tr>
+                                </tbody>
+                                @endforeach
+                        </table>
+                    </td>
+
+                    <td style="padding: 20;" valign="top">
+                        <table id="carFuelFillUps" class="display" >
+                                <thead>
+                                    <tr>
+                                        <th>Cost</th>
+                                        <th>Amount</th>
+                                        <th>Price/Liter</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                @foreach($fuelFillUps as $fuelFillUp)
+                                <tbody>
+                                    <tr>
+                                        <th>{{$fuelFillUp['cost']}}</th>
+                                        <th>{{$fuelFillUp['amount']}}</th>
+                                        <th>{{$fuelFillUp['price_per_liter']}}</th>
+                                        <th>{{$fuelFillUp['date_and_time']}}</th>
+                                    </tr>
+                                </tbody>
+                                @endforeach
+                        </table>
+                    </td>
+                </tr>
         </table>
+
+
+
+
+
     </div>
 </div>
 
