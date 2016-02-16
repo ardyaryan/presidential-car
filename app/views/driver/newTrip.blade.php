@@ -17,9 +17,9 @@ Daily Trips
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-user"></i>{{(Session::get('lid') == 2) ? ' Client' : ' Client' }}</span>
         <select id="client_name" class="selectpicker form-group input-group" data-width="auto">
-            <option value="1">Uber</option>
-            <option value="2">Client 1</option>
-            <option value="3">Client 2</option>
+            @foreach($clients as $client)
+                <option value="{{$client['id']}}">{{$client['name']}}</option>
+            @endforeach
         </select>
     </div>
 
@@ -97,4 +97,4 @@ Daily Trips
 @stop
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="{{ URL::asset('public/js/partials/newTrip.js')}}"></script>
+<script src="{{ URL::asset('public/js/partials/driverNewTrip.js')}}"></script>

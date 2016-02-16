@@ -14,25 +14,25 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                 @if (Session::get('logged'))
-                    <li><a href="dashboard"><span class="fa fa-home"></span> Dashboard</a></li>
+                    <li><a href="{{URL::to('/admin/dashboard');}}"><span class="fa fa-home"></span> Dashboard</a></li>
                 @endif
                 @if (!Session::get('logged'))
                     <li><a href="#"><span class="fa fa-user-plus"></span> Add User</a></li>
                 @endif
                 @if (Session::get('logged'))
-                    <li><a href="viewtrips"><span class="fa fa-table"></span> View Trips</a></li>
+                    <li><a href="{{URL::to('/admin/viewtrips');}}"><span class="fa fa-table"></span> View Trips</a></li>
                 @endif
                 @if (Session::get('logged'))
-                    <li><a href="viewdrivers"><span class="fa fa-users"></span> View Drivers</a></li>
+                    <li><a href="{{URL::to('/admin/viewdrivers');}}"><span class="fa fa-users"></span> View Drivers</a></li>
                 @endif
                 @if (Session::get('logged'))
-                    <li><a href="viewclients"><span class="fa fa-users"></span> View Clients</a></li>
+                    <li><a href="{{URL::to('/admin/viewclients');}}"><span class="fa fa-users"></span> View Clients</a></li>
                 @endif
                 @if (Session::get('logged'))
-                    <li><a href="viewcars"><span class="fa fa-car"></span> View Cars</a></li>
+                    <li><a href="{{URL::to('/admin/viewcars');}}"><span class="fa fa-car"></span> View Cars</a></li>
                 @endif
                 @if (Session::get('logged'))
-                    <li><a href="logout"><span class="fa fa-sign-out"></span> Logout</a></li>
+                    <li><a href="{{URL::to('/admin/logout');}}"><span class="fa fa-sign-out"></span> Logout</a></li>
                 @endif
                 </ul>
             </div>

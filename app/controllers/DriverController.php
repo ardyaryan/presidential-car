@@ -15,6 +15,8 @@ class DriverController extends BaseController {
         };
         $carId = Session::get('car_id');
         $car = Cars::find($carId);
+        $clients = Client::all();
+
         if(! $car instanceof Cars ) {
             $carId = 0;
             $carName = 'N/A';
@@ -25,7 +27,8 @@ class DriverController extends BaseController {
             $carRegistration = $car->registration;
         }
 
-        return View::make('driver/newTrip')->with('car', array('car_id' => $carId, 'car_name' => $carName, 'car_reg' => $carRegistration));
+        return View::make('driver/newTrip')->with('car', array('car_id' => $carId, 'car_name' => $carName, 'car_reg' => $carRegistration))
+            ->with('clients' , $clients);
     }
 
     public function myFuelTank()
@@ -327,12 +330,11 @@ class DriverController extends BaseController {
 
             $results = array('success' => true, 'message' => 'revision requested');
 
-        }catch(Exception $ex){
+        } catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
             $results = array('success' => false, 'message' => 'an error occurred');
         }
         return $results;
     }
-
 
 }

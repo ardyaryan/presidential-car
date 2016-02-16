@@ -39,6 +39,9 @@ $(document).ready(function(){
 function getAllCars() {
     
     var domain = window.location.origin;
+    if(domain == 'http://localhost') {
+        domain = domain + '/presidential-car';
+    }
     $('#cars').DataTable({
         'ajax': {
             "type"   : "POST",
@@ -50,7 +53,7 @@ function getAllCars() {
         'columns': [
             {"data" : "id"},
             {"mRender": function ( data, type, row ) {
-                return '<a href="' + domain + '/presidential-car/admin/cardetails/' + row.id +'">' + row.name + '</a>';
+                return '<a href="' + domain + '/admin/cardetails/' + row.id +'">' + row.name + '</a>';
                 }
             },
             {"data" : "brand"},
