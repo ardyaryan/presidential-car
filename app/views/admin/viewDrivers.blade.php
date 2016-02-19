@@ -18,7 +18,6 @@ List of Active Drivers
                         <th>Code</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Car ID</th>
                         <th>GSM Number</th>
                         <th>Total Hours</th>
                         <th>Total Trips</th>
@@ -32,7 +31,9 @@ List of Active Drivers
                 </thead>
                 <tfoot style="background-color: gainsboro;">
                     <tr>
-                        <th colspan="8" style="text-align:right">Total:</th>
+                        <th colspan="5" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
                         <th></th>
                         <th></th>
                         <th></th>

@@ -101,4 +101,11 @@ thead {background-color: gainsboro;}
 #carDetails_wrapper {
     margin-bottom: 45px;
 }
-    
+
+table, th, td {
+    border: 0.4pt solid #CCC;
+}
+
+footer {
+    margin-top: 100px;
+}

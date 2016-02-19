@@ -47,8 +47,7 @@ function getAllDrivers() {
             "type"   : "POST",
             "url"    : 'getdrivers',
             "data"   : {},
-            "dataSrc": "",
-            "async"  : false
+            "dataSrc": ""
         },
         "destroy": true,
         'columns': [
@@ -56,7 +55,6 @@ function getAllDrivers() {
             {"data" : "code"},
             {"data" : "name"},
             {"data" : "email"},
-            {"data" : "car_id"},
             {"data" : "gsm_number"},
             {"data" : "hours"},
             {"data" : "trips"},
@@ -81,31 +79,29 @@ function getAllDrivers() {
 
          var intVal = function ( i ) {
          return typeof i === 'string' ?
-         i.replace(/[\$,]/g, '')*1 :
-         typeof i === 'number' ?
-         i : 0;
-         };
+         i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0;};
 
-         // Total over all pages
-         /*
-         total = api
-         .column(8)
-         .data()
-         .reduce( function (a, b) {
-         return intVal(a) + intVal(b);
-         }, 0 );
+         /* Total over all pages
+         total = api.column(8).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
          */
+
         // Total over this page
-        pageTotal = api
-            .column( 8, { page: 'current'} )
-            .data()
-            .reduce( function (a, b) {
-                return intVal(a) + intVal(b);
-            }, 0 );
+        totalHours = api.column( 5, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+        totalTrips = api.column( 6, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+        totalCost  = api.column( 7, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+        totalHours = api.column( 8, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
 
         // Update footer
-        $( api.column(8).footer() ).html(
-            pageTotal
+        $( api.column(5).footer() ).html( (Math.round(totalHours * 100) /100 )
+            //'$'+pageTotal +' ( $'+ total +' total)'
+        );
+        $( api.column(6).footer() ).html(totalTrips
+            //'$'+pageTotal +' ( $'+ total +' total)'
+        );
+        $( api.column(7).footer() ).html(totalCost
+            //'$'+pageTotal +' ( $'+ total +' total)'
+        );
+        $( api.column(8).footer() ).html( (Math.round(totalHours * 100) /100 )
             //'$'+pageTotal +' ( $'+ total +' total)'
         );
     }
@@ -122,7 +118,6 @@ function editDriver(driverId) {
     $.ajax({
         url : "getdriverbyid",
         type: "POST",
-        async: false,
         data : {
             driver_id: driverId
         },

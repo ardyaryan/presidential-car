@@ -69,10 +69,11 @@ class AdminController extends BaseController {
     {
        
         $carStats = $this->getCarDetails($id);
+        $results = ['carDetails' => $carStats['car_details'], 'trips' => $carStats['trips'], 'fuelFillUps' => $carStats['fuel_fills']];
         
-        \Log::info(__METHOD__.' =======> $carDetails : '.print_r($carStats, 1));
+        \Log::info(__METHOD__.' =======> $carDetails : '.print_r($results, 1));
         
-        return View::make('admin/carDetails')->with(['carDetails' => $carStats['car_details'], 'trips' => $carStats['trips'], 'fuelFillUps' => $carStats['fuel_fills']]);
+        return View::make('admin/carDetails')->with($results);
     }
     
     public function getCarDetails($id) {
@@ -237,6 +238,7 @@ class AdminController extends BaseController {
 
     public function viewDashboard()
     {
+
         return View::make('admin/dashboard');
     }
 
@@ -341,7 +343,7 @@ class AdminController extends BaseController {
         } catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
-        \Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
+        //\Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
 
         return $results;
     }
@@ -718,5 +720,70 @@ class AdminController extends BaseController {
             $results = array('success' => false, 'message' => 'an error occurred');
         }
         return $results;
+    }
+
+    public function createReport()
+    {
+        $to = Input::get('to');
+        $from = Input::get('from');
+
+        if($from == null || $to == null) {
+            $todayFrom = (date('Y-m-d', strtotime('-30 day'))).' 00:00:00';
+            $todayTo = date('Y-m-d').' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
+
+        $results = [];
+
+        try{
+
+            $trips = DailyTrips::where('departure_date_time','>', $todayFrom)
+                ->where('departure_date_time','<', $todayTo)
+                ->orderBy('departure_date_time')
+                ->get();
+            $totalTripCount = count($trips);
+            $totalTripCost = 0;
+            $totalTripDistance = 0;
+            $totalTripTime = 0;
+            foreach($trips as $trip) {
+                $totalTripCost += $trip->trip_cost;
+                $totalTripDistance += ($trip->arrival_km - $trip->departure_km);
+                $totalTripTime += (strtotime($trip->arrival_date_time) - strtotime($trip->departure_date_time));
+            }
+            $totalTripTime = date('H:i:s', $totalTripTime);
+
+            $totalFuel = FuelFillUp::where('date_and_time','>', $todayFrom)
+                ->where('date_and_time','<', $todayTo)
+                ->orderBy('date_and_time')
+                ->get();
+
+            $totalFuelCost = 0;
+            $totalFuelAmount = 0;
+            foreach($totalFuel as $Fuel) {
+                $totalFuelCost += $Fuel->cost;
+                $totalFuelAmount += $Fuel->amount;
+            }
+
+            $report = ['totalTripCounts' => $totalTripCount,
+                        'totalTripCost'   => $totalTripCost,
+                        'totalTripkm'     => $totalTripDistance,
+                        'totalTripTime'   => $totalTripTime,
+                        'totalFuelCost'   => $totalFuelCost,
+                        'totalFuelAmount' => $totalFuelAmount
+            ];
+            array_push($results, $report);
+            /*
+            $queries = DB::getQueryLog();
+            $last_query = end($queries);
+            */
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+        }
+        //\Log::info(__METHOD__.' | =====> $results : '.print_r($results,1 ));
+
+        return json_encode($results);
+
     }
 }

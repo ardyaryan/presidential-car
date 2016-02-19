@@ -14,6 +14,7 @@ $(document).ready(function(){
                 getTripsByDriver();
             }, 500);
         }
+        createReport();
     });
 
     $('#from').on('change', function(){
@@ -25,7 +26,10 @@ $(document).ready(function(){
 
     getTripsByDriver();
 
+    $('#report_table').dataTable({'bPaginate': false, 'bFilter': false, 'bInfo': false });
+    createReport();
 
+    setTimeout(function() {loadPieChart();}, 1000);
 });
 
 
@@ -135,4 +139,70 @@ function validate() {
     }else {
         return true;
     }
+}
+
+function createReport() {
+
+    var from = $('#from').val();
+    var to = $('#to').val();
+
+    $('#report_table').DataTable({
+        'bPaginate': false,
+        'bFilter': false,
+        'bInfo': false,
+        'ajax': {
+            "type": "POST",
+            "url": 'createreport',
+            "data"   : {from: from, to: to},
+            "dataSrc": ""
+        },
+        "destroy": true,
+        'columns': [
+            {"data" : "totalTripCounts"},
+            {"data" : "totalTripCost"},
+            {"data" : "totalTripkm"},
+            {"data" : "totalTripTime"},
+            {"data" : "totalFuelCost"},
+            {"data" : "totalFuelAmount"},
+        ]
+    });
+
+    $('input[aria-controls="report_table"]').prop('type', 'text');
+}
+
+
+function loadPieChart() {
+    var chart = new CanvasJS.Chart("chartContainer2",
+        {
+            title:{
+                text: "",
+                fontFamily: "arial black"
+            },
+            animationEnabled: true,
+            legend: {
+                verticalAlign: "bottom",
+                horizontalAlign: "center"
+            },
+            theme: "theme1",
+            data: [
+                {
+                    type: "pie",
+                    indexLabelFontFamily: "Garamond",
+                    indexLabelFontSize: 20,
+                    indexLabelFontWeight: "bold",
+                    startAngle:0,
+                    indexLabelFontColor: "MistyRose",
+                    indexLabelLineColor: "darkgrey",
+                    indexLabelPlacement: "inside",
+                    toolTipContent: "{name}: {y}hrs",
+                    showInLegend: true,
+                    indexLabel: "#percent%",
+                    dataPoints: [
+                        {  y: 338, name: "Fuel", legendMarkerType: "triangle"},
+                        {  y: 418, name: "Trip Cost", legendMarkerType: "square"}
+                    ]
+                }
+            ]
+        });
+    chart.render();
 }

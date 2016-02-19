@@ -40,7 +40,7 @@ List of Vehicles
 
         <table cellpadding="10"   style="width: 100%;">
                 <thead style="background-color: white">
-                    <th ><h4 style="margin-left: 20px;">Trpis made by Vehicle</h4></th>
+                    <th ><h4 style="margin-left: 20px;">Trips made by Vehicle</h4></th>
                     <th><h4 style="margin-left: 20px;">Fuel Tanks fillups made by Vehicle</h4></th>
                 </thead>
                 <tr>
@@ -56,12 +56,28 @@ List of Vehicles
                                 @foreach($trips as $trip)
                                 <tbody>
                                     <tr>
-                                        <th>{{$trip['distance'] }} Km</th>
-                                        <th>{{$trip['cost'] .' '. $trip['currency'] }}</th>
-                                        <th>{{$trip['date'] }}</th>
+                                        <th style="padding-left: 18px;">{{$trip['distance']}} Km</th>
+                                        <th style="padding-left: 18px;">{{$trip['cost'] . ' ' . $trip['currency']}}</th>
+                                        <th style="padding-left: 18px;">{{$trip['date']}}</th>
                                     </tr>
                                 </tbody>
                                 @endforeach
+                                <tfoot style="background-color: gainsboro;">
+                                <?php
+                                    $totalDistance = 0;
+                                    $totalCost = 0;
+                                    foreach($trips as $trip) {
+                                         $totalDistance = $trip['distance'] + $totalDistance;
+                                         $totalCost = $trip['cost'] + $totalCost ;
+                                    }
+                                ?>
+
+                                    <tr>
+                                        <th>{{$totalDistance}} km</th>
+                                        <th>{{$totalCost}} MAD</th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
                         </table>
                     </td>
 
@@ -75,16 +91,32 @@ List of Vehicles
                                         <th>Date</th>
                                     </tr>
                                 </thead>
+                                <?php
+                                    $totalFuelCost = 0;
+                                    $totalLiter = 0
+                                ?>
                                 @foreach($fuelFillUps as $fuelFillUp)
+                                     <?php
+                                        $totalFuelCost = $fuelFillUp['cost'] + $totalFuelCost;
+                                        $totalLiter = $fuelFillUp['amount'] + $totalLiter ;
+                                     ?>
                                 <tbody>
                                     <tr>
-                                        <th>{{$fuelFillUp['cost']}}</th>
-                                        <th>{{$fuelFillUp['amount']}}</th>
-                                        <th>{{$fuelFillUp['price_per_liter']}}</th>
-                                        <th>{{$fuelFillUp['date_and_time']}}</th>
+                                        <th style="padding-left: 18px;">{{$fuelFillUp['cost']}} MAD</th>
+                                        <th style="padding-left: 18px;">{{$fuelFillUp['amount']}} Lit</th>
+                                        <th style="padding-left: 18px;">{{round($fuelFillUp['price_per_liter'], 2)}} MAD  /Lit</th>
+                                        <th style="padding-left: 18px;">{{$fuelFillUp['date_and_time']}}</th>
                                     </tr>
                                 </tbody>
                                 @endforeach
+                                <tfoot style="background-color: gainsboro;">
+                                    <tr>
+                                        <th>{{$totalFuelCost}} MAD</th>
+                                        <th>{{$totalLiter}} Lit</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </tfoot>
                         </table>
                     </td>
                 </tr>
@@ -101,4 +133,4 @@ List of Vehicles
 @stop
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="{{ URL::asset('public/js/partials/carDetails.js')}}"></script>
+<script src="{{ URL::asset('public/js/partials/adminCarDetails.js')}}"></script>

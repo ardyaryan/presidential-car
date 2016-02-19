@@ -36,8 +36,38 @@ Dashboard
         <div id="chartContainer" style="height: 300px; width: 100%;">
         </div>
     </div>
+
+
+
+    <table cellpadding="10"   style="width: 100%;">
+                    <thead style="background-color: white">
+                        <th><h4 style="margin-left: 20px;">Cost vs. Profit</h4></th>
+                        <th><h4 style="margin-left: 20px;">Reprt Table</h4></th>
+                    </thead>
+                    <tr>
+                        <td style="padding: 20;" valign="top">
+                            <div id="chartContainer2" style="height: 300px; width: 400px;"></div>
+                        </td>
+
+                        <td style="padding: 20;" valign="top">
+                            <table id="report_table" class="display" style="width: 200px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Total Count</th>
+                                            <th >Total Cost</th>
+                                            <th>Total Km</th>
+                                            <th>Total Time</th>
+                                            <th>Total Fuel Cost</th>
+                                            <th>Total Fuel Consumption</th>
+                                        </tr>
+                                    </thead>
+                            </table>
+                        </td>
+                    </tr>
+            </table>
+
 </div>
 @stop
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="{{ URL::asset('public/js/partials/dashboard.js')}}"></script>
+<script src="{{ URL::asset('public/js/partials/adminDashboard.js')}}"></script>
