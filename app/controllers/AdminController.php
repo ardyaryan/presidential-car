@@ -252,6 +252,11 @@ class AdminController extends BaseController {
         return View::make('admin/viewClients');
     }
 
+    public function viewPayments()
+    {
+        return View::make('admin/viewPayments');
+    }
+
     public function getDrivers()
     {
         $results = Driver::all()->toArray();
@@ -274,7 +279,20 @@ class AdminController extends BaseController {
             unset($results[$key]['first']);
             unset($results[$key]['last']);
         }
+        Log::info(__METHOD__.print_r($results, 1));
+        return json_encode($results);
+    }
 
+    public function getPayments()
+    {
+        $results = Payment::all()->toArray();
+
+        foreach ($results as $key => $payment) {
+
+            $driver = Driver::where('user_id','=', $payment['user_id'])->first()->toArray();
+            $results[$key]['driver_name'] =  $driver['first'].' '.$driver['last'];
+        }
+        \Log::info(__METHOD__.print_r($results, 1));
         return json_encode($results);
     }
 

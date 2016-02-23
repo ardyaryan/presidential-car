@@ -32,6 +32,9 @@
                     <li><a href="{{URL::to('/admin/viewcars');}}"><span class="fa fa-car"></span> View Cars</a></li>
                 @endif
                 @if (Session::get('logged'))
+                    <li><a href="{{URL::to('/admin/viewpayments');}}"><span class="fa fa-usd"></span> Payments</a></li>
+                @endif
+                @if (Session::get('logged'))
                     <li><a href="{{URL::to('/admin/logout');}}"><span class="fa fa-sign-out"></span> Logout</a></li>
                 @endif
                 </ul>
