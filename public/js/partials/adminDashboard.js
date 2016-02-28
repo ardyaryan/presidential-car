@@ -29,7 +29,7 @@ $(document).ready(function(){
     $('#report_table').dataTable({'bPaginate': false, 'bFilter': false, 'bInfo': false });
     createReport();
 
-    setTimeout(function() {loadPieChart();}, 1000);
+    //  setTimeout(function() {loadPieChart();}, 1000);
 });
 
 
@@ -79,8 +79,6 @@ function renderChart(driver) {
 
         var specs ={ type: "line",showInLegend: true,lineThickness: 1, name: "Trips", markerType: "square", color: "#"+Math.floor(Math.random()*16777215).toString(16), dataPoints: driver};
         datas = [specs];//datas.concat([specs]);
-
-
     }
 
     var chart = new CanvasJS.Chart("chartContainer",
@@ -164,14 +162,28 @@ function createReport() {
             {"data" : "totalTripTime"},
             {"data" : "totalFuelCost"},
             {"data" : "totalFuelAmount"},
-        ]
+            {"data" : "totalPayments"},
+            {"data" : "totalOther"}
+        ],
+        "footerCallback": function ( row, data, start, end, display ) {
+            if(typeof data[0] != 'undefined') {
+                console.log( data[0]);
+                var dataPoints = [
+                    { y : data[0].totalFuelCost, name : "Total Fuel Costs", legendMarkerType: "triangle"},
+                    { y : data[0].totalPayments, name : "Total Payments", legendMarkerType: "triangle"},
+                    { y : data[0].totalTripCost, name : "Total Trip Costs", legendMarkerType: "triangle"},
+                    { y : data[0].totalOther, name : "Total Other Costs", legendMarkerType: "triangle"}
+                ];
+                loadPieChart(dataPoints);
+            }
+        }
     });
 
     $('input[aria-controls="report_table"]').prop('type', 'text');
 }
 
+function loadPieChart(dataPoints) {
 
-function loadPieChart() {
     var chart = new CanvasJS.Chart("chartContainer2",
         {
             title:{
@@ -194,13 +206,16 @@ function loadPieChart() {
                     indexLabelFontColor: "MistyRose",
                     indexLabelLineColor: "darkgrey",
                     indexLabelPlacement: "inside",
-                    toolTipContent: "{name}: {y}hrs",
+                    toolTipContent: "{name}: {y} MAD",
                     showInLegend: true,
                     indexLabel: "#percent%",
-                    dataPoints: [
+                    dataPoints: dataPoints
+                        /*
+                        [
                         {  y: 338, name: "Fuel", legendMarkerType: "triangle"},
                         {  y: 418, name: "Trip Cost", legendMarkerType: "square"}
                     ]
+                    */
                 }
             ]
         });

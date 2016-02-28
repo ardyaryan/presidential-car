@@ -70,8 +70,7 @@ function getAllDrivers() {
                 return '<a class="btn delete-driver" data-id="' + row.id +'" style="color:red;"><i class="fa fa-remove"></i> Delete</a>';
                 }
             }
-        ]
-        ,
+        ],
     "footerCallback": function ( row, data, start, end, display ) {
         var api = this.api(), data;
 

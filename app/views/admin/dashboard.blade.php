@@ -39,10 +39,10 @@ Dashboard
 
 
 
-    <table cellpadding="10"   style="width: 100%;">
+    <table cellpadding="10"   style="width: 100%;    margin-left: -170px;">
                     <thead style="background-color: white">
-                        <th><h4 style="margin-left: 20px;">Cost vs. Profit</h4></th>
-                        <th><h4 style="margin-left: 20px;">Reprt Table</h4></th>
+                        <th><h4 style="margin-left: 20px;">Costs</h4></th>
+                        <th><h4 style="margin-left: 20px;">Report Table</h4></th>
                     </thead>
                     <tr>
                         <td style="padding: 20;" valign="top">
@@ -59,6 +59,8 @@ Dashboard
                                             <th>Total Time</th>
                                             <th>Total Fuel Cost</th>
                                             <th>Total Fuel Consumption</th>
+                                            <th>Total Payments</th>
+                                            <th>Total Other Payments</th>
                                         </tr>
                                     </thead>
                             </table>

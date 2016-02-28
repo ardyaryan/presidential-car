@@ -50,6 +50,16 @@ Payments
                         <th>Date</th>
                     </tr>
                 </thead>
+                <tfoot style="background-color: gainsboro;">
+                    <tr>
+                        <th colspan="1" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
             </table>
     </div>
 </div>
@@ -167,22 +177,22 @@ Payments
             </div>
             <div class="input-group form-group">
                   <span class="input-group-addon"><i class="fa "></i> Currency</span>
-                  <select class="selectpicker">
+                  <select class="selectpicker" name="new_currency" id="new_currency">
                     <option value="2">MAD</option>
                     <option value="1">US</option>
                   </select>
             </div>
 
             <div class="input-group form-group">
-                  <span class="input-group-addon"><i class="fa "></i> Driver</span>
-                  <select class="selectpicker" id="driver_list">
+                  <span class="input-group-addon"><i id="add_driver_select" class="fa fa-spin fa-spinner"></i> Driver</span>
+                  <select class="selectpicker" id="driver_list" name="new_driver" >
                   </select>
             </div>
           </div>
 
           <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-default" id="save_new_car">Save</button>
+                <button type="button" class="btn btn-default" id="save_new_payment">Save</button>
           </div>
 
     </div>

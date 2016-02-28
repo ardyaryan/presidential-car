@@ -10,7 +10,7 @@ class AdminController extends BaseController {
             if(Session::get('role') == Roles::DRIVER_ROLE) {
                 return Redirect::to('driver/newtrip');
             }else {
-                return Redirect::to('admin/viewtrips');
+                return Redirect::to('admin/dashboard');
             }
         }
 
@@ -75,6 +75,17 @@ class AdminController extends BaseController {
         
         return View::make('admin/carDetails')->with($results);
     }
+
+    public function driverDetails($id)
+    {
+
+        $driverDetails = $this->getDriverDetails($id);
+        $results = ['driverDetails' => $driverDetails['driver_details'], 'trips' => $driverDetails['trips'], 'fuelFillUps' => $driverDetails['fuel_fills']];
+
+        \Log::info(__METHOD__.' =======> $driverDetails : '.print_r($driverDetails, 1));
+
+        return View::make('admin/driverDetails')->with($results);
+    }
     
     public function getCarDetails($id) {
       
@@ -106,6 +117,38 @@ class AdminController extends BaseController {
        
        return ['car_details' => $car, 'trips' => $calculatedTrip, 'fuel_fills' => $fuelFills];
        
+    }
+
+    public function getDriverDetails($id) {
+
+        try{
+            $driver   = Driver::find($id)->toArray();
+            $trips = DailyTrips::where('user_id', '=', $driver['user_id'])->get()->toArray();
+            $fuelFills = FuelFillUp::where('user_id', '=', $driver['user_id'])->get()->toArray();
+            $calculatedTrip = [];
+
+            if(!is_null($trips)) {
+
+                foreach($trips as $trip) {
+
+                    $distance = $trip['arrival_km'] - $trip['departure_km'];
+
+                    $finalTrip = [
+                        'distance'          => $distance,
+                        'cost'              => $trip['trip_cost'],
+                        'currency'          => $trip['currency'],
+                        'date'              => date("Y-d-m",strtotime($trip['arrival_date_time']))
+                    ];
+                    array_push($calculatedTrip, $finalTrip);
+                }
+            }
+
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+        }
+
+        return ['driver_details' => $driver, 'trips' => $calculatedTrip, 'fuel_fills' => $fuelFills];
+
     }
 
     public function createNewUser()
@@ -279,18 +322,46 @@ class AdminController extends BaseController {
             unset($results[$key]['first']);
             unset($results[$key]['last']);
         }
-        Log::info(__METHOD__.print_r($results, 1));
+        //Log::info(__METHOD__.print_r($results, 1));
         return json_encode($results);
     }
 
     public function getPayments()
     {
-        $results = Payment::all()->toArray();
+        $to = Input::get('to');
+        $from = Input::get('from');
 
-        foreach ($results as $key => $payment) {
+        if($from == null || $to == null) {
+            $today = LocationController::getTime();
+            $todayFrom = $today['date'].' 00:00:00';
+            $todayTo = $today['date'].' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
 
-            $driver = Driver::where('user_id','=', $payment['user_id'])->first()->toArray();
-            $results[$key]['driver_name'] =  $driver['first'].' '.$driver['last'];
+        try{
+            $results = Payment::where('created_at','>', $todayFrom)
+                ->where('created_at','<', $todayTo)
+                //->orderBy('created_at')
+                ->get()
+                ->toArray();
+
+            if(!is_null($results)) {
+                foreach ($results as $key => $payment) {
+
+                    $driver = Driver::where('id','=', $payment['driver_id'])->first()->toArray();
+                    $currency = Currency::find($payment['currency'])->pluck('currency');
+                    $results[$key]['driver_name'] =  $driver['first'].' '.$driver['last'];
+                    $results[$key]['currency'] =  $currency;
+                }
+            }
+
+            $queries = DB::getQueryLog();
+            $last_query = end($queries);
+
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
         \Log::info(__METHOD__.print_r($results, 1));
         return json_encode($results);
@@ -304,7 +375,7 @@ class AdminController extends BaseController {
             $clients[$key]['price_per_min'] = round($client['price_per_km'], 3);
             $clients[$key]['us_dollar_exchange_rate'] = round($client['us_dollar_exchange_rate'], 3);
         }
-        \Log::info(__METHOD__.print_r($clients, 1));
+
         return json_encode($clients);
     }
 
@@ -606,6 +677,33 @@ class AdminController extends BaseController {
         return $result;
     }
 
+    public function savePayment() {
+
+        $amount     = Input::get('amount');
+        $other      = Input::get('other');
+        $currencyId = Input::get('currency');
+        $driverID   = Input::get('driver');
+
+        try {
+            $payment = new Payment;
+            $payment->amount = $amount;
+            $payment->other = $other;
+            $payment->currency = $currencyId;
+            $payment->driver_id = $driverID;
+
+            $payment->save();
+
+            $result = array('success' => true);
+
+        }catch(Exception $ex) {
+            \Log::error(__METHOD__ . ' | error :' . print_r($ex, 1));
+            $result = array('success' => false);
+        }
+        return $result;
+
+    }
+
+
     public function getEditedTripById() {
         $tripId = Input::get('trip_id');
 
@@ -776,7 +874,6 @@ class AdminController extends BaseController {
                 ->where('date_and_time','<', $todayTo)
                 ->orderBy('date_and_time')
                 ->get();
-
             $totalFuelCost = 0;
             $totalFuelAmount = 0;
             foreach($totalFuel as $Fuel) {
@@ -784,12 +881,25 @@ class AdminController extends BaseController {
                 $totalFuelAmount += $Fuel->amount;
             }
 
+            $totalPayments = 0;
+            $totalOther = 0;
+            $payments = Payment::where('created_at','>', $todayFrom)
+                ->where('created_at','<', $todayTo)
+                ->orderBy('created_at')
+                ->get();
+            foreach($payments as $payment) {
+                $totalPayments += $payment->amount;
+                $totalOther += $payment->other;
+            }
+
             $report = ['totalTripCounts' => $totalTripCount,
                         'totalTripCost'   => $totalTripCost,
                         'totalTripkm'     => $totalTripDistance,
                         'totalTripTime'   => $totalTripTime,
                         'totalFuelCost'   => $totalFuelCost,
-                        'totalFuelAmount' => $totalFuelAmount
+                        'totalFuelAmount' => $totalFuelAmount,
+                        'totalPayments'   => $totalPayments,
+                        'totalOther'      => $totalOther
             ];
             array_push($results, $report);
             /*

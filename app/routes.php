@@ -72,6 +72,7 @@ Route::get('/admin/viewtrips',      'AdminController@viewTrips');
 Route::get('/admin/newtrips',       'AdminController@newTrips');
 Route::get('/admin/viewcars',       'AdminController@viewCars');
 Route::get('/admin/cardetails/{id}','AdminController@carDetails');
+Route::get('/admin/driverdetails/{id}','AdminController@driverDetails');
 Route::get('/admin/viewpayments',   'AdminController@viewPayments');
 
 Route::post('/admin/login',         'AdminController@login');
@@ -104,7 +105,7 @@ Route::post('/admin/savecar',    'AdminController@saveCar');
 Route::post('/admin/savenewcar',    'AdminController@saveNewCar');
 Route::post('/admin/deletecar', 'AdminController@deleteCar');
 
-
+Route::post('/admin/savepayment',    'AdminController@savePayment');
 //-------------------DRIVER---------------------//
 
 Route::get('/driver/newtrip' ,'DriverController@newTrip');

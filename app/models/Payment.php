@@ -27,6 +27,6 @@ class Payment extends Eloquent {
      */
     protected $hidden = array('updated_at', 'deleted_at');
 
-    protected $filables = array('amount', 'other', 'currency', 'user_id');
+    protected $filables = array('amount', 'other', 'currency', 'driver_id');
 
 }

@@ -19,7 +19,7 @@ $(document).ready(function(){
                 if(data.success) {
                     console.log(data.payload.role);
                     if(data.payload.role == 'admin') {
-                        location.replace(data.payload.role +'/viewtrips');
+                        location.replace(data.payload.role +'/dashboard');
                     }else if(data.payload.role == 'driver') {
                         location.replace(data.payload.role +'/newtrip');
                     }
