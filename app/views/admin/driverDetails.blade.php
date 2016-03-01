@@ -5,7 +5,7 @@ List of Vehicles
 
 @section('body')
 
-<h3>View Vehicles Details</h3>
+<h3>View Driver Details</h3>
 
 <div id="carsContainer">
     <div id="mainContent">

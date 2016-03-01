@@ -48,6 +48,10 @@ class DriverController extends BaseController {
 
     public function saveNewTrip()
     {
+        if(!Session::get('logged')){
+            return Redirect::to('/');
+        };
+        
         $post = Input::all();
         /**
          * b : base fare
@@ -291,7 +295,7 @@ class DriverController extends BaseController {
         $departureAddress = Input::get('departure_address');
         $arrivalAddress = Input::get('destination_address');
 
-        $car = Cars::where('name', '=', substr($carName, 0, 2))->first();
+        $car = Cars::where('name', '=', substr($carName, 0, 3))->first();
         if($car instanceof Cars) {
             $carId = $car->id;
         }else {
@@ -304,8 +308,6 @@ class DriverController extends BaseController {
         }else {
             $clientId = '';
         }
-
-
 
         try {
             $myTrip = DailyTrips::find($tripId);
@@ -324,7 +326,6 @@ class DriverController extends BaseController {
             $myTripRevison->arrival_date_time   = $arrivalDateTime;
             $myTripRevison->departure_address   = $departureAddress;
             $myTripRevison->arrival_address     = $arrivalAddress;
-            $myTripRevison->trip_cost           = null;
 
             $myTripRevison->save();
 
