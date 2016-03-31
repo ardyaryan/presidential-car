@@ -56,6 +56,20 @@ $(document).ready(function () {
     $('#myModal').on('shown.bs.modal', function(e) {
         getAvailableCars();
     });
+
+    $('#custom_customer').on('click', function() {
+
+        var buttClass = $('#custom_customer i').attr('class');
+        if(buttClass == 'fa fa-plus') {
+            $('#custom_customer i').removeClass('fa fa-plus');
+            $('#custom_customer i').addClass('fa fa-minus');
+            $('#customer_details').slideDown();
+        } else {
+            $('#custom_customer i').removeClass('fa fa-minus');
+            $('#custom_customer i').addClass('fa fa-plus');
+            $('#customer_details').slideUp();
+        }
+    });
 });
 
 function getLocation() {
@@ -122,6 +136,16 @@ function saveTrip() {
     var errorMessage  = ($('#language_id').val() == 2) ? 'Erreur!' : 'There was a problem saving your trip!';
     var client        = $('#client_name').val();
     var customerName  = $('#customer_name').val();
+
+    var email  = $('#email').val();
+    var phone  = $('#phone').val();
+    var flatPrice  = $('#flat_price').val();
+    var dailyPrice  = $('#daily_price').val();
+    var hourlyPrice  = $('#hourly_price').val();
+    var base  = $('#base').val();
+    var perKm  = $('#per_km').val();
+    var perMin  = $('#per_min').val();
+
     var startKm     = $('#start_km').val();
     var endKm       = $('#end_km').val();
     var startAddr   = $('#departure_address').val();
@@ -135,6 +159,14 @@ function saveTrip() {
         data : {
                 client_id: client,
                 customer_name: customerName,
+                email: email,
+                phone: phone,
+                flat_price: flatPrice,
+                daily_price: dailyPrice,
+                hourly_price: hourlyPrice,
+                base: base,
+                per_km: perKm,
+                per_min: perMin,
                 departure_km: startKm,
                 departure_date_time: startTime,
                 arrival_km: endKm,

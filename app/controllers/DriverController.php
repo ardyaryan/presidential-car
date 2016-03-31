@@ -51,7 +51,7 @@ class DriverController extends BaseController {
         if(!Session::get('logged')){
             return Redirect::to('/');
         };
-        
+
         $post = Input::all();
         /**
          * b : base fare
@@ -62,6 +62,17 @@ class DriverController extends BaseController {
 
         $startKm    = $post['departure_km'];
         $endKm      = $post['arrival_km'];
+
+        $phone = $post['phone'];
+        $email = $post['email'];
+        $flatPrice = $post['flat_price'];
+        //$dailyPrice = $post['daily_price'];
+        $hourlyPrice = $post['hourly_price'];
+
+        $base = $post['base'];
+        $perKm = $post['per_km'];
+        $perMin = $post['per_min'];
+
         $tripKm     = $endKm - $startKm;
 
         $startTime  = strtotime($post['departure_date_time']);
@@ -69,15 +80,32 @@ class DriverController extends BaseController {
         $tripTime   = ($endTime - $startTime) / 60;
 
         $clientId   = $post['client_id'];
-        try{
-            $client     = Client::find($clientId);
-            $baseFare   = $client->base;
-            $costPerKm  = $client->price_per_km;
-            $costPerMin = $client->price_per_min;
-            $currency   = $client->currency;
 
-        }catch (Exception $ex){
-            \Log::error(__METHOD__.' | error : '.print_r($ex, 1));
+        if (!empty($clientId)) {
+            try{
+                $client     = Client::find($clientId);
+                $baseFare   = $client->base;
+                $costPerKm  = $client->price_per_km;
+                $costPerMin = $client->price_per_min;
+                $currency   = $client->currency;
+
+            }catch (Exception $ex){
+                \Log::error(__METHOD__.' | error : '.print_r($ex, 1));
+            }
+        }
+
+        if (!empty($base) && !empty($perKm) && !empty($perMin)) {
+            $baseFare = $base;
+            $costPerKm = $perKm;
+            $costPerMin = $perMin;
+        }
+
+        if (!empty($flatPrice)) {
+            $tripCost = $flatPrice;
+        }
+
+        if (!empty($hourlyPrice)) {
+            $tripCost = $tripTime * ( $hourlyPrice / 60 );
         }
 
         $tripCost = $baseFare + ($costPerKm * $tripKm) + ($costPerMin * $tripTime);
@@ -107,6 +135,9 @@ class DriverController extends BaseController {
                 \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
                 $result = array('success' => false, 'message' => 'an error occurred');
             }
+
+            mail($phone . '@vtext.com', "", "Your packaged has arrived!", "From: Presidential Car <david@davidwalsh.name>\r\n");
+
             return $result;
         }
     }

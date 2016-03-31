@@ -18,6 +18,7 @@ Daily Trips
         <span class="input-group-addon"><i class="fa fa-user"></i>{{(Session::get('lid') == 2) ? ' Client' : ' Client' }}</span>
         <select id="client_name" class="selectpicker form-group input-group" data-width="auto">
             @foreach($clients as $client)
+                <option value=""> -- Select</option>
                 <option value="{{$client['id']}}">{{$client['name']}}</option>
             @endforeach
         </select>
@@ -26,6 +27,45 @@ Daily Trips
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-user"></i>{{(Session::get('lid') == 2) ? ' Le Nom' : ' Customer\'s Name' }}</span>
         <input type="text" class="form-control" id="customer_name" name="customer_name">
+        <span class="input-group-btn">
+            <button type="button" id="custom_customer" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;</button>
+        </span>
+    </div>
+
+    <div style="display: none;" id="customer_details">
+        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
+            <span class="input-group-addon"><i class="fa fa-envelope-o"></i> Email Address:</span>
+            <input type="email" class="form-control" id="email" name="email">
+        </div>
+
+        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
+            <span class="input-group-addon"><i class="fa fa-phone"></i> Cellphone Number:</span>
+            <input type="number" class="form-control" id="phone" name="phone">
+        </div>
+
+        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
+            <span class="input-group-addon"><i class="fa fa-usd"></i> Flat Price:</span>
+            <input type="number" class="form-control" id="flat_price" name="flat_price">
+        </div>
+
+        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
+            <span class="input-group-addon"><i class="fa fa-usd"></i> Daily Price:</span>
+            <input type="number" class="form-control" id="daily_price" name="daily_price">
+        </div>
+
+        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
+            <span class="input-group-addon"><i class="fa fa-usd"></i> Hourly Price:</span>
+            <input type="number" class="form-control" id="hourly_price" name="hourly_price">
+        </div>
+
+        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
+            <span class="input-group-addon"><i class="fa fa-usd"></i> Base:</span>
+            <input type="number" class="form-control" id="base" name="base">
+            <span class="input-group-addon"><i class="fa fa-usd"></i> Per Km:</span>
+            <input type="number" class="form-control" id="per_km" name="per_km">
+            <span class="input-group-addon"><i class="fa fa-usd"></i> Per Min:</span>
+            <input type="number" class="form-control" id="per_min" name="per_min">
+        </div>
     </div>
 
     <div class="input-group form-group">
