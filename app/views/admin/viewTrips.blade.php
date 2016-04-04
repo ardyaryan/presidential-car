@@ -42,6 +42,8 @@ View Daily Trips
                         <th>Car</th>
                         <th>Client</th>
                         <th>Customer</th>
+                        <th>Email</th>
+                        <th>Phone</th>
                         <th>Departure Time</th>
                         <th>Arrival Time</th>
                         <th>Departure Address</th>
@@ -98,6 +100,18 @@ View Daily Trips
                 <input type="text" class="form-control input-group" id="customer_name" name="customer_name">
                 <span class="input-group-addon"><i class="fa fa-user"></i> Edited</span>
                 <input type="text" class="form-control input-group" id="edited_customer_name" name="edited_customer_name">
+            </div>
+            <div class="form-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i> Customer's Email</span>
+                <input type="text" class="form-control input-group" id="customer_email" name="customer_email">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i> Edited</span>
+                <input type="text" class="form-control input-group" id="edited_customer_email" name="edited_customer_email">
+            </div>
+            <div class="form-group">
+                <span class="input-group-addon"><i class="fa fa-phone"></i> Customer's Phone</span>
+                <input type="text" class="form-control input-group" id="customer_phone" name="customer_phone">
+                <span class="input-group-addon"><i class="fa fa-phone"></i> Edited</span>
+                <input type="text" class="form-control input-group" id="edited_customer_phone" name="edited_customer_phone">
             </div>
             <div class="form-group">
                 <span class="input-group-addon"><i class="fa fa-tachometer"></i> Start Km</span>

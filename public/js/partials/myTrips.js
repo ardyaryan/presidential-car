@@ -44,6 +44,8 @@ function editTripModal(tripId) {
             $('#trip_id').val(tripId);
             $('#client').val(data.client_name);
             $('#customer_name').val(data.customer_name);
+            $('#customer_email').val(data.customer_email);
+            $('#customer_phone').val(data.customer_phone);
             $('#start_km').val(data.departure_km);
             $('#end_km').val(data.arrival_km);
             $('#start_time').val(data.departure_date_time);
@@ -96,6 +98,8 @@ function requestRevision(tripId) {
     var car = $('#car').val();
     var client = $('#client').val();
     var customerName = $('#customer_name').val();
+    var customerEmail = $('#customer_email').val();
+    var customerPhone = $('#customer_phone').val();
     var startKm = $('#start_km').val();
     var endKm = $('#end_km').val();
     var startTime = $('#start_time').val();
@@ -111,6 +115,8 @@ function requestRevision(tripId) {
             car : car,
             client : client,
             customer_name : customerName,
+            customer_email : customerEmail,
+            customer_phone : customerPhone,
             start_km : startKm,
             end_km : endKm,
             start_time : startTime,

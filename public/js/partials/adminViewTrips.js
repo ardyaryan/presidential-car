@@ -77,6 +77,8 @@ function getDailyTrips() {
             {"data" : "car"},
             {"data" : "client"},
             {"data" : "customer"},
+            {"data" : "customer_email"},
+            {"data" : "customer_phone"},
             {"data" : "departure_time"},
             {"data" : "arrival_time"},
             {"data" : "departure_address"},
@@ -146,6 +148,8 @@ function editTrip(tripId) {
                 var editedTrip = data.trip.edited_trip;
                 var originalTrip = data.trip.original_trip;
                 $('#customer_name').val(originalTrip.customer_name);
+                $('#customer_email').val(originalTrip.customer_email);
+                $('#customer_phone').val(originalTrip.customer_phone);
                 $('#start_km').val(originalTrip.departure_km);
                 $('#end_km').val(originalTrip.arrival_km);
                 $('#start_time').val(originalTrip.departure_date_time);
@@ -156,6 +160,14 @@ function editTrip(tripId) {
                 $('#edited_customer_name').val(editedTrip.customer_name);
                 if(originalTrip.customer_name != editedTrip.customer_name){
                     $('#edited_customer_name').css('background-color', '#FFAAAA')
+                }
+                $('#edited_customer_email').val(editedTrip.customer_email);
+                if(originalTrip.customer_email != editedTrip.customer_email){
+                    $('#edited_customer_email').css('background-color', '#FFAAAA')
+                }
+                $('#edited_customer_phone').val(editedTrip.customer_phone);
+                if(originalTrip.customer_phone != editedTrip.customer_phone){
+                    $('#edited_customer_phone').css('background-color', '#FFAAAA')
                 }
                 $('#edited_start_km').val(editedTrip.departure_km);
                 if(originalTrip.departure_km != editedTrip.departure_km){
@@ -200,26 +212,30 @@ function editTrip(tripId) {
 function saveEditedTrip() {
 
     var tripId = $('#edit_trip_id').val();
-    var $editedCustomerName = $('#edited_customer_name').val();
-    var $edited_start_km = $('#edited_start_km').val();
-    var $edited_end_km = $('#edited_end_km').val();
-    var $edited_start_time = $('#edited_start_time').val();
-    var $edited_end_time = $('#edited_end_time').val();
-    var $edited_departure_address = $('#edited_departure_address').val();
-    var $edited_destination_address = $('#edited_destination_address').val();
+    var editedCustomerName = $('#edited_customer_name').val();
+    var editedCustomerEmail = $('#edited_customer_email').val();
+    var editedCustomerPhone = $('#edited_customer_phone').val();
+    var edited_start_km = $('#edited_start_km').val();
+    var edited_end_km = $('#edited_end_km').val();
+    var edited_start_time = $('#edited_start_time').val();
+    var edited_end_time = $('#edited_end_time').val();
+    var edited_departure_address = $('#edited_departure_address').val();
+    var edited_destination_address = $('#edited_destination_address').val();
 
     $.ajax({
         url : "saveeditedtrip",
         type: "POST",
         data : {
             trip_id: tripId,
-            edited_customer_name: $editedCustomerName,
-            edited_start_km: $edited_start_km,
-            edited_end_km: $edited_end_km,
-            edited_start_time: $edited_start_time,
-            edited_end_time: $edited_end_time,
-            edited_departure_address: $edited_departure_address,
-            edited_destination_address: $edited_destination_address
+            edited_customer_name: editedCustomerName,
+            edited_customer_email: editedCustomerEmail,
+            edited_customer_phome: editedCustomerPhone,
+            edited_start_km: edited_start_km,
+            edited_end_km: edited_end_km,
+            edited_start_time: edited_start_time,
+            edited_end_time: edited_end_time,
+            edited_departure_address: edited_departure_address,
+            edited_destination_address: edited_destination_address
         },
         beforeSend: function(){
             $('#accept_edited_trip').append(' <span class="fa fa-spin fa-spinner"></span>');

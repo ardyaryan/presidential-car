@@ -40,6 +40,9 @@ $(document).ready(function () {
     });
 
     $('#save_trip').on('click', function() {
+        if(!validate()) {
+            return;
+        }
         saveTrip();
         setTimeout(function(){ location.reload()}, 4000);
         $('#save_trip').attr('disabled', true);
@@ -137,14 +140,14 @@ function saveTrip() {
     var client        = $('#client_name').val();
     var customerName  = $('#customer_name').val();
 
-    var email  = $('#email').val();
-    var phone  = $('#phone').val();
-    var flatPrice  = $('#flat_price').val();
+    var email       = $('#customer_email').val();
+    var phone       = $('#customer_phone').val();
+    var flatPrice   = $('#flat_price').val();
     var dailyPrice  = $('#daily_price').val();
-    var hourlyPrice  = $('#hourly_price').val();
-    var base  = $('#base').val();
-    var perKm  = $('#per_km').val();
-    var perMin  = $('#per_min').val();
+    var hourlyPrice = $('#hourly_price').val();
+    var base        = $('#base').val();
+    var perKm       = $('#per_km').val();
+    var perMin      = $('#per_min').val();
 
     var startKm     = $('#start_km').val();
     var endKm       = $('#end_km').val();
@@ -258,4 +261,62 @@ function replaceCar(carId) {
             console.log(data);
         }
     });
+}
+
+function validate() {
+    var clientName = $('#client_name').val();
+    var email        = $('#customer_email').val();
+    var phone        = $('#customer_phone').val();
+    var flatPrice    = $('#flat_price').val();
+    var dailyPrice   = $('#daily_price').val();
+    var hourlyPrice  = $('#hourly_price').val();
+    var base         = $('#base').val();
+    var perKm        = $('#per_km').val();
+    var perMin       = $('#per_min').val();
+
+    var customContactCheck = false;
+    if (email != '' && phone != '') {
+        customContactCheck = true;
+    }
+
+    var customRateCheck = false;
+    if (clientName == '') {
+        if (flatPrice == '') {
+            if (dailyPrice == '') {
+                if (hourlyPrice == '') {
+                    if (base == '' && perKm == '' && perMin == '') {
+                        $('#client_name_div').css({border: 'solid', color :'#FFB0A2'});
+                        customRateCheck = false;
+                    } else {
+                        customRateCheck = true;
+                    }
+                } else {
+                    customRateCheck = true;
+                }
+            } else {
+                customRateCheck = true;
+            }
+        } else {
+            customRateCheck = true;
+        }
+    } else {
+        $('#client_name_div').css({border: '', color :''});
+        customRateCheck = true;
+    }
+
+    if (customContactCheck) {
+        $('#customer_email, #customer_phone,#client_name').css('background-color', '');
+        if (customRateCheck) {
+            $('#flat_price, #daily_price, #daily_price, #hourly_price, #base, #per_km, #per_min').css('background-color', '');
+            return true;
+        } else {
+            $('#flat_price, #daily_price, #daily_price, #hourly_price, #base, #per_km, #per_min').css('background-color', '#FFB0A2');
+            return false;
+        }
+    } else {
+        $('#customer_email, #customer_phone').css('background-color', '#FFB0A2');
+        return false;
+    }
+
+
 }

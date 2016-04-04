@@ -258,6 +258,8 @@ class AdminController extends BaseController {
                         'car'               => $car->name,
                         'client'            => $client->name,
                         'customer'          => $trip->customer_name,
+                        'customer_email'    => $trip->customer_email,
+                        'customer_phone'    => $trip->customer_phone,
                         'departure_time'    => date("H:i:s",strtotime($trip->departure_date_time)),
                         'arrival_time'      => date("H:i:s",strtotime($trip->arrival_date_time)),
                         'departure_address' => $trip->departure_address,
@@ -726,6 +728,8 @@ class AdminController extends BaseController {
     public function saveEditedTrip() {
         $tripId = Input::get('trip_id');
         $edited_customer_name = Input::get('edited_customer_name');
+        $edited_customer_email = Input::get('edited_customer_email');
+        $edited_customer_phone = Input::get('edited_customer_phone');
         $edited_start_km = Input::get('edited_start_km');
         $edited_end_km = Input::get('edited_end_km');
         $edited_start_time = Input::get('edited_start_time');
@@ -739,6 +743,8 @@ class AdminController extends BaseController {
             $originalTrip = DailyTrips::find($tripId);
 
             $originalTrip->customer_name = $edited_customer_name;
+            $originalTrip->customer_email = $edited_customer_email;
+            $originalTrip->customer_phone = $edited_customer_phone;
             $originalTrip->departure_km = $edited_start_km;
             $originalTrip->arrival_km = $edited_end_km;
             $originalTrip->departure_date_time = $edited_start_time;

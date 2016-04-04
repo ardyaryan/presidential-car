@@ -66,7 +66,7 @@ class DriverController extends BaseController {
         $phone = $post['phone'];
         $email = $post['email'];
         $flatPrice = $post['flat_price'];
-        //$dailyPrice = $post['daily_price'];
+        $dailyPrice = $post['daily_price'];
         $hourlyPrice = $post['hourly_price'];
 
         $base = $post['base'];
@@ -108,6 +108,10 @@ class DriverController extends BaseController {
             $tripCost = $tripTime * ( $hourlyPrice / 60 );
         }
 
+        if (!empty($daily1Price)) {
+            $tripCost = $tripTime * ( $dailyPrice / (24 * 60) );
+        }
+
         $tripCost = $baseFare + ($costPerKm * $tripKm) + ($costPerMin * $tripTime);
 
         if($post != null) {
@@ -117,6 +121,8 @@ class DriverController extends BaseController {
                 $newDailyTrip->car_id              = Session::get('car_id');
                 $newDailyTrip->client_id           = $clientId;
                 $newDailyTrip->customer_name       = $post['customer_name'];
+                $newDailyTrip->customer_email      = $post['email'];
+                $newDailyTrip->customer_phone      = $post['phone'];
                 $newDailyTrip->departure_km        = $startKm;
                 $newDailyTrip->departure_date_time = $post['departure_date_time'];
                 $newDailyTrip->arrival_km          = $endKm;
@@ -319,6 +325,8 @@ class DriverController extends BaseController {
         $carName = Input::get('car');
         $clientName = Input::get('client');
         $customerName = Input::get('customer_name');
+        $customerEmail = Input::get('customer_email');
+        $customerPhone = Input::get('customer_phone');
         $departureKm = Input::get('start_km');
         $arrivalKm = Input::get('end_km');
         $departureDateTime = Input::get('start_time');
@@ -351,6 +359,8 @@ class DriverController extends BaseController {
             $myTripRevison->car_id              = $carId;
             $myTripRevison->client_id           = $clientId;
             $myTripRevison->customer_name       = $customerName;
+            $myTripRevison->customer_email      = $customerEmail;
+            $myTripRevison->customer_phone      = $customerPhone;
             $myTripRevison->departure_km        = $departureKm;
             $myTripRevison->departure_date_time = $departureDateTime;
             $myTripRevison->arrival_km          = $arrivalKm;

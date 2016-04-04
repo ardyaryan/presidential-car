@@ -60,6 +60,17 @@ Daily Trips
                 <span class="input-group-addon"><i class="fa fa-user"></i> Customer's Name</span>
                 <input type="text" class="form-control input-group" id="customer_name" name="customer_name">
             </div>
+
+            <div class="input-group form-group">
+                <span class="input-group-addon"><i class="fa fa-envelope-o"></i> Email Address:</span>
+                <input type="email" class="form-control" id="customer_email" name="customer_email">
+            </div>
+
+            <div class="input-group form-group">
+                <span class="input-group-addon"><i class="fa fa-phone"></i> Cellphone Number:</span>
+                <input type="number" class="form-control" id="customer_phone" name="customer_phone">
+            </div>
+
             <div class="input-group form-group">
                 <span class="input-group-addon"><i class="fa fa-tachometer"></i> Start Km</span>
                 <input type="text" class="form-control input-group" id="start_km" name="start_km">

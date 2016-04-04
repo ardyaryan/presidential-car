@@ -14,7 +14,7 @@ Daily Trips
              <button type="button" id="change_car" class="btn btn-default" data-toggle="modal" data-target="#myModal" ><i class="fa fa-pencil"></i>{{(Session::get('lid') == 2) ? ' Changer' : ' Change' }}</button>
         </span>
     </div>
-    <div class="input-group form-group">
+    <div class="input-group form-group" id="client_name_div">
         <span class="input-group-addon"><i class="fa fa-user"></i>{{(Session::get('lid') == 2) ? ' Client' : ' Client' }}</span>
         <select id="client_name" class="selectpicker form-group input-group" data-width="auto">
             @foreach($clients as $client)
@@ -22,50 +22,50 @@ Daily Trips
                 <option value="{{$client['id']}}">{{$client['name']}}</option>
             @endforeach
         </select>
-    </div>
-
-    <div class="input-group form-group">
-        <span class="input-group-addon"><i class="fa fa-user"></i>{{(Session::get('lid') == 2) ? ' Le Nom' : ' Customer\'s Name' }}</span>
-        <input type="text" class="form-control" id="customer_name" name="customer_name">
         <span class="input-group-btn">
             <button type="button" id="custom_customer" class="btn btn-default"><i class="fa fa-plus"></i>&nbsp;</button>
         </span>
     </div>
 
     <div style="display: none;" id="customer_details">
-        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
-            <span class="input-group-addon"><i class="fa fa-envelope-o"></i> Email Address:</span>
-            <input type="email" class="form-control" id="email" name="email">
-        </div>
-
-        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
-            <span class="input-group-addon"><i class="fa fa-phone"></i> Cellphone Number:</span>
-            <input type="number" class="form-control" id="phone" name="phone">
-        </div>
-
-        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
-            <span class="input-group-addon"><i class="fa fa-usd"></i> Flat Price:</span>
+        <div class="input-group form-group" >
+            <span class="input-group-addon" style="background-color:#A9F5A9"><i class="fa fa-usd"></i> Flat Price:</span>
             <input type="number" class="form-control" id="flat_price" name="flat_price">
         </div>
 
-        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
-            <span class="input-group-addon"><i class="fa fa-usd"></i> Daily Price:</span>
+        <div class="input-group form-group" >
+            <span class="input-group-addon" style="background-color:#F3F781"><i class="fa fa-usd"></i> Daily Price:</span>
             <input type="number" class="form-control" id="daily_price" name="daily_price">
         </div>
 
-        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
-            <span class="input-group-addon"><i class="fa fa-usd"></i> Hourly Price:</span>
+        <div class="input-group form-group" >
+            <span class="input-group-addon" style="background-color:#58FAF4"><i class="fa fa-usd"></i> Hourly Price:</span>
             <input type="number" class="form-control" id="hourly_price" name="hourly_price">
         </div>
 
-        <div class="input-group form-group" style="width: 60%;margin-left: 40%;">
-            <span class="input-group-addon"><i class="fa fa-usd"></i> Base:</span>
+        <div class="input-group form-group" >
+            <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Base:</span>
             <input type="number" class="form-control" id="base" name="base">
-            <span class="input-group-addon"><i class="fa fa-usd"></i> Per Km:</span>
+            <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Per Km:</span>
             <input type="number" class="form-control" id="per_km" name="per_km">
-            <span class="input-group-addon"><i class="fa fa-usd"></i> Per Min:</span>
+            <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Per Min:</span>
             <input type="number" class="form-control" id="per_min" name="per_min">
         </div>
+    </div>
+
+    <div class="input-group form-group">
+        <span class="input-group-addon"><i class="fa fa-user"></i>{{(Session::get('lid') == 2) ? ' Le Nom' : ' Customer\'s Name' }}</span>
+        <input type="text" class="form-control" id="customer_name" name="customer_name">
+    </div>
+
+    <div class="input-group form-group">
+        <span class="input-group-addon"><i class="fa fa-envelope-o"></i> Email Address:</span>
+        <input type="email" class="form-control" id="customer_email" name="customer_email">
+    </div>
+
+    <div class="input-group form-group">
+        <span class="input-group-addon"><i class="fa fa-phone"></i> Cellphone Number:</span>
+        <input type="number" class="form-control" id="customer_phone" name="customer_phone">
     </div>
 
     <div class="input-group form-group">
