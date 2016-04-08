@@ -42,8 +42,8 @@
       <file leaf-file-name="DriverController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/controllers/DriverController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.185184" vertical-offset="3145" max-vertical-offset="8298">
-              <caret line="199" column="15" selection-start-line="199" selection-start-column="15" selection-end-line="199" selection-end-column="15" />
+            <state vertical-scroll-proportion="-24.185184" vertical-offset="3145" max-vertical-offset="8298">
+              <caret line="211" column="0" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
               <folding>
                 <marker date="1460142230072" expanded="true" signature="10024:10275" placeholder="SELECT car_i..id..." />
                 <marker date="1460142230072" expanded="true" signature="10073:10212" placeholder="SELECT cars...cars..." />
@@ -55,8 +55,8 @@
       <file leaf-file-name="mail.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/config/mail.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.24856156" vertical-offset="324" max-vertical-offset="2340">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            <state vertical-scroll-proportion="0.8342923" vertical-offset="1471" max-vertical-offset="2340">
+              <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -125,7 +125,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/admin/newTrips.blade.php" />
         <option value="$PROJECT_DIR$/app/views/admin/login.blade.php" />
         <option value="$PROJECT_DIR$/public/css/lib/landing-page.css" />
         <option value="$PROJECT_DIR$/app/models/FuelFillUp.php" />
@@ -176,6 +175,7 @@
         <option value="$PROJECT_DIR$/public/js/partials/sendEmail.js" />
         <option value="$PROJECT_DIR$/app/views/driver/emailForm.blade.php" />
         <option value="$PROJECT_DIR$/app/controllers/DriverController.php" />
+        <option value="$PROJECT_DIR$/app/config/mail.php" />
       </list>
     </option>
   </component>
@@ -967,8 +967,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/controllers/DriverController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.185184" vertical-offset="3145" max-vertical-offset="8298">
-          <caret line="199" column="15" selection-start-line="199" selection-start-column="15" selection-end-line="199" selection-end-column="15" />
+        <state vertical-scroll-proportion="-24.185184" vertical-offset="3145" max-vertical-offset="8298">
+          <caret line="211" column="0" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
           <folding>
             <marker date="1460142230072" expanded="true" signature="10024:10275" placeholder="SELECT car_i..id..." />
             <marker date="1460142230072" expanded="true" signature="10073:10212" placeholder="SELECT cars...cars..." />
@@ -978,8 +978,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/config/mail.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.24856156" vertical-offset="324" max-vertical-offset="2340">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        <state vertical-scroll-proportion="0.8342923" vertical-offset="1471" max-vertical-offset="2340">
+          <caret line="122" column="0" selection-start-line="122" selection-start-column="0" selection-end-line="122" selection-end-column="0" />
           <folding />
         </state>
       </provider>
