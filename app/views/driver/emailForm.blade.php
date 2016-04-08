@@ -4,7 +4,7 @@ Daily Trips
 @stop
 
 @section('body')
-<h3>'Send email/message:'</h3>
+<h3>Send Email/message:</h3>
 <div>
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-envelope-o"></i> Email Address:</span>

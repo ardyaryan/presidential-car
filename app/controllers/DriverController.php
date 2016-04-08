@@ -199,11 +199,11 @@ class DriverController extends BaseController {
             // checking if its dev box
             $url = url();
             if( $url != 'http://localhost/presidential-car') {
-                $messageController->sendGenericEmail($phone, $message);
+                $messageController->sendGenericSmsToNumber($phone, $message);
                 \Log::info(__METHOD__ . ' | ======== Message Sent: ' . print_r($phone . ' Message: ' . $message, 1));
             }
             if( $url != 'http://localhost/presidential-car') {
-                $messageController->sendGenericSmsToNumber($email, $message);
+                $messageController->sendGenericEmail($email, $message);
                 \Log::info(__METHOD__ . ' | ======== Email Sent: ' . print_r($email . ' Message: ' . $message, 1));
             }
             $result = array('success' => true, 'message' => 'Email Send successfully');
