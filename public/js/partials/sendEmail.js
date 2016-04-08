@@ -2,7 +2,6 @@ $(document).ready(function () {
 
     $('#send').on('click', function() {
         sendEmail();
-        //setTimeout(function(){ location.reload()}, 4000);
         $('#send').attr('disabled', true);
     });
 
@@ -34,11 +33,13 @@ function sendEmail() {
                 $('#alert').addClass('alert alert-danger');
                 $('#alert').html('there was an error');
                 $('#alert').show();
+                setTimeout(function(){ location.reload()}, 1000);
             }else {
                 $('#send').html('<span class="fa fa-check-square"></span>' + buttonName + '');
                 $('#alert').addClass('alert alert-success');
                 $('#alert').html('message/ email sent successfully');
                 $('#alert').show();
+                setTimeout(function(){ location.reload()}, 4000);
             }
 
         },

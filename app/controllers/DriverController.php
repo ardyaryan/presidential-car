@@ -1,5 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
+//use App\User;
+use Symfony\Component\Security\Core\User\User;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Tests\Controller;
+//use App\Http\Controllers\Controller;
+
 class DriverController extends BaseController {
 
     public function logout()
@@ -185,37 +192,26 @@ class DriverController extends BaseController {
         }
     }
 
+    /**
+     * this function is only created to test Mailgun ,the route is : {domain}/driver/showemailform
+     * @return array
+     */
     public function sendEmail()
     {
         try {
+
             $post = Input::all();
-            \Log::info(__METHOD__ . ' | ================= POST : ' . print_r($post, 1));
             $phone = $post['phone'];
             $email = $post['email'];
-            $message = $post['message'];
+            $messageBody = $post['message'];
 
-            $messageController = new CommunicationController();
-            Mail::send('Email.test', [], function ($message) {
-                $message->to('ardy.aryan@gmail.com', 'example_name')->subject('Welcome!');
-            });
-            // checking if its dev box
-            $url = url();
-            if( $url != 'http://localhost/presidential-car') {
-                $messageController->sendGenericSmsToNumber($phone, $message);
-                Mail::send('Email.test', [], function ($message) {
-                    $message->to('ardy.aryan@gmail.com', 'example_name')->subject('Welcome!');
-                });
-                \Log::info(__METHOD__ . ' | ======== Message Sent: ' . print_r($phone . ' Message: ' . $message, 1));
-            }
-            if( $url != 'http://localhost/presidential-car') {
-                $messageController->sendGenericEmail($email, $message);
+            CommunicationController::sendEmail($email,$messageBody,'emails/test');
+            CommunicationController::sendSmsToNumber($phone, $messageBody);
 
-                \Log::info(__METHOD__ . ' | ======== Email Sent: ' . print_r($email . ' Message: ' . $message, 1));
-            }
             $result = array('success' => true, 'message' => 'Email Send successfully');
 
         } catch(Exception $ex) {
-            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            \Log::error(__METHOD__.' | error :' . $ex);
             $result = array('success' => false, 'message' => 'an error occurred');
         }
         return $result;

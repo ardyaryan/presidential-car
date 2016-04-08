@@ -15,8 +15,8 @@ return array(
 	*/
 
 	'mailgun' => array(
-		'domain' => '',
-		'secret' => '',
+		'domain' => 'sandbox9b6b31f53c0a490daadd2c33187e9b0b.mailgun.org',
+		'secret' => 'key-c271cbd8f33376319b688e5d3c1b0b3f',
 	),
 
 	'mandrill' => array(

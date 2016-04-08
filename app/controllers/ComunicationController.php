@@ -3,30 +3,27 @@
 class CommunicationController extends BaseController {
 
     const PROVIDER_SMS_EMAIL = '@vtext.com';
+    const COMPANY_FROM_EMAIL = 'do-not-reply@presidential-car.com';
+    const COMPANY_FROM_NAME = 'Presidential Car';
 
     public function __construct($cost = 0, $currency = '$') {
         $this->messageBody = 'Your trip with Presidential Car cost: ' . $currency . ' ' . round($cost, 2);
     }
 
-    public function sendSmsToNumber($phoneNumber)
+    public static function sendSmsToNumber($phoneNumber, $messageBody)
     {
-
-        mail($phoneNumber . static::PROVIDER_SMS_EMAIL, '', $this->messageBody);
+        Mail::send('emails.sms', ['messageBody' => $messageBody], function ($message) use ($phoneNumber){
+            $message->from(static::COMPANY_FROM_EMAIL, static::COMPANY_FROM_NAME);
+            $message->to($phoneNumber . static::PROVIDER_SMS_EMAIL, 'something')->subject('');
+        });
     }
 
-    public function sendEmail($email)
+    public static function sendEmail($email, $messageBody, $emailView, $subject = 'Test Email')
     {
-        mail($email, 'Presidential Car Trip', $this->messageBody);
-    }
-
-    public function sendGenericSmsToNumber($phoneNumber, $messageBody)
-    {
-        mail($phoneNumber . static::PROVIDER_SMS_EMAIL, '', $messageBody);
-    }
-
-    public function sendGenericEmail($email, $messageBody)
-    {
-        mail($email, 'Presidential Car Trip', $messageBody);
+        Mail::send($emailView, ['messageBody' => $messageBody], function ($message) use ($email, $subject) {
+            $message->from(static::COMPANY_FROM_EMAIL, static::COMPANY_FROM_NAME);
+            $message->to($email, '')->subject($subject);
+        });
     }
 
 }

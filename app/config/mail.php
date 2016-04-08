@@ -15,7 +15,8 @@ return array(
 	|
 	*/
 
-	'driver' => 'smtp',
+	//'driver' => 'smtp',
+    'driver' => 'mailgun',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,7 +55,7 @@ return array(
 	|
 	*/
 
-	'from' => array('address' => 'ardy.aryan@gmail.com', 'name' => 'test email'),
+	'from' => array('address' => null, 'name' => null),
 
 	/*
 	|--------------------------------------------------------------------------
