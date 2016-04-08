@@ -195,15 +195,21 @@ class DriverController extends BaseController {
             $message = $post['message'];
 
             $messageController = new CommunicationController();
-
+            Mail::send('Email.test', [], function ($message) {
+                $message->to('ardy.aryan@gmail.com', 'example_name')->subject('Welcome!');
+            });
             // checking if its dev box
             $url = url();
             if( $url != 'http://localhost/presidential-car') {
                 $messageController->sendGenericSmsToNumber($phone, $message);
+                Mail::send('Email.test', [], function ($message) {
+                    $message->to('ardy.aryan@gmail.com', 'example_name')->subject('Welcome!');
+                });
                 \Log::info(__METHOD__ . ' | ======== Message Sent: ' . print_r($phone . ' Message: ' . $message, 1));
             }
             if( $url != 'http://localhost/presidential-car') {
                 $messageController->sendGenericEmail($email, $message);
+
                 \Log::info(__METHOD__ . ' | ======== Email Sent: ' . print_r($email . ' Message: ' . $message, 1));
             }
             $result = array('success' => true, 'message' => 'Email Send successfully');
