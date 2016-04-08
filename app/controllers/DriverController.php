@@ -31,6 +31,15 @@ class DriverController extends BaseController {
             ->with('clients' , $clients);
     }
 
+    public function showEmailForm()
+    {
+        if(!Session::get('logged')){
+            return Redirect::to('/');
+        }
+
+        return View::make('driver/emailForm');
+    }
+
     public function myFuelTank()
     {
         $carId = Session::get('car_id');
@@ -174,6 +183,36 @@ class DriverController extends BaseController {
 
             return $result;
         }
+    }
+
+    public function sendEmail()
+    {
+        try {
+            $post = Input::all();
+            \Log::info(__METHOD__ . ' | ================= POST : ' . print_r($post, 1));
+            $phone = $post['phone'];
+            $email = $post['email'];
+            $message = $post['message'];
+
+            $messageController = new CommunicationController();
+
+            // checking if its dev box
+            $url = url();
+            if( $url != 'http://localhost/presidential-car') {
+                $messageController->sendGenericEmail($phone, $message);
+                \Log::info(__METHOD__ . ' | ======== Message Sent: ' . print_r($phone . ' Message: ' . $message, 1));
+            }
+            if( $url != 'http://localhost/presidential-car') {
+                $messageController->sendGenericSmsToNumber($email, $message);
+                \Log::info(__METHOD__ . ' | ======== Email Sent: ' . print_r($email . ' Message: ' . $message, 1));
+            }
+            $result = array('success' => true, 'message' => 'Email Send successfully');
+
+        } catch(Exception $ex) {
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+            $result = array('success' => false, 'message' => 'an error occurred');
+        }
+        return $result;
     }
 
     public function saveFuelFillUp()

@@ -112,6 +112,7 @@ Route::get('/driver/newtrip' ,'DriverController@newTrip');
 Route::get('/driver/logout' ,'DriverController@logout');
 Route::get('/driver/mytrips', 'DriverController@myTrips');
 Route::get('/driver/myfueltank', 'DriverController@myFuelTank');
+Route::get('/driver/showemailform', 'DriverController@showEmailForm');
 
 Route::post('/driver/getlocation' ,'LocationController@getLocation');
 Route::post('/driver/gettime' ,'LocationController@getTime');
@@ -123,3 +124,4 @@ Route::post('/driver/requestdeletion', 'DriverController@requestDeletion');
 Route::post('/driver/requestrevision', 'DriverController@requestRevision');
 Route::post('/driver/showmytrips', 'DriverController@showMyTrips');
 Route::post('/driver/savefuelfillup', 'DriverController@saveFuelFillUp');
+Route::post('/driver/sendemail' ,'DriverController@sendEmail');
