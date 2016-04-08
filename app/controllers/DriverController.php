@@ -51,7 +51,7 @@ class DriverController extends BaseController {
         if(!Session::get('logged')){
             return Redirect::to('/');
         };
-
+        $tripCost = 0;
         $post = Input::all();
         /**
          * b : base fare
@@ -59,63 +59,65 @@ class DriverController extends BaseController {
          * cd : cost per distance
          * If your ride lasted for time T and you rode a distance of D, the total cost is simply b + ct∗T + cd∗D.
          */
-
-        $startKm    = $post['departure_km'];
-        $endKm      = $post['arrival_km'];
-
-        $phone = $post['phone'];
-        $email = $post['email'];
-        $flatPrice = $post['flat_price'];
-        $dailyPrice = $post['daily_price'];
-        $hourlyPrice = $post['hourly_price'];
-
-        $base = $post['base'];
-        $perKm = $post['per_km'];
-        $perMin = $post['per_min'];
-
-        $tripKm     = $endKm - $startKm;
-
-        $startTime  = strtotime($post['departure_date_time']);
-        $endTime    = strtotime($post['arrival_date_time']);
-        $tripTime   = ($endTime - $startTime) / 60;
-
-        $clientId   = $post['client_id'];
-
-        if (!empty($clientId)) {
-            try{
-                $client     = Client::find($clientId);
-                $baseFare   = $client->base;
-                $costPerKm  = $client->price_per_km;
-                $costPerMin = $client->price_per_min;
-                $currency   = $client->currency;
-
-            }catch (Exception $ex){
-                \Log::error(__METHOD__.' | error : '.print_r($ex, 1));
-            }
-        }
-
-        if (!empty($base) && !empty($perKm) && !empty($perMin)) {
-            $baseFare = $base;
-            $costPerKm = $perKm;
-            $costPerMin = $perMin;
-        }
-
-        if (!empty($flatPrice)) {
-            $tripCost = $flatPrice;
-        }
-
-        if (!empty($hourlyPrice)) {
-            $tripCost = $tripTime * ( $hourlyPrice / 60 );
-        }
-
-        if (!empty($daily1Price)) {
-            $tripCost = $tripTime * ( $dailyPrice / (24 * 60) );
-        }
-
-        $tripCost = $baseFare + ($costPerKm * $tripKm) + ($costPerMin * $tripTime);
-
         if($post != null) {
             try{
+                $startKm    = $post['departure_km'];
+                $endKm      = $post['arrival_km'];
+
+                $phone = $post['phone'];
+                $emailAddress = $post['email'];
+
+                $flatPrice = $post['flat_price'];
+                $dailyPrice = $post['daily_price'];
+                $hourlyPrice = $post['hourly_price'];
+
+                $base = $post['base'];
+                $perKm = $post['per_km'];
+                $perMin = $post['per_min'];
+
+                $tripKm     = $endKm - $startKm;
+
+                $startTime  = strtotime($post['departure_date_time']);
+                $endTime    = strtotime($post['arrival_date_time']);
+                $tripTime   = ($endTime - $startTime) / 60;
+
+                $clientId   = $post['client_id'];
+
+                if (!empty($clientId)) {
+                    try{
+                        $client     = Client::find($clientId);
+                        $baseFare   = $client->base;
+                        $costPerKm  = $client->price_per_km;
+                        $costPerMin = $client->price_per_min;
+                        $currency   = $client->currency;
+
+                        $tripCost = $baseFare + ($costPerKm * $tripKm) + ($costPerMin * $tripTime);
+
+                    }catch (Exception $ex){
+                        \Log::error(__METHOD__.' | error : '.print_r($ex, 1));
+                    }
+                } else {
+                    if (!empty($base) && !empty($perKm) && !empty($perMin)) {
+                        $baseFare = $base;
+                        $costPerKm = $perKm;
+                        $costPerMin = $perMin;
+
+                        $tripCost = $baseFare + ($costPerKm * $tripKm) + ($costPerMin * $tripTime);
+                    }
+                }
+
+                if (!empty($flatPrice)) {
+                    $tripCost = $flatPrice;
+                }
+
+                if (!empty($hourlyPrice)) {
+                    $tripCost = $tripTime * ( $hourlyPrice / 60 );
+                }
+
+                if (!empty($daily1Price)) {
+                    $tripCost = $tripTime * ( $dailyPrice / (24 * 60) );
+                }
+
                 $newDailyTrip = new DailyTrips();
                 $newDailyTrip->user_id             = Session::get('user_id');
                 $newDailyTrip->car_id              = Session::get('car_id');
@@ -135,14 +137,40 @@ class DriverController extends BaseController {
                 $newDailyTrip->edit_req            = null;
 
                 $newDailyTrip->save();
+
+                $messageController = new CommunicationController($tripCost, $currency);
+
+                // checking if its dev box
+                $url = url();
+                if( $url != 'http://localhost/presidential-car') {
+                    $messageController->sendSmsToNumber($phone);
+                }
+
+                $message = new Message();
+                $message->phone     = $phone;
+                $message->cost      = $tripCost;
+                $message->message   = $messageController->messageBody;
+                $message->currency  = $currency;
+                $message->date_sent = $post['arrival_date_time'];
+                $message->save();
+
+
+                if( $url != 'http://localhost/presidential-car') {
+                    $messageController->sendEmail($emailAddress);
+                }
+
+                $email = new Email();
+                $email->email_address    = $emailAddress;
+                $email->message  = $messageController->messageBody;
+                $email->date_sent = $post['arrival_date_time'];
+                $email->save();
+
                 $result = array('success' => true, 'message' => 'New trip entered successfully');
 
             }catch(Exception $ex) {
                 \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
                 $result = array('success' => false, 'message' => 'an error occurred');
             }
-
-            mail($phone . '@vtext.com', "", "Your packaged has arrived!", "From: Presidential Car <david@davidwalsh.name>\r\n");
 
             return $result;
         }
