@@ -1,11 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Mail;
-//use App\User;
 use Symfony\Component\Security\Core\User\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Tests\Controller;
-//use App\Http\Controllers\Controller;
 
 class DriverController extends BaseController {
 
@@ -159,7 +157,7 @@ class DriverController extends BaseController {
                 // checking if its dev box
                 $url = url();
                 if( $url != 'http://localhost/presidential-car') {
-                    $messageController->sendSmsToNumber($phone);
+                    //$messageController->sendSmsToNumber($phone);
                 }
 
                 $message = new Message();
@@ -172,7 +170,7 @@ class DriverController extends BaseController {
 
 
                 if( $url != 'http://localhost/presidential-car') {
-                    $messageController->sendEmail($emailAddress);
+                    ///$messageController->sendEmail($emailAddress);
                 }
 
                 $email = new Email();
