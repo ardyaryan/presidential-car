@@ -8,17 +8,17 @@ Daily Trips
 <div>
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-envelope-o"></i> Email Address:</span>
-        <input type="email" class="form-control" id="email" name="email" value="ardy.aryan@gmail.com">
+        <input type="email" class="form-control" id="email" name="email" value="">
     </div>
 
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-phone"></i> Cellphone Number:</span>
-        <input type="number" class="form-control" id="phone" name="phone" value="6195071911">
+        <input type="number" class="form-control" id="phone" name="phone" value="">
     </div>
 
     <div class="input-group form-group">
         <span class="input-group-addon"><i class="fa fa-text-height"></i> Message:</span>
-        <input type="text" class="form-control" id="text_message" name="text_message" value="This is a test message">
+        <input type="text" class="form-control" id="text_message" name="text_message" value="">
     </div>
 
     <div class=" form-group">

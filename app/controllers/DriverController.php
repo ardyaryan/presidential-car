@@ -152,32 +152,26 @@ class DriverController extends BaseController {
 
                 $newDailyTrip->save();
 
-                $messageController = new CommunicationController($tripCost, $currency);
+                $messageBody = 'Your trip with Presidential Car cost: ' . $currency . ' ' . round($tripCost, 2);
+                CommunicationController::sendEmail($emailAddress, $messageBody, 'emails/cost', 'Your Trip Receipt');
 
-                // checking if its dev box
-                $url = url();
-                if( $url != 'http://localhost/presidential-car') {
-                    //$messageController->sendSmsToNumber($phone);
-                }
+                $email = new Email();
+                $email->email_address = $emailAddress;
+                $email->message       = $messageBody;
+                $email->date_sent     = $post['arrival_date_time'];
+                $email->save();
+
+                /*
+                CommunicationController::sendSmsToNumber($phone, $messageBody);
 
                 $message = new Message();
                 $message->phone     = $phone;
                 $message->cost      = $tripCost;
-                $message->message   = $messageController->messageBody;
+                $message->message   = $messageBody;
                 $message->currency  = $currency;
                 $message->date_sent = $post['arrival_date_time'];
                 $message->save();
-
-
-                if( $url != 'http://localhost/presidential-car') {
-                    ///$messageController->sendEmail($emailAddress);
-                }
-
-                $email = new Email();
-                $email->email_address    = $emailAddress;
-                $email->message  = $messageController->messageBody;
-                $email->date_sent = $post['arrival_date_time'];
-                $email->save();
+                */
 
                 $result = array('success' => true, 'message' => 'New trip entered successfully');
 
@@ -203,7 +197,7 @@ class DriverController extends BaseController {
             $email = $post['email'];
             $messageBody = $post['message'];
 
-            CommunicationController::sendEmail($email,$messageBody,'emails/test');
+            CommunicationController::sendEmail($email,$messageBody,'emails/test', 'Test Email');
             CommunicationController::sendSmsToNumber($phone, $messageBody);
 
             $result = array('success' => true, 'message' => 'Email Send successfully');
