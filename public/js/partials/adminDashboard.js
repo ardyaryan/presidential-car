@@ -72,12 +72,13 @@ function getTripsByDriver() {
 
 
 function renderChart(driver) {
+    console.log(driver);
     var datas = [];
     //var driver = drivers();
 
     for(var i = 0; i < driver.length ; i ++) {
 
-        var specs ={ type: "line",showInLegend: true,lineThickness: 1, name: "Trips", markerType: "square", color: "#"+Math.floor(Math.random()*16777215).toString(16), dataPoints: driver};
+        var specs ={ type: "line",showInLegend: true,lineThickness: 1, name: "Trips", markerType: "square", color: "#" + Math.floor(Math.random()*16777215).toString(16), dataPoints: driver};
         datas = [specs];//datas.concat([specs]);
     }
 
@@ -167,7 +168,7 @@ function createReport() {
         ],
         "footerCallback": function ( row, data, start, end, display ) {
             if(typeof data[0] != 'undefined') {
-                console.log( data[0]);
+                //console.log( data[0]);
                 var dataPoints = [
                     { y : data[0].totalFuelCost, name : "Total Fuel Costs", legendMarkerType: "triangle"},
                     { y : data[0].totalPayments, name : "Total Payments", legendMarkerType: "triangle"},

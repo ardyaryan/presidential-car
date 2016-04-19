@@ -348,7 +348,7 @@ class AdminController extends BaseController {
                 //->orderBy('created_at')
                 ->get()
                 ->toArray();
-
+            
             if(!is_null($results)) {
                 foreach ($results as $key => $payment) {
 
@@ -407,7 +407,6 @@ class AdminController extends BaseController {
         }
 
         $results = [];
-
         try{
 
             $trips = DB::table('daily_trips')
@@ -430,6 +429,7 @@ class AdminController extends BaseController {
             /*
             $queries = DB::getQueryLog();
             $last_query = end($queries);
+            \Log::info(__METHOD__.' | ===================== Last Query: '.print_r($queries, 1));
             */
         } catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
@@ -713,6 +713,7 @@ class AdminController extends BaseController {
 
             $originalTrip = DailyTrips::find($tripId)->toArray();
             $editedTrip   = DailyTripsRevision::where('trip_id', '=', $tripId)->first()->toArray();
+            \Log::info($editedTrip);
 
             $trip = array ('original_trip' => $originalTrip, 'edited_trip' => $editedTrip);
 
@@ -902,8 +903,8 @@ class AdminController extends BaseController {
                         'totalTripCost'   => $totalTripCost,
                         'totalTripkm'     => $totalTripDistance,
                         'totalTripTime'   => $totalTripTime,
-                        'totalFuelCost'   => $totalFuelCost,
-                        'totalFuelAmount' => $totalFuelAmount,
+                        'totalFuelCost'   => round($totalFuelCost, 2),
+                        'totalFuelAmount' => round($totalFuelAmount, 2),
                         'totalPayments'   => $totalPayments,
                         'totalOther'      => $totalOther
             ];
