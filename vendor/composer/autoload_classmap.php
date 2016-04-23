@@ -15,6 +15,7 @@ return array(
     'Currency' => $baseDir . '/app/models/Currency.php',
     'DailyTrips' => $baseDir . '/app/models/DailyTrips.php',
     'DailyTripsRevision' => $baseDir . '/app/models/DailyTripsRevision.php',
+    'DailyTripsTemp' => $baseDir . '/app/models/DailyTripsTemp.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'Driver' => $baseDir . '/app/models/Driver.php',
     'DriverController' => $baseDir . '/app/controllers/DriverController.php',

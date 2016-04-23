@@ -11,7 +11,5 @@ return array(
     '3919eeb97e98d4648304477f8ef734ba' => $vendorDir . '/phpseclib/phpseclib/phpseclib/Crypt/Random.php',
     'fad373d645dd668e85d44ccf3c38fbd6' => $vendorDir . '/guzzlehttp/streams/src/functions.php',
     '58571171fd5812e6e447dce228f52f4d' => $vendorDir . '/laravel/framework/src/Illuminate/Support/helpers.php',
-    'c964ee0ededf28c96ebd9db5099ef910' => $vendorDir . '/guzzlehttp/promises/src/functions_include.php',
-    'a0edc8309cc5e1d60e3047b5df6b7052' => $vendorDir . '/guzzlehttp/psr7/src/functions_include.php',
     '154e0d165f5fe76e8e9695179d0a7345' => $vendorDir . '/guzzlehttp/guzzle/src/functions.php',
 );

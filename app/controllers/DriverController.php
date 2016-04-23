@@ -78,7 +78,7 @@ class DriverController extends BaseController {
                 $startKm    = $post['departure_km'];
                 $endKm      = $post['arrival_km'];
 
-                $phone = $post['phone'];
+                $phone = (int) $post['phone'];
                 $emailAddress = $post['email'];
 
                 $flatPrice = $post['flat_price'];
@@ -88,6 +88,23 @@ class DriverController extends BaseController {
                 $base = $post['base'];
                 $perKm = $post['per_km'];
                 $perMin = $post['per_min'];
+
+                $tripMode = $post['trip_mode'];
+                $tollFee = $post['toll_fee'];
+                $parkingFee = $post['parking_fee'];
+                $tempTripId = $post['temp_trip_id'];
+
+                if (!empty($tollFee) || !empty($parkingFee)) {
+                    if ($tripMode == DailyTrips::FREE_MODE) {
+                        $extraCharge = 0;
+                        $extraCost = $tollFee + $parkingFee;
+                    } else {
+                        $extraCharge = $tollFee + $parkingFee;
+                        $extraCost = 0;
+                    }
+                } else {
+                    $extraCost = $extraCharge = 0;
+                }
 
                 $tripKm     = $endKm - $startKm;
 
@@ -132,13 +149,17 @@ class DriverController extends BaseController {
                     $tripCost = $tripTime * ( $dailyPrice / (24 * 60) );
                 }
 
+                $tripCost += $extraCharge;
+
                 $newDailyTrip = new DailyTrips();
                 $newDailyTrip->user_id             = Session::get('user_id');
                 $newDailyTrip->car_id              = Session::get('car_id');
                 $newDailyTrip->client_id           = $clientId;
                 $newDailyTrip->customer_name       = $post['customer_name'];
+                $newDailyTrip->toll_fee            = $tollFee;
+                $newDailyTrip->parking_fee         = $parkingFee;
                 $newDailyTrip->customer_email      = $post['email'];
-                $newDailyTrip->customer_phone      = $post['phone'];
+                $newDailyTrip->customer_phone      = $phone;
                 $newDailyTrip->departure_km        = $startKm;
                 $newDailyTrip->departure_date_time = $post['departure_date_time'];
                 $newDailyTrip->arrival_km          = $endKm;
@@ -146,20 +167,27 @@ class DriverController extends BaseController {
                 $newDailyTrip->departure_address   = $post['departure_address'];
                 $newDailyTrip->arrival_address     = $post['arrival_address'];
                 $newDailyTrip->trip_cost           = $tripCost;
+                $newDailyTrip->extra_cost          = $extraCost;
+                $newDailyTrip->extra_charge        = $extraCharge;
                 $newDailyTrip->currency            = $currency;
+                $newDailyTrip->trip_time           = $tripTime;
+                $newDailyTrip->trip_distance       = $tripKm;
                 $newDailyTrip->delete_req          = null;
                 $newDailyTrip->edit_req            = null;
 
                 $newDailyTrip->save();
 
-                $messageBody = 'Your trip with Presidential Car cost: ' . $currency . ' ' . round($tripCost, 2);
-                CommunicationController::sendEmail($emailAddress, $messageBody, 'emails/cost', 'Your Trip Receipt');
+                if(!empty($email) && strpos($email, '@') ) {
+                    $messageBody = 'Your trip with Presidential Car cost: ' . $currency . ' ' . round($tripCost, 2);
+                    CommunicationController::sendEmail($emailAddress, $messageBody, 'emails/cost', 'Your Trip Receipt');
 
-                $email = new Email();
-                $email->email_address = $emailAddress;
-                $email->message       = $messageBody;
-                $email->date_sent     = $post['arrival_date_time'];
-                $email->save();
+                    $email = new Email();
+                    $email->email_address = $emailAddress;
+                    $email->message       = $messageBody;
+                    $email->date_sent     = $post['arrival_date_time'];
+                    $email->save();
+                }
+
 
                 /*
                 CommunicationController::sendSmsToNumber($phone, $messageBody);
@@ -172,8 +200,91 @@ class DriverController extends BaseController {
                 $message->date_sent = $post['arrival_date_time'];
                 $message->save();
                 */
-
+                $tempTrip = DailyTripsTemp::find($tempTripId);//->delete();
+                if ($tempTrip instanceof DailyTripsTemp) {
+                    $tempTrip->delete();
+                }
+                \Session::set('temp_trip', '');
                 $result = array('success' => true, 'message' => 'New trip entered successfully');
+
+            }catch(Exception $ex) {
+                \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+                $result = array('success' => false, 'message' => 'an error occurred');
+            }
+
+            return $result;
+        }
+    }
+
+    public function saveNewTempTrip()
+    {
+        $post = Input::all();
+        /**
+         * b : base fare
+         * ct : cost per time
+         * cd : cost per distance
+         * If your ride lasted for time T and you rode a distance of D, the total cost is simply b + ct∗T + cd∗D.
+         */
+        if($post != null) {
+            try{
+                $startKm    = $post['departure_km'];
+
+                $phone = $post['phone'];
+                $emailAddress = $post['email'];
+
+                $flatPrice = $post['flat_price'];
+                $dailyPrice = $post['daily_price'];
+                $hourlyPrice = $post['hourly_price'];
+
+                $base = $post['base'];
+                $perKm = $post['per_km'];
+                $perMin = $post['per_min'];
+
+                $tripMode = $post['trip_mode'];
+                $tollFee = $post['toll_fee'];
+                $parkingFee = $post['parking_fee'];
+
+                if (!empty($tollFee) || !empty($parkingFee)) {
+                    if ($tripMode == DailyTrips::FREE_MODE) {
+                        $extraCharge = 0;
+                        $extraCost = $tollFee + $parkingFee;
+                    } else {
+                        $extraCharge = $tollFee + $parkingFee;
+                        $extraCost = 0;
+                    }
+                } else {
+                    $extraCost = $extraCharge = 0;
+                }
+
+                $clientId   = $post['client_id'];
+
+                $newDailyTripTemp = new DailyTripsTemp();
+                $newDailyTripTemp->user_id             = Session::get('user_id');
+                $newDailyTripTemp->car_id              = Session::get('car_id');
+                $newDailyTripTemp->client_id           = $clientId;
+                $newDailyTripTemp->customer_name       = $post['customer_name'];
+                $newDailyTripTemp->toll_fee            = $tollFee;
+                $newDailyTripTemp->parking_fee         = $parkingFee;
+                $newDailyTripTemp->customer_email      = $emailAddress;
+                $newDailyTripTemp->customer_phone      = $phone;
+                $newDailyTripTemp->departure_km        = $startKm;
+                $newDailyTripTemp->departure_date_time = $post['departure_date_time'];
+                $newDailyTripTemp->departure_address   = $post['departure_address'];
+                $newDailyTripTemp->extra_charge        = $extraCharge;
+                $newDailyTripTemp->extra_cost          = $extraCost;
+                $newDailyTripTemp->trip_mode           = $tripMode;
+                $newDailyTripTemp->flat_rate           = $flatPrice;
+                $newDailyTripTemp->daily_rate          = $dailyPrice;
+                $newDailyTripTemp->hourly_rate         = $hourlyPrice;
+                $newDailyTripTemp->base_rate           = $base;
+                $newDailyTripTemp->per_km              = $perKm;
+                $newDailyTripTemp->per_min             = $perMin;
+
+                $newDailyTripTemp->save();
+
+                \Session::set('temp_trip', $newDailyTripTemp);
+
+                $result = array('success' => true, 'message' => 'temp trip entered successfully');
 
             }catch(Exception $ex) {
                 \Log::error(__METHOD__.' | error :'.print_r($ex, 1));

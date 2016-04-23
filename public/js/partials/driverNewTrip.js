@@ -9,14 +9,10 @@ $(document).ready(function () {
             getUTCTime('start_time');
             $('#start_address_icon').removeClass();
             $('#start_address_icon').addClass('fa fa-spin fa-spinner');
-            /*
-            $('#client_name').attr('disabled', true);
-            $('#start_km').attr('disabled', true);
-            $('#change_car').attr('disabled', true);
-            $('#start_time').attr('disabled', true);
-            */
             $('#start_trip').attr('disabled', true);
             $('#end_trip').attr('disabled', false);
+            setTimeout(function(){ saveTempTrip()
+            }, 3000);
         }
     });
 
@@ -25,28 +21,21 @@ $(document).ready(function () {
             $('#end_km').css('background-color', '#FFB0A2');
             $('#end_km').addClass('error_placeholder');
         }else{
+            if(!validate()) {
+                return;
+            }
             getLocation();
             getUTCTime('end_time');
             $('#end_address_icon').removeClass();
             $('#end_address_icon').addClass('fa fa-spin fa-spinner');
-            /*
-            $('#end_km').attr('disabled', true);
-            $('#destination_address').attr('disabled', true);
-            $('#end_time').attr('disabled', true);
-            */
             $('#end_trip').attr('disabled', true);
             $('#save_trip').attr('disabled', false);
+            setTimeout(function(){ saveTrip()
+            }, 3000);
         }
     });
 
-    $('#save_trip').on('click', function() {
-        if(!validate()) {
-            return;
-        }
-        saveTrip();
-        setTimeout(function(){ location.reload()}, 4000);
-        $('#save_trip').attr('disabled', true);
-    });
+
 
     $('#start_km').on('keyup', function(){
         $('#start_km').css('background-color', 'white');
@@ -71,6 +60,20 @@ $(document).ready(function () {
             $('#custom_customer i').removeClass('fa fa-minus');
             $('#custom_customer i').addClass('fa fa-plus');
             $('#customer_details').slideUp();
+        }
+    });
+
+    $('#extra_charge').on('click', function() {
+
+        var buttClass = $('#extra_charge i').attr('class');
+        if(buttClass == 'fa fa-plus') {
+            $('#extra_charge i').removeClass('fa fa-plus');
+            $('#extra_charge i').addClass('fa fa-minus');
+            $('#extra_charge_div').slideDown();
+        } else {
+            $('#extra_charge i').removeClass('fa fa-minus');
+            $('#extra_charge i').addClass('fa fa-plus');
+            $('#extra_charge_div').slideUp();
         }
     });
 });
@@ -123,6 +126,11 @@ function getUTCTime(resource) {
     $.ajax({
         url : "gettime",
         type: "POST",
+        beforeSend: function(){
+            if ($('#departure_address').val() != '') {
+                $('#end_trip').html('<span class="fa fa-spinner fa-spin"></span> Getting Location');
+            }
+        },
         success: function(data) {
             $('#' + resource + '').val(data.date + ' ' + data.time);
         },
@@ -132,7 +140,7 @@ function getUTCTime(resource) {
     });
 }
 
-function saveTrip() {
+function ajaxSaveTrip() {
 
     var buttonName  = ($('#language_id').val() == 2) ? ' Enregistrer' : ' Save Trip';
     var successMessage  = ($('#language_id').val() == 2) ? 'Enregistré!' : 'Your trip has been saved successfully, Refreshing...';
@@ -156,6 +164,11 @@ function saveTrip() {
     var startTime   = $('#start_time').val();
     var endTime     = $('#end_time').val();
 
+    var tollFee     = $('#toll_fee').val();
+    var parkingFee  = $('#parking_fee').val();
+    var tripMpde    = $('#trip_mode').val();
+    var tempTripId    = $('#temp_trip_id').val();
+
     $.ajax({
         url : "savenewtrip",
         type: "POST",
@@ -167,6 +180,9 @@ function saveTrip() {
                 flat_price: flatPrice,
                 daily_price: dailyPrice,
                 hourly_price: hourlyPrice,
+                trip_mode: tripMpde,
+                parking_fee: parkingFee,
+                toll_fee: tollFee,
                 base: base,
                 per_km: perKm,
                 per_min: perMin,
@@ -175,25 +191,110 @@ function saveTrip() {
                 arrival_km: endKm,
                 arrival_date_time: endTime,
                 departure_address: startAddr,
-                arrival_address: endAddr
+                arrival_address: endAddr,
+                temp_trip_id: tempTripId
         },
         beforeSend: function(){
-            $('#save_trip').html('<span class="fa fa-spinner fa-spin"></span>' + buttonName + '');
+            $('#end_trip').html('<span class="fa fa-spinner fa-spin"></span> Saving Trip');
+            $('#end_trip').removeClass('btn-danger');
+            $('#end_trip').addClass('btn-info');
+
         },
         success: function(data) {
-
             if(data.success == false) {
                 $('#save_trip').html('<span class="fa fa-remove"></span>' + buttonName + '');
                 $('#alert').addClass('alert alert-danger');
                 $('#alert').html(errorMessage);
                 $('#alert').show();
             }else {
-                $('#save_trip').html('<span class="fa fa-check-square"></span>' + buttonName + '');
+                $('#end_trip').html('<span class="fa fa-check-square"></span> Trip Saved!');
                 $('#alert').addClass('alert alert-success');
                 $('#alert').html(successMessage);
                 $('#alert').show();
             }
 
+        },
+        error: function (data) {
+            console.log(data);
+        }
+    });
+}
+
+function ajaxSaveTempTrip() {
+
+
+    var buttonName  = ($('#language_id').val() == 2) ? ' Enregistrer' : ' Save Trip';
+    var successMessage  = ($('#language_id').val() == 2) ? 'Enregistré!' : 'Your trip has been saved successfully, Refreshing...';
+    var errorMessage  = ($('#language_id').val() == 2) ? 'Erreur!' : 'There was a problem saving your trip!';
+    var client        = $('#client_name').val();
+    var customerName  = $('#customer_name').val();
+
+    var email       = $('#customer_email').val();
+    var phone       = $('#customer_phone').val();
+    var flatPrice   = $('#flat_price').val();
+    var dailyPrice  = $('#daily_price').val();
+    var hourlyPrice = $('#hourly_price').val();
+    var base        = $('#base').val();
+    var perKm       = $('#per_km').val();
+    var perMin      = $('#per_min').val();
+
+    var startKm     = $('#start_km').val();
+    var endKm       = $('#end_km').val();
+    var startAddr   = $('#departure_address').val();
+    var endAddr     = $('#destination_address').val();
+    var startTime   = $('#start_time').val();
+    var endTime     = $('#end_time').val();
+
+    var tollFee     = $('#toll_fee').val();
+    var parkingFee  = $('#parking_fee').val();
+    var tripMpde    = $('#trip_mode').val();
+
+    $.ajax({
+        url : "savenewtemptrip",
+        type: "POST",
+        data : {
+            client_id: client,
+            customer_name: customerName,
+            email: email,
+            phone: phone,
+            flat_price: flatPrice,
+            daily_price: dailyPrice,
+            hourly_price: hourlyPrice,
+            trip_mode: tripMpde,
+            parking_fee: parkingFee,
+            toll_fee: tollFee,
+            base: base,
+            per_km: perKm,
+            per_min: perMin,
+            departure_km: startKm,
+            departure_date_time: startTime,
+            arrival_km: endKm,
+            arrival_date_time: endTime,
+            departure_address: startAddr,
+            arrival_address: endAddr
+        },
+        beforeSend: function(){
+            /*
+            $('#end_trip').html('<span class="fa fa-spinner fa-spin"></span> Saving Trip');
+            $('#end_trip').removeClass('btn-danger');
+            $('#end_trip').addClass('btn-info');
+            */
+        },
+        success: function(data) {
+            console.log('success');
+            /*
+            if(data.success == false) {
+                $('#save_trip').html('<span class="fa fa-remove"></span>' + buttonName + '');
+                $('#alert').addClass('alert alert-danger');
+                $('#alert').html(errorMessage);
+                $('#alert').show();
+            }else {
+                $('#end_trip').html('<span class="fa fa-check-square"></span> Trip Saved!');
+                $('#alert').addClass('alert alert-success');
+                $('#alert').html(successMessage);
+                $('#alert').show();
+            }
+            */
         },
         error: function (data) {
             console.log(data);
@@ -274,11 +375,13 @@ function validate() {
     var perKm        = $('#per_km').val();
     var perMin       = $('#per_min').val();
 
-    var customContactCheck = false;
+    //var customContactCheck = false;
+    var customContactCheck = true;
+    /*
     if (email != '' && phone != '') {
         customContactCheck = true;
     }
-
+    */
     var customRateCheck = false;
     if (clientName == '') {
         if (flatPrice == '') {
@@ -318,5 +421,14 @@ function validate() {
         return false;
     }
 
+}
 
+function saveTrip() {
+    ajaxSaveTrip();
+    setTimeout(function(){ location.reload()}, 4000);
+    $('#save_trip').attr('disabled', true);
+}
+
+function saveTempTrip() {
+    ajaxSaveTempTrip();
 }
