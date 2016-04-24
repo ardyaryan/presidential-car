@@ -12,7 +12,7 @@ $(document).ready(function () {
             $('#start_trip').attr('disabled', true);
             $('#end_trip').attr('disabled', false);
             setTimeout(function(){ saveTempTrip()
-            }, 3000);
+            }, 5000);
         }
     });
 
@@ -31,7 +31,7 @@ $(document).ready(function () {
             $('#end_trip').attr('disabled', true);
             $('#save_trip').attr('disabled', false);
             setTimeout(function(){ saveTrip()
-            }, 3000);
+            }, 5000);
         }
     });
 

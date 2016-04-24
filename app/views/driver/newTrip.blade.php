@@ -33,6 +33,36 @@ $tempTrip = \Session::get('temp_trip', null);
         </span>
     </div>
 
+    <div style="display: none;" id="customer_details">
+            <div class="input-group form-group" >
+                <span class="input-group-addon" style="background-color:#A9F5A9"><i class="fa fa-usd"></i> Flat Price:</span>
+                <input type="@if (!empty($tempTrip['trip_mode'])) text @else number @endif" class="form-control" id="flat_price" name="flat_price" value="@if (!empty($tempTrip['trip_mode']) ) {{$tempTrip['flat_price'] }} @endif">
+            </div>
+
+            <div class="input-group form-group" >
+                <span class="input-group-addon" style="background-color:#F3F781"><i class="fa fa-usd"></i> Daily Price:</span>
+                <input type="@if (!empty($tempTrip['daily_price'])) text @else number @endif" class="form-control" id="daily_price" name="daily_price" value="@if (!empty($tempTrip['daily_price'])) {{$tempTrip['daily_price'] }} @endif">
+            </div>
+
+            <div class="input-group form-group" >
+                <span class="input-group-addon" style="background-color:#58FAF4"><i class="fa fa-usd"></i> Hourly Price:</span>
+                <input type="@if (!empty($tempTrip['hourly_price'])) text @else number @endif" class="form-control" id="hourly_price" name="hourly_price" value="@if (!empty($tempTrip['hourly_price'])) {{$tempTrip['hourly_price'] }} @endif">
+            </div>
+
+            <div class="input-group form-group" >
+                <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Base:</span>
+                <input type="@if (!empty($tempTrip['base'])) text @else number @endif" class="form-control" id="base" name="base" value="@if (!empty($tempTrip['base'])) {{$tempTrip['base'] }} @endif">
+            </div>
+            <div class="input-group form-group" >
+                <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Per Km:</span>
+                <input type="@if (!empty($tempTrip['per_km'])) text @else number @endif" class="form-control" id="per_km" name="per_km" value="@if (!empty($tempTrip['per_km'])) {{$tempTrip['per_km'] }} @endif">
+            </div>
+            <div class="input-group form-group" >
+                <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Per Min:</span>
+                <input type="@if (!empty($tempTrip['per_min'])) text @else number @endif" class="form-control" id="per_min" name="per_min" value="@if (!empty($tempTrip['per_min'])) {{$tempTrip['per_min'] }} @endif">
+            </div>
+        </div>
+
     <div class="input-group form-group" id="">
         <span class="input-group-addon" style="width: 90%"><i class="fa fa-usd"></i> Extra Charge</span>
         <span class="input-group-btn">
@@ -47,36 +77,14 @@ $tempTrip = \Session::get('temp_trip', null);
                 <option value="1" @if(!empty($tempTrip['trip_mode']) && $tempTrip['trip_mode'] == 1) selected @endif>On a Trip</option>
                 <option value="2" @if(!empty($tempTrip['trip_mode']) && $tempTrip['trip_mode'] == 2) selected @endif>Free</option>
             </select>
+         </div>
+         <div class="input-group form-group" >
             <span class="input-group-addon" ><i class="fa fa-usd"></i> Toll Fee:</span>
             <input type="@if (!empty($tempTrip['toll_fee'])) text @else number @endif" class="form-control" id="toll_fee" name="toll_fee" value="@if (!empty($tempTrip['toll_fee'])) {{$tempTrip['toll_fee']}} @endif">
+         </div>
+         <div class="input-group form-group" >
             <span class="input-group-addon"><i class="fa fa-usd"></i> Parking:</span>
             <input type="@if (!empty($tempTrip['parking_fee'])) text @else number @endif" class="form-control" id="parking_fee" name="parking_fee" value="@if (!empty($tempTrip['parking_fee'])) {{$tempTrip['parking_fee'] }} @endif">
-        </div>
-    </div>
-
-    <div style="display: none;" id="customer_details">
-        <div class="input-group form-group" >
-            <span class="input-group-addon" style="background-color:#A9F5A9"><i class="fa fa-usd"></i> Flat Price:</span>
-            <input type="@if (!empty($tempTrip['trip_mode'])) text @else number @endif" class="form-control" id="flat_price" name="flat_price" value="@if (!empty($tempTrip['trip_mode']) ) {{$tempTrip['flat_price'] }} @endif">
-        </div>
-
-        <div class="input-group form-group" >
-            <span class="input-group-addon" style="background-color:#F3F781"><i class="fa fa-usd"></i> Daily Price:</span>
-            <input type="@if (!empty($tempTrip['daily_price'])) text @else number @endif" class="form-control" id="daily_price" name="daily_price" value="@if (!empty($tempTrip['daily_price'])) {{$tempTrip['daily_price'] }} @endif">
-        </div>
-
-        <div class="input-group form-group" >
-            <span class="input-group-addon" style="background-color:#58FAF4"><i class="fa fa-usd"></i> Hourly Price:</span>
-            <input type="@if (!empty($tempTrip['hourly_price'])) text @else number @endif" class="form-control" id="hourly_price" name="hourly_price" value="@if (!empty($tempTrip['hourly_price'])) {{$tempTrip['hourly_price'] }} @endif">
-        </div>
-
-        <div class="input-group form-group" >
-            <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Base:</span>
-            <input type="@if (!empty($tempTrip['base'])) text @else number @endif" class="form-control" id="base" name="base" value="@if (!empty($tempTrip['base'])) {{$tempTrip['base'] }} @endif">
-            <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Per Km:</span>
-            <input type="@if (!empty($tempTrip['per_km'])) text @else number @endif" class="form-control" id="per_km" name="per_km" value="@if (!empty($tempTrip['per_km'])) {{$tempTrip['per_km'] }} @endif">
-            <span class="input-group-addon" style="background-color:#BCA9F5"><i class="fa fa-usd"></i> Per Min:</span>
-            <input type="@if (!empty($tempTrip['per_min'])) text @else number @endif" class="form-control" id="per_min" name="per_min" value="@if (!empty($tempTrip['per_min'])) {{$tempTrip['per_min'] }} @endif">
         </div>
     </div>
 
