@@ -5,6 +5,7 @@ $(document).ready(function(){
         startDate: '-3d'
     });
 
+    $('#driver_performance').DataTable({});
     $('form').on('submit', function(e) {
         e.preventDefault();
 
@@ -12,6 +13,7 @@ $(document).ready(function(){
             $('#graph_loading').show();
             setTimeout(function(){
                 getTripsByDriver();
+                getDriverPerformance();
             }, 500);
         }
         createReport();
@@ -25,6 +27,7 @@ $(document).ready(function(){
     });
 
     getTripsByDriver();
+    getDriverPerformance();
 
     $('#report_table').dataTable({'bPaginate': false, 'bFilter': false, 'bInfo': false });
     createReport();
@@ -72,7 +75,7 @@ function getTripsByDriver() {
 
 
 function renderChart(driver) {
-    console.log(driver);
+    //console.log(driver);
     var datas = [];
     //var driver = drivers();
 
@@ -221,4 +224,126 @@ function loadPieChart(dataPoints) {
             ]
         });
     chart.render();
+}
+
+function getDriverPerformance() {
+
+    var from = $('#from').val();
+    var to = $('#to').val();
+
+    if( from != '' && to != '') {
+        $('#time_range_span').html(from + ' <i class="fa fa-arrow-right"></i> ' + to);
+    }
+
+    $('#driver_performance').DataTable({
+        'ajax': {
+            "type"   : "POST",
+            "url"    : 'getdriverperformance',
+            "data"   : {from: from, to: to, page : 'dashboard'},
+            "dataSrc": ""
+        },
+        "destroy": true,
+        'columns': [
+            {"data" : "driver_name"},
+            {"data" : "cars"},
+            {"data" : "count"},
+            {"data" : "total_km"},
+            {"data" : "total_trip_km"},
+            {"data" : "total_trip_km_percent"},
+            {"data" : "free_ride_km"},
+            {"data" : "free_ride_km_percent"},
+            {"data" : "total_hours"},
+            {"data" : "total_work_hours"},
+            {"data" : "total_work_hours_percent"},
+            {"data" : "total_free_hours"},
+            {"data" : "total_free_hours_percent"},
+            {"data" : "hours_per_trip"},
+            {"data" : "km_per_trip"},
+            {"data" : "receipt"}
+        ],
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+
+             var intVal = function ( i ) {
+             return typeof i === 'string' ?
+             i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0;};
+
+             // Total over all pages
+             //total = api.column(8).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+             
+
+            // Total over this page
+            totalTripsNumber = api.column( 2, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalKm = api.column( 3, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalTripKM  = api.column( 4, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalTripPer = api.column( 5, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalFreeKM = api.column( 6, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalFreePer = api.column( 7, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalHours = api.column( 8, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalWorkHours = api.column( 9, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalWorkHoursPer = api.column( 10, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalFreeHours = api.column( 11, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalFreeHoursPer = api.column( 12, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            hourPerTrip = api.column( 13, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            kmPerTrip = api.column( 14, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalReciept = api.column( 15, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            
+
+            // Update footer
+            $( api.column(2).footer() ).html(totalTripsNumber
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(3).footer() ).html(totalKm + ' KM'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(4).footer() ).html(totalTripKM + ' KM'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(5).footer() ).html( totalTripPer + ' %'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(6).footer() ).html(totalFreeKM + ' KM'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(7).footer() ).html(totalFreePer + ' %'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(8).footer() ).html(totalHours
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(9).footer() ).html(totalWorkHours
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(10).footer() ).html(totalWorkHoursPer + ' %'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(11).footer() ).html(totalFreeHours
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(12).footer() ).html(totalFreeHoursPer + ' %'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(13).footer() ).html(hourPerTrip
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(14).footer() ).html(kmPerTrip
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(15).footer() ).html(totalReciept
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+    
+        }
+        
+    });
+    $('input[aria-controls="daily_trips"]').prop('type', 'text');
+
+    //$('select[name=daily_trips_length]').addClass('form-control');
+}
+
+function getTimeAsSeconds(time){
+    var timeArray = time.split(':');
+    return Number(timeArray [0]) * 3600 + Number(timeArray [1]) * 60 + Number(timeArray[2]);
 }

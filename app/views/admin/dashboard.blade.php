@@ -37,8 +37,59 @@ Dashboard
         </div>
     </div>
 
+    
+    <h2 style="margin-left: 40%;">Driver Performance</h2>
 
+    <div id="performanceContainer">
+        <div id="mainContent" style="margin-left: -30%;">
+             <table id="driver_performance" class="display"  align="center">
+                <thead>
+                    <tr>
+                        <th>Driver</th>
+                        <th>Vehicle(S)</th>
+                        <th>Number Of Trips</th>
+                        <th>Total KM</th>
+                        <th>Total Trip KM</th>
+                        <th>Total Trip %</th>
+                        <th>Free Ride KM</th>
+                        <th>Free Ride %</th>
+                        <th>Total Hours</th>
+                        <th>Total Work Hours</th>
+                        <th>Total Work<br>Hours %</th>
+                        <th>Total Free<br>Hours</th>
+                        <th>Total Free<br>hours %</th>
+                        <th>Hour/Trip</th>
+                        <th>KM/Trip</th>
+                        <th>Receipt</th>
+                    </tr>
+                </thead>
+                
+                <tfoot style="background-color: gainsboro;">
+                    <tr>
+                        <th colspan="2" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                
+            </table>
+        </div>
+    </div>
 
+    <h2 style="margin-left: 40%;">Payments and Costs</h2>
+    <br/>
     <table cellpadding="10"   style="width: 100%;    margin-left: -170px;">
                     <thead style="background-color: white">
                         <th><h4 style="margin-left: 20px;">Costs</h4></th>
@@ -66,7 +117,7 @@ Dashboard
                             </table>
                         </td>
                     </tr>
-            </table>
+    </table>
 
 </div>
 @stop

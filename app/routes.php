@@ -78,6 +78,7 @@ Route::get('/admin/viewpayments',   'AdminController@viewPayments');
 Route::post('/admin/login',         'AdminController@login');
 Route::post('/admin/gettrips',      'AdminController@getTrips');
 Route::post('/admin/getdriverdailytrips',      'AdminController@getDriverDailyTrips');
+Route::post('/admin/getdriverperformance',      'AdminController@getDriverDailyTrips');
 Route::post('/admin/gettripsbydriver',  'AdminController@getTripsByDriver');
 Route::post('/admin/geteditedtripbyid',  'AdminController@getEditedTripById');
 Route::post('/admin/saveeditedtrip',  'AdminController@saveEditedTrip');

@@ -77,7 +77,7 @@ View Daily Trips
     </div>
 </div>
 
-<h3>View Driver Activity Breakdown</h3>
+<h3>View Daily Driver Activity Breakdown</h3>
 <div class="row">
     <form novalidate="novalidate" class="form-inline" id="daily_driver_trips_form">
         <div class="form-group input-group col-sm-3  col-lg-offset-1 date">

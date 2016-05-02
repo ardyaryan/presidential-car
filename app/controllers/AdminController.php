@@ -220,7 +220,8 @@ class AdminController extends BaseController {
     }
 
     public function getTrips()
-    {\Log::info(__METHOD__.' +++++++++++++++++++ : '.print_r('here',1));
+    {
+        //\Log::info(__METHOD__.' +++++++++++++++++++ : '.print_r('here',1));
         $to = Input::get('to');
         $from = Input::get('from');
 
@@ -290,16 +291,31 @@ class AdminController extends BaseController {
     public function getDriverDailyTrips()
     {
         $toDay = Input::get('day');
-
-        if($toDay == null) {
+        $from = Input::get('from');
+        $to = Input::get('to');
+        $page = Input::get('page');
+        
+        if ($page == 'dashboard') {
+            if($from == null || $to == null) {
+            $today = LocationController::getTime();
+            $todayFrom = $today['date'].' 00:00:00';
+            $todayTo = $today['date'].' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
+        }else {
+            if($toDay == null) {
             $today = LocationController::getTime();
             $todayFrom = $today['date'].' 00:00:00';
             $todayTo = $today['date'].' 23:59:59';
         }else {
             $todayFrom = $toDay.' 00:00:00';
             $todayTo = $toDay.' 23:59:59';
+            }
         }
-
+      
+        //\Log::info(__METHOD__.' +++++++++++++++++++ : '.print_r('here',1));
         try{
             
             $allDrivers = Driver::all()->toArray();
@@ -312,28 +328,71 @@ class AdminController extends BaseController {
                         (SELECT  MIN(departure_date_time) AS start_time FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS c,
                         (SELECT  MAX(departure_date_time) AS end_time FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS d,
                         (SELECT  SUM(trip_distance) AS total_trip_km FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS e,
-                        (SELECT  SUM(trip_time) AS total_trip_time FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS f    
+                        (SELECT  SUM(trip_time) AS total_trip_time FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS f,
+                        (SELECT GROUP_CONCAT(car_id) AS car_ids FROM (SELECT car_id FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '" GROUP BY car_id) AS g) as h
                 '));
                 $dailyBreakdown = (array) $query[0];
                 $dailyBreakdown['id'] = $driver['id'];
                 $dailyBreakdown['driver_name'] = $driver['first'] . ' ' . $driver['last'];
+                
                 $dailyBreakdown['total_km'] = $dailyBreakdown['end_km'] - $dailyBreakdown['start_km'];
                 $dailyBreakdown['free_ride_km'] = $dailyBreakdown['total_km'] - $dailyBreakdown['total_trip_km'];
+                if($dailyBreakdown['total_km'] != 0) {
+                    $dailyBreakdown['free_ride_km_percent'] = round( ($dailyBreakdown['free_ride_km']/ $dailyBreakdown['total_km']) * 100, 2);
+                    $dailyBreakdown['total_trip_km_percent'] = round( ($dailyBreakdown['total_trip_km']/ $dailyBreakdown['total_km']) * 100, 2);
+                } else {
+                    $dailyBreakdown['free_ride_km_percent'] = 0;
+                    $dailyBreakdown['total_trip_km_percent'] = 0;
+                }
+                
                 $startTime = strtotime($dailyBreakdown['start_time']);
                 $endTime = strtotime($dailyBreakdown['end_time']);
                 $totalMinutes = round(($endTime - $startTime) / 60); //in minutes
                 $totalWorkMinutes = $dailyBreakdown['total_trip_time']; // in minutes
                 $totalFreeMinutes = $totalMinutes - $totalWorkMinutes;
+                if ($dailyBreakdown['count'] != 0) {
+                    $hoursPerTrip = $totalWorkMinutes / $dailyBreakdown['count'];
+                    $kmPerTrip = round( $dailyBreakdown['total_km'] / $dailyBreakdown['count']);
+                } else {
+                    $hoursPerTrip = 0;
+                    $kmPerTrip = 0;
+                }
+                
+                if ($totalMinutes != 0) {
+                    $totalWorkPercentage = round( ($totalWorkMinutes / $totalMinutes) * 100, 2 );
+                    $totalFreePercentage = round( ($totalFreeMinutes / $totalMinutes) * 100, 2 );
+                } else {
+                    $totalWorkPercentage = 0;
+                    $totalFreePercentage = 0;
+                }
                 
                 $dailyBreakdown['total_hours'] = date('H:i:s', $totalMinutes);
                 $dailyBreakdown['total_work_hours'] = date('H:i:s', $totalWorkMinutes);
                 $dailyBreakdown['total_free_hours'] = date('H:i:s', $totalFreeMinutes);
+                $dailyBreakdown['total_free_hours_percent'] = $totalFreePercentage;
+                $dailyBreakdown['total_work_hours_percent'] = $totalWorkPercentage;
+                $dailyBreakdown['hours_per_trip'] = date('H:i:s', $hoursPerTrip);
+                $dailyBreakdown['km_per_trip'] = $kmPerTrip;
+                
                 $dailyBreakdown['receipt'] = 0;
+              
+                if ($dailyBreakdown['car_ids'] != null) {
+                    $carNames = '';
+                    $carIds = explode(',', $dailyBreakdown['car_ids']);
+                    foreach($carIds as $carId) {
+                        $car = Cars::find($carId)->toArray();
+                        $carNames .=$car['name'] .', ';
+                    }
+                    $dailyBreakdown['cars'] = $carNames;
+                } else {
+                    $dailyBreakdown['cars'] = 'NA';
+                }
+                unset ($dailyBreakdown['car_ids']);
                 array_push($driverBreakdown, $dailyBreakdown);
                 
             }
 
-            //\Log::info(__METHOD__.' +++++++++++++++++++ $driverBreakdown: '.print_r($driverBreakdown,1));
+            \Log::info(__METHOD__.' +++++++++++++++++++ $driverBreakdown: '.print_r($driverBreakdown,1));
 
         } catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));

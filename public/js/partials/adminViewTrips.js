@@ -172,7 +172,7 @@ function getDriverDailyTrips() {
         'ajax': {
             "type"   : "POST",
             "url"    : 'getdriverdailytrips',
-            "data"   : {day: day},
+            "data"   : {day: day, page : 'trips'},
             "dataSrc": ""
         },
         "destroy": true,
