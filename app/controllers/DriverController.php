@@ -201,6 +201,7 @@ class DriverController extends BaseController {
                 $message->save();
                 */
                 $tempTrip = DailyTripsTemp::find($tempTripId);//->delete();
+                \Log::info(__METHOD__.' | ============= Temp Trip: '.  print_r($tempTrip,1));
                 if ($tempTrip instanceof DailyTripsTemp) {
                     $tempTrip->delete();
                 }
@@ -284,7 +285,7 @@ class DriverController extends BaseController {
 
                 \Session::set('temp_trip', $newDailyTripTemp);
 
-                $result = array('success' => true, 'message' => 'temp trip entered successfully');
+                $result = array('success' => true, 'message' => 'temp trip entered successfully', 'temp_trip_id' => $newDailyTripTemp->id);
 
             }catch(Exception $ex) {
                 \Log::error(__METHOD__.' | error :'.print_r($ex, 1));

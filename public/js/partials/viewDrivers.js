@@ -88,7 +88,7 @@ function getAllDrivers() {
         totalHours = api.column( 5, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
         totalTrips = api.column( 6, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
         totalCost  = api.column( 7, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
-        totalHours = api.column( 8, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+        totalHoursPerTrip = api.column( 8, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
 
         // Update footer
         $( api.column(5).footer() ).html( (Math.round(totalHours * 100) /100 )
@@ -100,7 +100,7 @@ function getAllDrivers() {
         $( api.column(7).footer() ).html(totalCost
             //'$'+pageTotal +' ( $'+ total +' total)'
         );
-        $( api.column(8).footer() ).html( (Math.round(totalHours * 100) /100 )
+        $( api.column(8).footer() ).html( (Math.round(totalHoursPerTrip * 100) /100 )
             //'$'+pageTotal +' ( $'+ total +' total)'
         );
     }

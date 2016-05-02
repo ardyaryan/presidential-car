@@ -8,7 +8,7 @@ View Daily Trips
 
 <h3>View Daily Trips</h3>
 <div class="row">
-    <form novalidate="novalidate" class="form-inline">
+    <form novalidate="novalidate" class="form-inline" id="daily_trips_form">
         <div class="form-group input-group col-sm-3  col-lg-offset-1 date">
             <input type="text" class="datepicker form-control" name="from" id="from" placeholder=" - From" data-provide="datepicker">
             <div class="input-group-addon">
@@ -33,28 +33,108 @@ View Daily Trips
 </div>
 
 <div id="tripsContainer">
-    <div id="mainContent">
+    <div id="mainContent" style="margin-left: -20%;">
         <table id="daily_trips" class="display"  align="center">
                 <thead>
                     <tr>
-                        <th nowrap>Trip ID</th>
+                        <th>ID</th>
                         <th>Driver</th>
-                        <th>Car</th>
+                        <th>Vehicle</th>
                         <th>Client</th>
                         <th>Customer</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Departure Time</th>
-                        <th>Arrival Time</th>
-                        <th>Departure Address</th>
-                        <th>Arrival Address</th>
-                        <th>Distance</th>
-                        <th>Cost</th>
+                        <th>Departure<br>Time</th>
+                        <th>Arrival<br>Time</th>
+                        <th>Departure<br>Address</th>
+                        <th>Arrival<br>Address</th>
+                        <th>Departure<br>KM</th>
+                        <th>Arrival<br>KM</th>
+                        <th>Distance<br>KM</th>
+                        <th>Trip Time<br>(min)</th>
+                        <th>Parking/Toll<br>(for Client)</th>
+                        <th>Parking/Toll<br> (for Company)</th>
+                        <th>Trip Cost</th>
                         <th>Date</th>
                         <th>Delete</th>
                         <th>Edit</th>
                     </tr>
                 </thead>
+                <tfoot style="background-color: gainsboro;">
+                    <tr>
+                        <th colspan="13" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+    </div>
+</div>
+
+<h3>View Driver Activity Breakdown</h3>
+<div class="row">
+    <form novalidate="novalidate" class="form-inline" id="daily_driver_trips_form">
+        <div class="form-group input-group col-sm-3  col-lg-offset-1 date">
+            <input type="text" class="datepicker form-control" name="day" id="day" placeholder=" - Day" data-provide="datepicker">
+            <div class="input-group-addon">
+                <span class="glyphicon glyphicon-th"></span>
+            </div>
+        </div>
+
+        <div class="input-group form-group col-sm-3">
+            <button id="get_driver_more_trips" class="btn btn-success" style="width: 40%; margin-top: 25px;"><i id="go_button_admin" class="fa fa-calendar"></i> Search</button>
+        </div>
+    </form>
+</div>
+
+
+<div id="vehiclesContainer">
+    <div id="mainContent" style="margin-left: -20%;">
+        <table id="driver_daily_trips" class="display"  align="center">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Driver</th>
+                        <th>Number Of Trips</th>
+                        <th>Start KM</th>
+                        <th>End KM</th>
+                        <th>Total KM</th>
+                        <th>Total Trip KM</th>
+                        <th>Free Ride KM</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Total Hours</th>
+                        <th>Total Work Hours</th>
+                        <th>Total Free Hours</th>
+                        <th>Receipt</th>
+                    </tr>
+                </thead>
+                <!--
+                <tfoot style="background-color: gainsboro;">
+                    <tr>
+                        <th colspan="1" style="text-align:right">Total:</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+                -->
             </table>
     </div>
 </div>

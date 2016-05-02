@@ -6,14 +6,23 @@ $(document).ready(function(){
     });
 
     $('#daily_trips').DataTable({});
-
+    $('#driver_daily_trips').DataTable({});
+    
     getDailyTrips();
+    getDriverDailyTrips();
 
-    $('form').on('submit', function(e) {
+    $('form#daily_trips_form').on('submit', function(e) {
         e.preventDefault();
         if(validate()) {
             getDailyTrips();
         }
+    });
+    
+    $('form#daily_driver_trips_form').on('submit', function(e) {
+        e.preventDefault();
+        //if(validate()) {
+            getDriverDailyTrips();
+        //}
     });
 
     $('#start_date').on('change', function(){
@@ -83,7 +92,12 @@ function getDailyTrips() {
             {"data" : "arrival_time"},
             {"data" : "departure_address"},
             {"data" : "arrival_address"},
+            {"data" : "departure_km"},
+            {"data" : "arrival_km"},
             {"data" : "distance"},
+            {"data" : "trip_time"},
+            {"data" : "extra_charge"},
+            {"data" : "extra_cost"},
             {"data" : "cost"},
             {"data" : "date"},
             {"mRender": function ( data, type, row ) {
@@ -102,7 +116,121 @@ function getDailyTrips() {
                     }
                 }
             }
-        ]
+        ],
+        "footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+
+             var intVal = function ( i ) {
+             return typeof i === 'string' ?
+             i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0;};
+
+             /* Total over all pages
+             total = api.column(8).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+             */
+
+            // Total over this page
+            totalDistance = api.column( 13, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalTripTime = api.column( 14, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalClPT  = api.column( 15, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalCoPt = api.column( 16, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalTripCost = api.column( 17, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+
+            // Update footer
+            $( api.column(13).footer() ).html( (Math.round(totalDistance * 100) /100 ) + ' KM'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(14).footer() ).html(totalTripTime + ' Min'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(15).footer() ).html(totalClPT
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(16).footer() ).html( (Math.round(totalCoPt * 100) /100 )
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(17).footer() ).html( (Math.round(totalTripCost * 100) /100 )
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+        }
+    });
+    $('input[aria-controls="daily_trips"]').prop('type', 'text');
+
+    //$('select[name=daily_trips_length]').addClass('form-control');
+}
+
+function getDriverDailyTrips() {
+
+    var day = $('#day').val();
+    
+    if( day != '') {
+        //$('#time_range_span').html(day + ' <i class="fa fa-arrow-right"></i> ');
+    }
+
+    $('#driver_daily_trips').DataTable({
+        'ajax': {
+            "type"   : "POST",
+            "url"    : 'getdriverdailytrips',
+            "data"   : {day: day},
+            "dataSrc": ""
+        },
+        "destroy": true,
+        'columns': [
+            {"data" : "id", "sClass": "center", "sWidth": "200px"},
+            {"data" : "driver_name"},
+            {"data" : "count"},
+            {"data" : "start_km"},
+            {"data" : "end_km"},
+            {"data" : "total_km"},
+            {"data" : "total_trip_km"},
+            {"data" : "free_ride_km"},
+            {"data" : "start_time"},
+            {"data" : "end_time"},
+            {"data" : "total_hours"},
+            {"data" : "total_work_hours"},
+            {"data" : "total_free_hours"},
+            {"data" : "receipt"}
+        ]/*
+        ,"footerCallback": function ( row, data, start, end, display ) {
+            var api = this.api(), data;
+
+            // Remove the formatting to get integer data for summation
+
+             var intVal = function ( i ) {
+             return typeof i === 'string' ?
+             i.replace(/[\$,]/g, '')*1 : typeof i === 'number' ? i : 0;};
+
+             // Total over all pages
+             //total = api.column(8).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+             //
+
+            // Total over this page
+        
+            totalDistance = api.column( 13, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalTripTime = api.column( 14, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalClPT  = api.column( 15, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalCoPt = api.column( 16, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+            totalTripCost = api.column( 17, { page: 'current'} ).data().reduce( function (a, b) {return intVal(a) + intVal(b);}, 0 );
+
+            // Update footer
+            $( api.column(13).footer() ).html( (Math.round(totalDistance * 100) /100 ) + ' KM'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(14).footer() ).html(totalTripTime + ' Min'
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(15).footer() ).html(totalClPT
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(16).footer() ).html( (Math.round(totalCoPt * 100) /100 )
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            $( api.column(17).footer() ).html( (Math.round(totalTripCost * 100) /100 )
+                //'$'+pageTotal +' ( $'+ total +' total)'
+            );
+            
+        }*/
     });
     $('input[aria-controls="daily_trips"]').prop('type', 'text');
 

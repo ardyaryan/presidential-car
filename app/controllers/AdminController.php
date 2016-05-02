@@ -82,7 +82,7 @@ class AdminController extends BaseController {
         $driverDetails = $this->getDriverDetails($id);
         $results = ['driverDetails' => $driverDetails['driver_details'], 'trips' => $driverDetails['trips'], 'fuelFillUps' => $driverDetails['fuel_fills']];
 
-        \Log::info(__METHOD__.' =======> $driverDetails : '.print_r($driverDetails, 1));
+        //\Log::info(__METHOD__.' =======> $driverDetails : '.print_r($driverDetails, 1));
 
         return View::make('admin/driverDetails')->with($results);
     }
@@ -220,7 +220,7 @@ class AdminController extends BaseController {
     }
 
     public function getTrips()
-    {
+    {\Log::info(__METHOD__.' +++++++++++++++++++ : '.print_r('here',1));
         $to = Input::get('to');
         $from = Input::get('from');
 
@@ -251,7 +251,7 @@ class AdminController extends BaseController {
                     $driver = Driver::where('user_id', '=', $driverId)->first();
                     $car    = Cars::find($carId);
                     $client = Client::find($clientId);
-
+                    
                     $finalTrip = [
                         'trip_id'           => $trip->id,
                         'driver'            => $driver->first.' '.$driver->last,
@@ -264,13 +264,19 @@ class AdminController extends BaseController {
                         'arrival_time'      => date("H:i:s",strtotime($trip->arrival_date_time)),
                         'departure_address' => $trip->departure_address,
                         'arrival_address'   => $trip->arrival_address,
+                        'departure_km'      => $trip->departure_km,
+                        'arrival_km'        => $trip->arrival_km,
                         'distance'          => $distance,
-                        'cost'              => $trip->trip_cost.' '.$trip->currency,
+                        'trip_time'         => $trip->trip_time,
+                        'extra_charge'      => $trip->extra_charge,//for company
+                        'extra_cost'        => $trip->extra_cost,//for company
+                        'cost'              => $trip->trip_cost,//.' '.$trip->currency,
                         'date'              => date("Y-d-m",strtotime($trip->arrival_date_time)),
                         'delete'            => $trip->delete_req,
                         'edit'              => $trip->edit_req
                     ];
                     array_push($results, $finalTrip);
+                    
                 }
             }
 
@@ -279,6 +285,61 @@ class AdminController extends BaseController {
         }
 
         return json_encode($results);
+    }
+    
+    public function getDriverDailyTrips()
+    {
+        $toDay = Input::get('day');
+
+        if($toDay == null) {
+            $today = LocationController::getTime();
+            $todayFrom = $today['date'].' 00:00:00';
+            $todayTo = $today['date'].' 23:59:59';
+        }else {
+            $todayFrom = $toDay.' 00:00:00';
+            $todayTo = $toDay.' 23:59:59';
+        }
+
+        try{
+            
+            $allDrivers = Driver::all()->toArray();
+            
+            $driverBreakdown = [];
+            foreach ($allDrivers as $driver) {
+                $userId = $driver['user_id'];
+                $query = DB::select(DB::raw('SELECT * FROM (SELECT departure_date_time, MIN(departure_km) AS start_km FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS a,
+                        (SELECT  COUNT(id) AS count, MAX(arrival_km) AS end_km FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS b,
+                        (SELECT  MIN(departure_date_time) AS start_time FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS c,
+                        (SELECT  MAX(departure_date_time) AS end_time FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS d,
+                        (SELECT  SUM(trip_distance) AS total_trip_km FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS e,
+                        (SELECT  SUM(trip_time) AS total_trip_time FROM daily_trips WHERE user_id = ' . $userId . ' AND departure_date_time BETWEEN "' . $todayFrom . '" AND "' .$todayTo . '") AS f    
+                '));
+                $dailyBreakdown = (array) $query[0];
+                $dailyBreakdown['id'] = $driver['id'];
+                $dailyBreakdown['driver_name'] = $driver['first'] . ' ' . $driver['last'];
+                $dailyBreakdown['total_km'] = $dailyBreakdown['end_km'] - $dailyBreakdown['start_km'];
+                $dailyBreakdown['free_ride_km'] = $dailyBreakdown['total_km'] - $dailyBreakdown['total_trip_km'];
+                $startTime = strtotime($dailyBreakdown['start_time']);
+                $endTime = strtotime($dailyBreakdown['end_time']);
+                $totalMinutes = round(($endTime - $startTime) / 60); //in minutes
+                $totalWorkMinutes = $dailyBreakdown['total_trip_time']; // in minutes
+                $totalFreeMinutes = $totalMinutes - $totalWorkMinutes;
+                
+                $dailyBreakdown['total_hours'] = date('H:i:s', $totalMinutes);
+                $dailyBreakdown['total_work_hours'] = date('H:i:s', $totalWorkMinutes);
+                $dailyBreakdown['total_free_hours'] = date('H:i:s', $totalFreeMinutes);
+                $dailyBreakdown['receipt'] = 0;
+                array_push($driverBreakdown, $dailyBreakdown);
+                
+            }
+
+            //\Log::info(__METHOD__.' +++++++++++++++++++ $driverBreakdown: '.print_r($driverBreakdown,1));
+
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+        }
+
+        return json_encode($driverBreakdown);
     }
 
     public function viewDashboard()
@@ -365,7 +426,7 @@ class AdminController extends BaseController {
         } catch(Exception $ex){
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
-        \Log::info(__METHOD__.print_r($results, 1));
+        //\Log::info(__METHOD__.print_r($results, 1));
         return json_encode($results);
     }
 
@@ -713,7 +774,7 @@ class AdminController extends BaseController {
 
             $originalTrip = DailyTrips::find($tripId)->toArray();
             $editedTrip   = DailyTripsRevision::where('trip_id', '=', $tripId)->first()->toArray();
-            \Log::info($editedTrip);
+            //\Log::info($editedTrip);
 
             $trip = array ('original_trip' => $originalTrip, 'edited_trip' => $editedTrip);
 

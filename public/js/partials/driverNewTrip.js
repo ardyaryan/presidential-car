@@ -281,20 +281,7 @@ function ajaxSaveTempTrip() {
             */
         },
         success: function(data) {
-            console.log('success');
-            /*
-            if(data.success == false) {
-                $('#save_trip').html('<span class="fa fa-remove"></span>' + buttonName + '');
-                $('#alert').addClass('alert alert-danger');
-                $('#alert').html(errorMessage);
-                $('#alert').show();
-            }else {
-                $('#end_trip').html('<span class="fa fa-check-square"></span> Trip Saved!');
-                $('#alert').addClass('alert alert-success');
-                $('#alert').html(successMessage);
-                $('#alert').show();
-            }
-            */
+            $('#temp_trip_id').val(data.temp_trip_id);
         },
         error: function (data) {
             console.log(data);
