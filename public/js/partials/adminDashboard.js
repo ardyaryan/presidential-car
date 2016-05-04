@@ -6,6 +6,7 @@ $(document).ready(function(){
     });
 
     $('#driver_performance').DataTable({});
+    
     $('form').on('submit', function(e) {
         e.preventDefault();
 
@@ -30,6 +31,7 @@ $(document).ready(function(){
     getDriverPerformance();
 
     $('#report_table').dataTable({'bPaginate': false, 'bFilter': false, 'bInfo': false });
+    
     createReport();
 
     //  setTimeout(function() {loadPieChart();}, 1000);
@@ -148,7 +150,7 @@ function createReport() {
     var from = $('#from').val();
     var to = $('#to').val();
 
-    $('#car_details').DataTable({
+    $('#report_table').DataTable({
         'bPaginate': false,
         'bFilter': false,
         'bInfo': false,
