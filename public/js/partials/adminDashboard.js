@@ -148,7 +148,7 @@ function createReport() {
     var from = $('#from').val();
     var to = $('#to').val();
 
-    $('#report_table').DataTable({
+    $('#car_details').DataTable({
         'bPaginate': false,
         'bFilter': false,
         'bInfo': false,

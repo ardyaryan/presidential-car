@@ -88,6 +88,8 @@ Route::post('/admin/newtrip',       'AdminController@newDailyTrip');
 Route::post('/admin/deletetrip', 'AdminController@deleteTrip');
 Route::post('/admin/newuser',       'AdminController@createNewUser');
 Route::post('/admin/getcars',       'AdminController@getCars');
+Route::post('/admin/cardetails/get',       'AdminController@getCarDetails');
+Route::post('/admin/cardetails/getfuel',       'AdminController@getFuel');
 Route::post('/admin/getpayments',       'AdminController@getPayments');
 Route::post('/admin/createreport',      'AdminController@createReport');
 

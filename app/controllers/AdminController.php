@@ -68,12 +68,13 @@ class AdminController extends BaseController {
     public function carDetails($id)
     {
        
-        $carStats = $this->getCarDetails($id);
-        $results = ['carDetails' => $carStats['car_details'], 'trips' => $carStats['trips'], 'fuelFillUps' => $carStats['fuel_fills']];
-        
-        \Log::info(__METHOD__.' =======> $carDetails : '.print_r($results, 1));
+        //$carStats = $this->getCarDetails($id);
+        $car   = Cars::find($id)->toArray();
+        $results = ['carDetails' => $car];
+        //\Log::info(__METHOD__.' =======> $carDetails : '.print_r($results, 1));
         
         return View::make('admin/carDetails')->with($results);
+        //return View::make('admin/carDetails');
     }
 
     public function driverDetails($id)
@@ -87,12 +88,25 @@ class AdminController extends BaseController {
         return View::make('admin/driverDetails')->with($results);
     }
     
-    public function getCarDetails($id) {
-      
+    public function getCarDetails() {
+       
+        $to = Input::get('to');
+        $from = Input::get('from');
+        $carId = Input::get('car_id');
+        
+        
+        if($from == null || $to == null) {
+            $today = LocationController::getTime();
+            $todayFrom = $today['date'].' 00:00:00';
+            $todayTo = $today['date'].' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
+        
        try{
-            $car   = Cars::find($id)->toArray();
-            $trips = DailyTrips::where('car_id', '=', $id)->get()->toArray();
-            $fuelFills = FuelFillUp::where('car_id', '=', $id)->get()->toArray();
+            $trips = DailyTrips::where('car_id', '=', $carId)->whereBetween('departure_date_time' ,[$todayFrom, $todayTo])->get()->toArray();
+        
             $calculatedTrip = [];
 
             if(!is_null($trips)) {
@@ -100,11 +114,13 @@ class AdminController extends BaseController {
                 foreach($trips as $trip) {
                
                     $distance = $trip['arrival_km'] - $trip['departure_km'];
-
+                    $totalTime = strtotime($trip['departure_date_time']) - strtotime($trip['arrival_date_time']);
+                    $totalCotst = $trip['extra_charge'] + $trip['extra_cost'];
                     $finalTrip = [
                         'distance'          => $distance,
+                        'hours'             => date('H:i:s', $totalTime),
                         'cost'              => $trip['trip_cost'],
-                        'currency'          => $trip['currency'],
+                        'parking_toll'      => $totalCotst,
                         'date'              => date("Y-d-m",strtotime($trip['arrival_date_time']))
                     ];
                     array_push($calculatedTrip, $finalTrip);
@@ -115,7 +131,44 @@ class AdminController extends BaseController {
             \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
         }
        
-       return ['car_details' => $car, 'trips' => $calculatedTrip, 'fuel_fills' => $fuelFills];
+       return json_encode($calculatedTrip);
+       
+    }
+    
+    public function getFuel() {
+       
+        $to = Input::get('to');
+        $from = Input::get('from');
+        $carId = Input::get('car_id');
+        
+        
+        if($from == null || $to == null) {
+            $today = LocationController::getTime();
+            $todayFrom = $today['date'].' 00:00:00';
+            $todayTo = $today['date'].' 23:59:59';
+        }else {
+            $todayFrom = $from.' 00:00:00';
+            $todayTo = $to.' 23:59:59';
+        }
+       
+       try{
+            
+            $fuelFills = FuelFillUp::where('car_id', '=', $carId)->whereBetween('date_and_time' ,[$todayFrom, $todayTo])->get()->toArray();
+            if(!empty($fuelFills)) {
+                foreach ($fuelFills as $key => $fuelFill) {
+                    \Log::info(__METHOD__.' =======> $fuelFill : '.print_r($fuelFill, 1));
+                    $fuelFills[$key]['cost'] = round($fuelFill['cost'], 2);
+                    $fuelFills[$key]['amount'] = round($fuelFill['amount'], 2);
+                    $fuelFills[$key]['price_per_liter'] = round($fuelFill['price_per_liter'], 2);
+                    \Log::info(__METHOD__.' =======> $fuelFill : '.print_r($fuelFill, 1));
+                }
+            }
+            \Log::info(__METHOD__.' =======> $fuelFills : '.print_r($fuelFills, 1));
+        } catch(Exception $ex){
+            \Log::error(__METHOD__.' | error :'.print_r($ex, 1));
+        }
+       
+       return json_encode($fuelFills);
        
     }
 
@@ -299,6 +352,7 @@ class AdminController extends BaseController {
             if($from == null || $to == null) {
             $today = LocationController::getTime();
             $todayFrom = $today['date'].' 00:00:00';
+            $todayFrom = (date('Y-m-d', strtotime('-30 day'))).' 00:00:00';
             $todayTo = $today['date'].' 23:59:59';
         }else {
             $todayFrom = $from.' 00:00:00';
